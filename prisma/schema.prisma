@@ -1,0 +1,66 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Category {
+  id                  String @id @default(uuid())
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  slug                String @unique
+  title               String
+  description         String
+  questions           Question[]
+  image               String 
+  order               Int @default(autoincrement())
+  published           Boolean @default(false)
+}
+
+model Question {
+  id                  String @id @default(uuid())
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  category            Category @relation(fields: [categoryId], references: [id])
+  categoryId          String
+  title               String
+  description         String
+  help                String?
+  order               Int @default(autoincrement())
+  published           Boolean @default(false)
+  choices             Choice[]
+
+  @@unique([categoryId, order])
+}
+
+model Choice {
+  id                  String @id @default(uuid())
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  question            Question @relation(fields: [questionId], references: [id])
+  questionId          String
+  text                String
+  order               Int
+  politicianScores    PoliticianScore[]
+
+  @@unique([questionId, order])
+}
+
+model PoliticianScore {
+  id                  String @id @default(uuid())
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
+  choice              Choice @relation(fields: [choiceId], references: [id])
+  choiceId            String
+  score               Int
+  source              String
+  politicianId        String
+
+  @@unique([politicianId, choiceId])
+}
