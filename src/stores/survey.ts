@@ -1,11 +1,11 @@
 import create, { State, UseBoundStore } from 'zustand';
 import createContext from 'zustand/context';
+import Answer from '../types/answer';
 
 interface SurveyState extends State {
-  // TODO should only contain answers and result because questions are loaded statically
-  bears: number;
-  increasePopulation(): void;
-  removeAllBears(): void;
+  answers: Answer[];
+  setAnswers: (answers: Answer[]) => void;
+  addAnswer: (answer: Answer) => void;
 }
 
 const { Provider, useStore } = createContext<SurveyState>();
@@ -17,9 +17,27 @@ let store: UseBoundStore<SurveyState>;
 export const createSurveyStore = () => {
   if (!store || typeof window === 'undefined') {
     store = create<SurveyState>(set => ({
-      bears: 0,
-      increasePopulation: () => set(state => ({ bears: state.bears + 1 })),
-      removeAllBears: () => set({ bears: 0 }),
+      answers: [],
+      setAnswers: (answers: Answer[]) => set(state => ({ ...state, answers })),
+      addAnswer: (answer: Answer) =>
+        set(state => {
+          const alreadyCreatedAnswerIndex = state.answers.findIndex(
+            a => a.questionId === answer.questionId,
+          );
+
+          if (alreadyCreatedAnswerIndex >= 0) {
+            return {
+              ...state,
+              answers: [
+                ...state.answers.slice(0, alreadyCreatedAnswerIndex),
+                answer,
+                ...state.answers.slice(alreadyCreatedAnswerIndex + 1),
+              ],
+            };
+          } else {
+            return { ...state, answers: [...state.answers, answer] };
+          }
+        }),
     }));
   }
 

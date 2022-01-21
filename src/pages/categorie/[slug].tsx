@@ -1,10 +1,14 @@
-import { Container, Heading, HStack, ListItem, OrderedList } from '@chakra-ui/react';
+import { Container, Heading, useColorModeValue, VStack } from '@chakra-ui/react';
 import Link from 'next/link';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
+import { SSRConfig } from 'next-i18next';
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useMemo } from 'react';
 import superjson from 'superjson';
 import { fetchSurvey } from '../../services/survey';
-import { Survey } from '../../types/survey';
+import Survey from '../../types/survey';
+import SurveyLayout from '../../components/SurveyLayout';
+import Question from '../../components/Question';
 
 interface SerialiazedCategoryProps {
   survey: string;
@@ -22,9 +26,11 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async context => {
-  const { params, preview = false } = context;
-
+export const getStaticProps: GetStaticProps<SerialiazedCategoryProps & SSRConfig> = async ({
+  params,
+  preview = false,
+  locale = 'fr',
+}) => {
   if (!params || !params.slug) {
     return {
       notFound: true,
@@ -50,12 +56,17 @@ export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async co
       nextCategory: survey[survey.indexOf(currentCategory) + 1]
         ? superjson.stringify(survey[survey.indexOf(currentCategory) + 1])
         : null,
+      ...(await serverSideTranslations(locale)),
     },
   };
 };
 
 const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
-  // const survey = useMemo(() => superjson.parse<Survey>(props.survey), [props.survey]);
+  const titleColor = useColorModeValue('primary.900', 'secondary.200');
+  const survey = useMemo(
+    () => superjson.parse<Survey>(serializedProps.survey),
+    [serializedProps.survey],
+  );
   const currentCategory = useMemo(
     () => superjson.parse<Survey[number]>(serializedProps.currentCategory),
     [serializedProps.currentCategory],
@@ -73,23 +84,30 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
   );
 
   return (
-    <Container h="full" display="flex" flexDirection="column" justifyContent="center">
-      <Heading>Category {currentCategory.title}</Heading>
-      <HStack spacing={4}>
+    <SurveyLayout survey={survey} currentCategory={currentCategory}>
+      <Container
+        maxW="container.lg"
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        padding="16px 8px"
+      >
+        <Heading color={titleColor} as="h1" marginBottom="32px">
+          {currentCategory.title}
+        </Heading>
+        <VStack spacing="16px" alignItems="flex-start">
+          {currentCategory.questions.map(question => (
+            <Question key={question.id} question={question} />
+          ))}
+        </VStack>
         {previousCategory && <Link href={`/categorie/${previousCategory.slug}`}>Previous</Link>}
-        <Link href="/">Back home</Link>
         {nextCategory ? (
           <Link href={`/categorie/${nextCategory.slug}`}>Next</Link>
         ) : (
           <Link href="/">Finish</Link>
         )}
-      </HStack>
-      <OrderedList>
-        {currentCategory.questions.map(question => (
-          <ListItem key={question.id}>{question.title}</ListItem>
-        ))}
-      </OrderedList>
-    </Container>
+      </Container>
+    </SurveyLayout>
   );
 };
 
