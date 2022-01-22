@@ -1,4 +1,4 @@
-import { useRadio, UseRadioProps, Box, useColorModeValue } from '@chakra-ui/react';
+import { useRadio, UseRadioProps, Box, useColorModeValue, Button } from '@chakra-ui/react';
 import React, { FC } from 'react';
 
 const ImportanceRadio: FC<UseRadioProps> = props => {
@@ -12,17 +12,11 @@ const ImportanceRadio: FC<UseRadioProps> = props => {
   return (
     <Box as="label">
       <input {...input} />
-      <Box
+      <Button
         {...checkbox}
+        as={Box}
         cursor="pointer"
-        borderWidth="1px"
-        borderRadius="md"
-        color="primary"
-        borderColor={borderColor}
-        fontWeight="semibold"
-        display="flex"
-        flexDirection="row"
-        alignItems="center"
+        width="full"
         _checked={{
           bgColor: 'primary.500',
           color: 'white',
@@ -30,10 +24,9 @@ const ImportanceRadio: FC<UseRadioProps> = props => {
         _focus={{
           boxShadow: 'outline',
         }}
-        padding="8px"
       >
         {props.children}
-      </Box>
+      </Button>
     </Box>
   );
 };

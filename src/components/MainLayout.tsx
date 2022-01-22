@@ -25,7 +25,7 @@ const MainLayout: FC = ({ children }) => {
 
   return (
     <Flex direction="column">
-      <Flex align="center" justify="space-between" px={5} py={3}>
+      <Flex align="center" justify="space-between" px={[3, 3, 5]} py={3}>
         <NextLink href="/" passHref>
           <Link>
             <Image src="/logo.png" alt="logo" w="64px" />

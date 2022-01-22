@@ -1,4 +1,4 @@
-import { useRadioGroup, HStack, Flex, Text } from '@chakra-ui/react';
+import { useRadioGroup, Stack, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
 import ImportanceRadio from './ImportanceRadio';
 import { faFireAlt, faSnowflake, faMehBlank } from '@fortawesome/free-solid-svg-icons';
@@ -43,7 +43,7 @@ const ImportanceMeter = (props: ImportanceMeterProps) => {
       <Text mb={3} fontWeight="semibold">
         Ce sujet est-il important pour vous ?
       </Text>
-      <HStack {...group}>
+      <Stack {...group} direction={['column', 'column', 'row']}>
         <ImportanceRadio {...notImportantRadioProps}>
           <FontAwesomeIcon width={15} height={15} icon={faSnowflake} />
           <Text ml={2}>Peu important</Text>
@@ -56,7 +56,7 @@ const ImportanceMeter = (props: ImportanceMeterProps) => {
           <FontAwesomeIcon width={15} height={15} icon={faFireAlt} />
           <Text ml={2}>Important</Text>
         </ImportanceRadio>
-      </HStack>
+      </Stack>
     </Flex>
   );
 };

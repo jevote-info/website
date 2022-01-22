@@ -1,4 +1,4 @@
-import { Container, Heading, useColorModeValue, Button, HStack } from '@chakra-ui/react';
+import { Container, Button, HStack } from '@chakra-ui/react';
 import Link from 'next/link';
 import Head from 'next/head';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
@@ -6,7 +6,7 @@ import { useCallback, useMemo } from 'react';
 import superjson from 'superjson';
 import { fetchSurvey } from '../../services/survey';
 import Survey from '../../types/survey';
-import SurveyLayout from '../../components/SurveyLayout';
+import { SurveyLayout } from '../../components/SurveyLayout';
 import { Importance } from '../../components/ImportanceMeter';
 import { useRouter } from 'next/router';
 import { useSurveyStore } from '../../stores/survey';
@@ -66,7 +66,6 @@ export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async ({
 const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
   const { push } = useRouter();
 
-  const titleColor = useColorModeValue('primary.900', 'secondary.500');
   const survey = useMemo(
     () => superjson.parse<Survey>(serializedProps.survey),
     [serializedProps.survey],
@@ -136,38 +135,18 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
           display="flex"
           flexDirection="column"
           justifyContent="center"
-          padding="16px 8px"
+          p={0}
         >
-          <Heading color={titleColor} as="h1" marginBottom="32px">
-            {currentCategory.title}
-          </Heading>
           <CategoryForm
             key={
               currentCategory.id /* Important so that form gets regenerated between two categories */
             }
-            formId="categoryForm"
-            category={currentCategory}
+            currentCategory={currentCategory}
+            nextCategory={nextCategory}
+            previousCategory={previousCategory}
             defaultValues={defaultValues}
             onSubmit={onSubmit}
           />
-          <HStack mt={5} spacing={5} justifyContent="space-between">
-            {previousCategory && (
-              <Link href={`/categorie/${previousCategory.slug}`} passHref>
-                <Button as="a" variant="outline" colorScheme="primary">
-                  Précédent
-                </Button>
-              </Link>
-            )}
-            {nextCategory ? (
-              <Button form="categoryForm" type="submit" colorScheme="primary">
-                Suivant
-              </Button>
-            ) : (
-              <Button form="categoryForm" type="submit" colorScheme="primary">
-                Accéder aux résultats
-              </Button>
-            )}
-          </HStack>
         </Container>
       </SurveyLayout>
     </>
