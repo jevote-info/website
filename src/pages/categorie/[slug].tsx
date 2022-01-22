@@ -1,8 +1,6 @@
 import { Container, Heading, useColorModeValue, VStack } from '@chakra-ui/react';
 import Link from 'next/link';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
-import { SSRConfig } from 'next-i18next';
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations';
 import { useMemo } from 'react';
 import superjson from 'superjson';
 import { fetchSurvey } from '../../services/survey';
@@ -26,10 +24,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<SerialiazedCategoryProps & SSRConfig> = async ({
+export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async ({
   params,
   preview = false,
-  locale = 'fr',
 }) => {
   if (!params || !params.slug) {
     return {
@@ -56,7 +53,6 @@ export const getStaticProps: GetStaticProps<SerialiazedCategoryProps & SSRConfig
       nextCategory: survey[survey.indexOf(currentCategory) + 1]
         ? superjson.stringify(survey[survey.indexOf(currentCategory) + 1])
         : null,
-      ...(await serverSideTranslations(locale)),
     },
   };
 };

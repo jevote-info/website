@@ -1,4 +1,3 @@
-import { useTranslation } from 'next-i18next';
 import { FC, useState } from 'react';
 import {
   useColorMode,
@@ -18,7 +17,6 @@ import NextLink from 'next/link';
 import usePrimaryColorModeValue from '../hooks/usePrimaryColorModeValue';
 
 const MainLayout: FC = ({ children }) => {
-  const { t } = useTranslation();
   const { colorMode, toggleColorMode } = useColorMode();
   const mobileMenuColor = useColorModeValue('white', 'gray.800');
   const primaryColor = usePrimaryColorModeValue();
@@ -37,14 +35,14 @@ const MainLayout: FC = ({ children }) => {
         <Flex align="center">
           <Flex display={['none', 'none', 'flex', 'flex']}>
             <NextLink href="/categorie" passHref>
-              <Button as="a" colorScheme="primary" variant="ghost" aria-label={t('survey')}>
-                {t('survey')}
+              <Button as="a" colorScheme="primary" variant="ghost" aria-label="Questionnaire">
+                Questionnaire
               </Button>
             </NextLink>
 
             <NextLink href="/equipe" passHref>
-              <Button as="a" colorScheme="primary" variant="ghost" aria-label={t('team')}>
-                {t('team')}
+              <Button as="a" colorScheme="primary" variant="ghost" aria-label="L'équipe">
+                L'équipe
               </Button>
             </NextLink>
 
@@ -126,11 +124,11 @@ const MainLayout: FC = ({ children }) => {
               as="a"
               colorScheme="primary"
               variant="ghost"
-              aria-label={t('survey')}
+              aria-label="Questionnaire"
               marginY="2px"
               width="100%"
             >
-              {t('survey')}
+              Questionnaire
             </Button>
           </NextLink>
 
@@ -139,11 +137,11 @@ const MainLayout: FC = ({ children }) => {
               as="a"
               colorScheme="primary"
               variant="ghost"
-              aria-label={t('team')}
+              aria-label="L'équipe"
               marginY="2px"
               width="100%"
             >
-              {t('team')}
+              L'équipe
             </Button>
           </NextLink>
 

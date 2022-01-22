@@ -1,5 +1,4 @@
 import { Box, Heading, Radio, RadioGroup, VStack } from '@chakra-ui/react';
-import { useTranslation } from 'next-i18next';
 import React, { useMemo } from 'react';
 import { useSurveyStore } from '../stores/survey';
 import Survey from '../types/survey';
@@ -10,7 +9,6 @@ interface QuestionProps {
 }
 
 const Question = ({ question }: QuestionProps) => {
-  const { t } = useTranslation();
   const { answers, addAnswer } = useSurveyStore();
 
   const questionAnswer = useMemo(() => {
@@ -45,7 +43,7 @@ const Question = ({ question }: QuestionProps) => {
               </Radio>
             ))}
             <Radio value="NO_ANSWER" colorScheme="primary">
-              {t('noAnswer')}
+              Ne se prononce pas
             </Radio>
           </VStack>
         </RadioGroup>
