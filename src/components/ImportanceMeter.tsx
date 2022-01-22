@@ -3,42 +3,58 @@ import React from 'react';
 import ImportanceRadio from './ImportanceRadio';
 import { faFireAlt, faSnowflake, faMehBlank } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useController, Control } from 'react-hook-form';
+import Question from '../types/question';
 
-enum Importance {
-  NOT_IMPORTANT = 'NOT_IMPORTANT',
-  NEUTRAL = 'NEUTRAL',
-  IMPORTANT = 'IMPORTANT',
+export enum Importance {
+  NOT_IMPORTANT = 0.5,
+  NEUTRAL = 1,
+  IMPORTANT = 1.5,
 }
 
-const ImportanceMeter = () => {
+interface ImportanceMeterProps {
+  questionId: Question['id'];
+  control: Control<any>;
+}
+
+const ImportanceMeter = (props: ImportanceMeterProps) => {
+  const { questionId, control } = props;
+
+  const {
+    field: { onChange, name, value },
+  } = useController({
+    name: `${questionId}.weight`,
+    control,
+  });
+
   const { getRootProps, getRadioProps } = useRadioGroup({
-    name: 'importance',
-    defaultValue: Importance.NEUTRAL,
-    onChange: console.log,
+    value: `${value}`,
+    name,
+    onChange: value => onChange(+value),
   });
 
   const group = getRootProps();
-  const notImportantRadioProps = getRadioProps({ value: Importance.NOT_IMPORTANT });
-  const neutralRadioProps = getRadioProps({ value: Importance.NEUTRAL });
-  const importantRadioProps = getRadioProps({ value: Importance.IMPORTANT });
+  const notImportantRadioProps = getRadioProps({ value: `${Importance.NOT_IMPORTANT}` });
+  const neutralRadioProps = getRadioProps({ value: `${Importance.NEUTRAL}` });
+  const importantRadioProps = getRadioProps({ value: `${Importance.IMPORTANT}` });
 
   return (
-    <Flex direction="column" marginTop="32px">
-      <Text marginBottom="8px" fontWeight="semibold">
+    <Flex direction="column" mt={8}>
+      <Text mb={3} fontWeight="semibold">
         Ce sujet est-il important pour vous ?
       </Text>
       <HStack {...group}>
         <ImportanceRadio {...notImportantRadioProps}>
-          <FontAwesomeIcon icon={faSnowflake} />
-          <Text marginLeft="4px">Peu important</Text>
+          <FontAwesomeIcon width={15} height={15} icon={faSnowflake} />
+          <Text ml={2}>Peu important</Text>
         </ImportanceRadio>
         <ImportanceRadio {...neutralRadioProps}>
-          <FontAwesomeIcon icon={faMehBlank} />
-          <Text marginLeft="4px">Neutre</Text>
+          <FontAwesomeIcon width={15} height={15} icon={faMehBlank} />
+          <Text ml={2}>Neutre</Text>
         </ImportanceRadio>
         <ImportanceRadio {...importantRadioProps}>
-          <FontAwesomeIcon icon={faFireAlt} />
-          <Text marginLeft="4px">Important</Text>
+          <FontAwesomeIcon width={15} height={15} icon={faFireAlt} />
+          <Text ml={2}>Important</Text>
         </ImportanceRadio>
       </HStack>
     </Flex>

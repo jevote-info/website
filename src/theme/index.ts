@@ -24,12 +24,13 @@ const theme = extendTheme({
       900: '#2f2788', // Logo primary color
     },
     secondary: {
+      20: '#ad8274',
       50: '#fbe6e3',
       100: '#fcc5b2',
-      200: '#f99f81', // Logo secondary color
+      200: '#ec3f00',
       300: '#f47a50',
       400: '#f05d2b',
-      500: '#ec3f00',
+      500: '#f99f81', // Logo secondary color
       600: '#e23a00',
       700: '#d53300',
       800: '#c72b00',

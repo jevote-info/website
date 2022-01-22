@@ -22,7 +22,7 @@ const Home = () => {
         rowGap={4}
       >
         <Heading _hover={{ fontSize: 44 }} transition="all 200ms ease">
-          Home
+          Accueil
         </Heading>
       </Container>
     </Box>
