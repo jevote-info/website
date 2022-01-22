@@ -12,7 +12,7 @@ interface QuestionProps {
 const Question = (props: QuestionProps) => {
   const { question, control } = props;
 
-  const borderColor = useColorModeValue('primary.900', 'primary.200');
+  const bgColor = useColorModeValue('gray.50', 'gray.700');
 
   const {
     field,
@@ -26,14 +26,8 @@ const Question = (props: QuestionProps) => {
   });
 
   return (
-    <Box
-      borderWidth="1px"
-      borderRadius="lg"
-      borderColor={borderColor}
-      overflow="hidden"
-      width="100%"
-    >
-      <Box color="white" bgColor="primary.900" padding="16px">
+    <Box p={5} bgColor={bgColor} borderRadius="lg" boxShadow="sm" width="100%">
+      <Box mb={5}>
         <Heading size="md" as="h2" marginBottom="4px">
           {question.title}
         </Heading>
@@ -41,7 +35,7 @@ const Question = (props: QuestionProps) => {
           {question.description}
         </Heading>
       </Box>
-      <Box padding="16px">
+      <Box>
         {error?.type === 'required' && (
           <Box mb={5} p={3} borderRadius={6} bgColor="red.100">
             <Text color="red.600" fontWeight="bold">

@@ -1,6 +1,6 @@
 import { useRadioGroup, Stack, Flex, Text } from '@chakra-ui/react';
 import React from 'react';
-import ImportanceRadio from './ImportanceRadio';
+import { ImportanceRadio } from './ImportanceRadio';
 import { faFireAlt, faSnowflake, faMehBlank } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useController, Control } from 'react-hook-form';

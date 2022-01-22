@@ -15,16 +15,15 @@ import {
   DrawerHeader,
   DrawerBody,
 } from '@chakra-ui/react';
-import { ReactElement, useEffect, useRef } from 'react';
+import { ReactNode, useEffect, useRef } from 'react';
 import Survey from '../../types/survey';
-import Link from 'next/link';
 import { CategoryItem } from './CategoryItem';
 import { useRouter } from 'next/router';
 
 interface SurveyLayoutProps {
   survey: Survey;
   currentCategory: Survey[number];
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export function SurveyLayoutDesktop(props: SurveyLayoutProps) {

@@ -1,13 +1,15 @@
 import { useRadio, UseRadioProps, Box, useColorModeValue, Button } from '@chakra-ui/react';
-import React, { FC } from 'react';
+import React, { ReactNode } from 'react';
 
-const ImportanceRadio: FC<UseRadioProps> = props => {
+interface ImportanceRadioProps extends UseRadioProps {
+  children: ReactNode;
+}
+
+export function ImportanceRadio(props: ImportanceRadioProps) {
   const { getInputProps, getCheckboxProps } = useRadio(props);
 
   const input = getInputProps();
   const checkbox = getCheckboxProps();
-
-  const borderColor = useColorModeValue('primary.900', 'primary.200');
 
   return (
     <Box as="label">
@@ -29,6 +31,4 @@ const ImportanceRadio: FC<UseRadioProps> = props => {
       </Button>
     </Box>
   );
-};
-
-export default ImportanceRadio;
+}
