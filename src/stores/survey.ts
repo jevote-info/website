@@ -4,13 +4,16 @@ import { persist } from 'zustand/middleware';
 import { QuestionAnswer, SurveyAnswers } from '../types/answers';
 import Category from '../types/category';
 import Question from '../types/question';
+import { calculateSurveyResult } from '../utils/calculateSurveyResult';
 interface SurveyState extends State {
   answers: SurveyAnswers;
+  result?: ResultDto;
   setQuestionAnswer: (
     categoryId: Category['id'],
     questionId: Question['id'],
     answer: QuestionAnswer,
   ) => void;
+  calculateResult: (survey: Survey) => void;
 }
 
 const { Provider, useStore, useStoreApi } = createContext<SurveyState>();
@@ -29,6 +32,14 @@ export const createSurveyStore = () => {
       persist(
         (set, get) => ({
           answers: {},
+          result: undefined,
+          calculateResult(survey: Survey) {
+            const answers = get().answers;
+            const result = calculateSurveyResult(survey, answers);
+            set({
+              result,
+            });
+          },
           setQuestionAnswer(categoryId, questionId, answer) {
             const answers = get().answers;
             const existingAnswer = answers[categoryId]?.[questionId];
