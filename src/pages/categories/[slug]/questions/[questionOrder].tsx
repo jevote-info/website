@@ -1,4 +1,4 @@
-import { Box, Container } from '@chakra-ui/react';
+import { Container } from '@chakra-ui/react';
 import Head from 'next/head';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
 import { useCallback, useMemo } from 'react';
@@ -74,7 +74,7 @@ export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async ({
 
   if (nextQuestion) {
     nextPath = `/categories/${currentCategory.slug}/questions/${nextQuestion.order}`;
-  } else if (nextCategory) {
+  } else if (nextCategory && nextCategory.questions[0]) {
     nextPath = `/categories/${nextCategory.slug}/questions/${nextCategory.questions[0].order}`;
   }
 
@@ -86,7 +86,10 @@ export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async ({
 
   if (previousQuestion) {
     previousPath = `/categories/${currentCategory.slug}/questions/${previousQuestion.order}`;
-  } else if (previousCategory) {
+  } else if (
+    previousCategory &&
+    previousCategory.questions[previousCategory.questions.length - 1]
+  ) {
     previousPath = `/categories/${previousCategory.slug}/questions/${
       previousCategory.questions[previousCategory.questions.length - 1].order
     }`;
@@ -138,7 +141,7 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
 
       push(nextPath);
     },
-    [currentCategory, currentQuestion, nextPath],
+    [currentCategory, currentQuestion, nextPath, push, setQuestionAnswer],
   );
 
   return (

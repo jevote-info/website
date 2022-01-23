@@ -14,7 +14,7 @@ export function SubmitButtonsMobile(props: SubmitButtonsProps) {
   return (
     <Box height="64px">
       <HStack
-        spacing={5}
+        spacing={3}
         p={3}
         justifyContent="space-between"
         position="fixed"
@@ -33,7 +33,7 @@ export function SubmitButtonsMobile(props: SubmitButtonsProps) {
           </Link>
         )}
         <Button type="submit" colorScheme="primary" ml="auto" flex={1}>
-          {isFinal ? 'Accéder aux résultats' : 'Suivant'}
+          {isFinal ? 'Voir les résultats' : 'Suivant'}
         </Button>
       </HStack>
     </Box>

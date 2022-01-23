@@ -8,7 +8,7 @@ export function MenuLinks() {
     <>
       <NextLink href="/equipe" passHref>
         <Button as="a" colorScheme="primary" variant="ghost" aria-label="L'équipe">
-          L'équipe
+          L&apos;équipe
         </Button>
       </NextLink>
 

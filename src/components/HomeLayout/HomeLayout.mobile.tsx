@@ -36,7 +36,7 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
 
   useEffect(() => {
     onClose();
-  }, [asPath]);
+  }, [asPath, onClose]);
 
   return (
     <>
