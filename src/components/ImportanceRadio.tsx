@@ -1,4 +1,4 @@
-import { useRadio, UseRadioProps, Box, useColorModeValue, Button } from '@chakra-ui/react';
+import { useRadio, UseRadioProps, Box, Button } from '@chakra-ui/react';
 import React, { ReactNode } from 'react';
 
 interface ImportanceRadioProps extends UseRadioProps {

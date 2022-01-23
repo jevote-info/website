@@ -1,21 +1,21 @@
-import { Box, Text, Heading, Radio, RadioGroup, useColorModeValue, VStack } from '@chakra-ui/react';
+import { Box, Text, Heading, Radio, RadioGroup, VStack, useRadioGroup } from '@chakra-ui/react';
 import React from 'react';
-import Survey from '../types/survey';
 import ImportanceMeter from './ImportanceMeter';
 import { useController, Control } from 'react-hook-form';
+import Question from '../types/question';
+import { QuestionAnswer } from '../types/answers';
+import { ChoiceRadio } from './ChoiceRadio';
 
 interface QuestionProps {
-  question: Survey[number]['questions'][number];
-  control: Control<any>;
+  question: Question;
+  control: Control<QuestionAnswer>;
 }
 
 const Question = (props: QuestionProps) => {
   const { question, control } = props;
 
-  const bgColor = useColorModeValue('gray.50', 'gray.700');
-
   const {
-    field,
+    field: { onChange, name, value },
     fieldState: { error },
   } = useController({
     name: 'choiceId',
@@ -25,8 +25,14 @@ const Question = (props: QuestionProps) => {
     },
   });
 
+  const { getRootProps, getRadioProps } = useRadioGroup({
+    value,
+    name,
+    onChange,
+  });
+
   return (
-    <Box p={5} bgColor={bgColor} borderRadius="lg" boxShadow="sm" width="100%">
+    <Box width="100%" mb={5}>
       <Box mb={5}>
         <Heading size="md" as="h2" marginBottom="4px">
           {question.title}
@@ -43,18 +49,14 @@ const Question = (props: QuestionProps) => {
             </Text>
           </Box>
         )}
-        <RadioGroup {...field}>
-          <VStack alignItems="flex-start" spacing={5}>
-            {question.choices.map(choice => (
-              <Radio value={choice.id} key={choice.id} colorScheme="primary">
-                {choice.text}
-              </Radio>
-            ))}
-            <Radio value="NO_ANSWER" colorScheme="primary">
-              Ne se prononce pas
-            </Radio>
-          </VStack>
-        </RadioGroup>
+        <VStack {...getRootProps()} alignItems="flex-start" spacing={5}>
+          {question.choices.map(choice => (
+            <ChoiceRadio {...getRadioProps({ value: choice.id })} key={choice.id}>
+              {choice.text}
+            </ChoiceRadio>
+          ))}
+          <ChoiceRadio {...getRadioProps({ value: 'NO_ANSWER' })}>Ne se prononce pas</ChoiceRadio>
+        </VStack>
         <ImportanceMeter control={control} />
       </Box>
     </Box>

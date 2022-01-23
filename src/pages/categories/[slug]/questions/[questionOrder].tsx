@@ -1,4 +1,4 @@
-import { Container } from '@chakra-ui/react';
+import { Box, Container } from '@chakra-ui/react';
 import Head from 'next/head';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
 import { useCallback, useMemo } from 'react';
@@ -158,6 +158,7 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
           flexDirection="column"
           justifyContent="center"
           p={0}
+          m={0}
         >
           <QuestionForm
             key={
