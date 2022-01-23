@@ -42,8 +42,8 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
 
   return (
     <>
-      <VStack p={3}>
-        <Flex width="full" p={3}>
+      <VStack px={5}>
+        <Flex width="full" py={3}>
           <Flex flex={1} alignItems="start">
             <NextLink href="/" passHref>
               <Link>

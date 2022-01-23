@@ -1,4 +1,4 @@
-import { Image, VStack, HStack, Flex, Link } from '@chakra-ui/react';
+import { Image, VStack, HStack, Flex, Link, Grid } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import Survey from '../../types/survey';
 import { CategoryItem } from './CategoryItem';
@@ -16,7 +16,7 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
   const { survey, currentCategory, children } = props;
 
   return (
-    <VStack>
+    <VStack align="start">
       <HStack width="full" align="center" justify="space-between" px={[3, 3, 5]} py={3}>
         <NextLink href="/" passHref>
           <Link>
@@ -31,7 +31,7 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
           </Flex>
         </HStack>
       </HStack>
-      <HStack alignItems="start">
+      <Grid width="full" templateColumns="auto 1fr">
         <VStack p={5} alignItems="start" spacing={3}>
           {survey.map(category => (
             <CategoryItem
@@ -44,7 +44,7 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
         <Flex flexDirection="column" flex={1} alignItems="center" p={5}>
           {children}
         </Flex>
-      </HStack>
+      </Grid>
     </VStack>
   );
 }

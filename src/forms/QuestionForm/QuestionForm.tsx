@@ -26,9 +26,7 @@ export function QuestionForm(props: CategoryFormProps) {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <VStack spacing="16px" alignItems="flex-start">
-        <QuestionField question={currentQuestion} control={control} />
-      </VStack>
+      <QuestionField question={currentQuestion} control={control} />
       {variant === 'desktop' ? (
         <SubmitButtonsDesktop isFinal={isFinal} previousPath={previousPath} />
       ) : (
