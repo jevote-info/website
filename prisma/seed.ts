@@ -3,16 +3,125 @@ import { createSurveyCategory } from '../src/factories/createSurveyCategory';
 const prisma = new PrismaClient();
 
 async function main() {
-  // await prisma.politicianScore.deleteMany();
-  // await prisma.choice.deleteMany();
-  // await prisma.question.deleteMany();
-  // await prisma.category.deleteMany();
+  await prisma.politicianScore.deleteMany();
+  await prisma.choice.deleteMany();
+  await prisma.question.deleteMany();
+  await prisma.category.deleteMany();
 
   const survey = [
-    createSurveyCategory({ slug: 'theFirstCategory', order: 1 }),
-    createSurveyCategory({ slug: 'theSecondCategory', order: 2 }),
-    createSurveyCategory({ slug: 'theThirdCategory', order: 3 }),
-    createSurveyCategory({ slug: 'theFourthCategory', order: 4 }),
+    createSurveyCategory({
+      title: 'Société',
+      slug: 'societe',
+      image: '/icons/society.svg',
+      order: 1,
+      published: true,
+    }),
+    createSurveyCategory({
+      title: 'Fiscalité',
+      slug: 'fiscalite',
+      image: '/icons/taxation.svg',
+      order: 2,
+      published: true,
+    }),
+    createSurveyCategory({
+      title: 'Politique économique & sociale',
+      slug: 'economie',
+      image: '/icons/economy.svg',
+      order: 3,
+      published: true,
+      questions: [
+        {
+          title: 'Mondialisation',
+          description: "Concernant la mondialisation de l'économie :",
+          order: 1,
+          published: true,
+          choices: [
+            {
+              text: "La France doit poursuivre l'intégration européenne en inistant sur une Europe sociale, et ne pas signer de nouveaux accourds de libre-échange (TAFTA, CETA, etc.)",
+              politicianScores: [],
+              order: 1,
+            },
+            {
+              text: 'La France doit sortir des traités économiques européens et internationaux pour pouvoir remettre en place des barrières dounaières.',
+              politicianScores: [],
+              order: 2,
+            },
+            {
+              text: "La France doit continuer à défendre l'intégration européenne et à signer des accords de libre-échange internationaux.",
+              politicianScores: [],
+              order: 3,
+            },
+          ],
+        },
+        {
+          title: 'Revenu universel',
+          description: "Etes-vous favorable à la création d'un revenu universel ?",
+          order: 2,
+          published: true,
+          choices: [
+            {
+              text: 'Oui',
+              politicianScores: [],
+              order: 1,
+            },
+            {
+              text: 'Non',
+              politicianScores: [],
+              order: 2,
+            },
+          ],
+        },
+        {
+          title: 'Aides sociales',
+          description: "Concernant les aides sociales de l'Etat, selon vous :",
+          order: 3,
+          published: true,
+          choices: [],
+        },
+      ],
+    }),
+    createSurveyCategory({
+      title: 'Politique environnementale',
+      slug: 'environnement',
+      image: '/icons/ecology.svg',
+      order: 4,
+      published: true,
+    }),
+    createSurveyCategory({
+      title: 'Affaires étrangères',
+      slug: 'etranger',
+      image: '/icons/foreign-affairs.svg',
+      order: 5,
+      published: true,
+    }),
+    createSurveyCategory({
+      title: 'Défense',
+      slug: 'defense',
+      image: '/icons/defense.svg',
+      order: 6,
+      published: true,
+    }),
+    createSurveyCategory({
+      title: 'Education nationale',
+      slug: 'education',
+      image: '/icons/education.svg',
+      order: 7,
+      published: true,
+    }),
+    createSurveyCategory({
+      title: 'Santé',
+      slug: 'sante',
+      image: '/icons/health.svg',
+      order: 8,
+      published: true,
+    }),
+    createSurveyCategory({
+      title: 'Culture',
+      slug: 'culture',
+      image: '/icons/culture.svg',
+      order: 9,
+      published: true,
+    }),
   ];
 
   const categories = await Promise.all(

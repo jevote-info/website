@@ -1,29 +1,30 @@
 import faker from 'faker';
-import { Survey } from '../types/survey';
+import Question from '../types/question';
+import RecursivePartial from '../utils/recursivePartial';
 import { createSurveyChoice } from './createSurveyChoice';
 
-type QuestionWithChoices = Survey[number]['questions'][number];
-
-export function createSurveyQuestion(
-  params: Partial<QuestionWithChoices> = {},
-): QuestionWithChoices {
-  const id = faker.datatype.uuid();
+export function createSurveyQuestion(params: RecursivePartial<Question> = {}): Question {
+  const id = params.id ?? faker.datatype.uuid();
 
   return {
     id,
-    categoryId: faker.datatype.uuid(),
-    title: faker.hacker.phrase(),
-    description: faker.lorem.sentence(),
-    help: faker.random.arrayElement([faker.lorem.sentence(), null]),
-    choices: [
-      createSurveyChoice({ questionId: id, order: 1 }),
-      createSurveyChoice({ questionId: id, order: 2 }),
-      createSurveyChoice({ questionId: id, order: 3 }),
-    ],
-    order: faker.datatype.number(),
-    published: faker.datatype.boolean(),
-    createdAt: faker.date.past(),
-    updatedAt: faker.date.past(),
-    ...params,
+    categoryId: params.categoryId ?? faker.datatype.uuid(),
+    title: params.title ?? faker.hacker.phrase(),
+    description: params.description ?? faker.lorem.sentence(),
+    help: params.help ?? faker.random.arrayElement([faker.lorem.sentence(), null]),
+    choices:
+      params.choices && params.choices.length
+        ? params.choices.map((choice, index) =>
+            createSurveyChoice({ questionId: id, order: index, ...choice }),
+          )
+        : [
+            createSurveyChoice({ questionId: id, order: 1 }),
+            createSurveyChoice({ questionId: id, order: 2 }),
+            createSurveyChoice({ questionId: id, order: 3 }),
+          ],
+    order: params.order ?? faker.datatype.number(),
+    published: params.published ?? faker.datatype.boolean(),
+    createdAt: (params.createdAt as Date) ?? faker.date.past(),
+    updatedAt: (params.updatedAt as Date) ?? faker.date.past(),
   };
 }

@@ -1,8 +1,8 @@
-import { ReactElement } from 'react';
+import { ReactNode } from 'react';
 import { createSurveyStore, SurveyStoreProvider } from './stores/survey';
 
 interface BootstrapStoresProps {
-  children: ReactElement;
+  children: ReactNode;
 }
 
 export function BootstrapStores(props: BootstrapStoresProps) {
