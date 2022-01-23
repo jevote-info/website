@@ -1,19 +1,23 @@
-import { Box, Text, Heading, VStack, useRadioGroup } from '@chakra-ui/react';
+import { Box, Text, Heading, VStack, useRadioGroup, useBreakpointValue } from '@chakra-ui/react';
 import React from 'react';
 import ImportanceMeter from './ImportanceMeter';
 import { useController, Control } from 'react-hook-form';
 import Question from '../types/question';
 import { QuestionAnswer } from '../types/answers';
 import { ChoiceRadio } from './ChoiceRadio';
+import { QuestionsStepper } from './SurveyLayout/QuestionsStepper';
+import Category from '../types/category';
 
 interface QuestionProps {
+  currentCategory: Category;
   question: Question;
   control: Control<QuestionAnswer>;
 }
 
 const Question = (props: QuestionProps) => {
-  const { question, control } = props;
+  const { currentCategory, question, control } = props;
 
+  const variant = useBreakpointValue({ base: 'mobile', lg: 'desktop' });
   const {
     field: { onChange, name, value },
     fieldState: { error },
@@ -34,6 +38,9 @@ const Question = (props: QuestionProps) => {
   return (
     <Box width="full" mb={5}>
       <Box mb={5}>
+        {variant === 'mobile' && (
+          <QuestionsStepper currentCategory={currentCategory} currentQuestion={question} />
+        )}
         <Heading size="md" as="h2" marginBottom="4px">
           {question.title}
         </Heading>

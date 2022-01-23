@@ -5,15 +5,19 @@ import { CategoryItem } from './CategoryItem';
 import NextLink from 'next/link';
 import { MenuLinks } from '../MenuLinks';
 import { ColorModeSwitch } from '../ColorModeSwitch';
+import Category from '../../types/category';
+import Question from '../../types/question';
+import { QuestionsStepper } from './QuestionsStepper';
 
 interface SurveyLayoutProps {
   survey: Survey;
-  currentCategory: Survey[number];
+  currentCategory: Category;
+  currentQuestion: Question;
   children: ReactNode;
 }
 
 export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
-  const { survey, currentCategory, children } = props;
+  const { survey, currentCategory, currentQuestion, children } = props;
 
   return (
     <VStack height="full" align="start">
@@ -25,7 +29,6 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
         </NextLink>
         <HStack>
           <MenuLinks />
-
           <Flex align="center" marginLeft="8px">
             <ColorModeSwitch />
           </Flex>
@@ -49,6 +52,7 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
           height="full"
           position="relative"
         >
+          <QuestionsStepper currentCategory={currentCategory} currentQuestion={currentQuestion} />
           {children}
         </Flex>
       </Grid>
