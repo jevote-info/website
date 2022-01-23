@@ -1,10 +1,18 @@
-import { Container, Heading, HStack, ListItem, OrderedList } from '@chakra-ui/react';
+import { Container, Button, HStack } from '@chakra-ui/react';
 import Link from 'next/link';
+import Head from 'next/head';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
-import { useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import superjson from 'superjson';
 import { fetchSurvey } from '../../services/survey';
-import { Survey } from '../../types/survey';
+import Survey from '../../types/survey';
+import { SurveyLayout } from '../../components/SurveyLayout';
+import { Importance } from '../../components/ImportanceMeter';
+import { useRouter } from 'next/router';
+import { useSurveyStore } from '../../stores/survey';
+import Answers from '../../types/answers';
+import { CategoryForm } from '../../forms/CategoryForm';
+import Category from '../../types/category';
 
 interface SerialiazedCategoryProps {
   survey: string;
@@ -22,9 +30,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async context => {
-  const { params, preview = false } = context;
-
+export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async ({
+  params,
+  preview = false,
+}) => {
   if (!params || !params.slug) {
     return {
       notFound: true,
@@ -55,41 +64,92 @@ export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async co
 };
 
 const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
-  // const survey = useMemo(() => superjson.parse<Survey>(props.survey), [props.survey]);
+  const { push } = useRouter();
+
+  const survey = useMemo(
+    () => superjson.parse<Survey>(serializedProps.survey),
+    [serializedProps.survey],
+  );
   const currentCategory = useMemo(
     () => superjson.parse<Survey[number]>(serializedProps.currentCategory),
     [serializedProps.currentCategory],
   );
   const previousCategory = useMemo(
     () =>
-      serializedProps.previousCategory &&
-      superjson.parse<Survey[number]>(serializedProps.previousCategory),
+      serializedProps.previousCategory
+        ? superjson.parse<Survey[number]>(serializedProps.previousCategory)
+        : null,
     [serializedProps.previousCategory],
   );
   const nextCategory = useMemo(
     () =>
-      serializedProps.nextCategory && superjson.parse<Survey[number]>(serializedProps.nextCategory),
+      serializedProps.nextCategory
+        ? superjson.parse<Survey[number]>(serializedProps.nextCategory)
+        : null,
     [serializedProps.nextCategory],
   );
 
+  const { answers, setCategoryAnswers } = useSurveyStore();
+
+  const defaultValues = useMemo<Answers[Category['id']]>(() => {
+    const categoryAnswer = answers[currentCategory.id];
+
+    return currentCategory.questions.reduce(
+      (acc, question) => ({
+        [question.id]: {
+          choiceId: categoryAnswer?.[question.id].choiceId ?? null,
+          weight: categoryAnswer?.[question.id].weight ?? Importance.NEUTRAL,
+        },
+        ...acc,
+      }),
+      {},
+    );
+  }, [currentCategory, answers]);
+
+  const onSubmit = useCallback(
+    (formValues: Answers[Category['id']]) => {
+      console.log('onSubmit');
+      setCategoryAnswers(currentCategory.id, formValues);
+      if (nextCategory) {
+        push(`/categorie/${nextCategory.slug}`);
+      } else {
+        push(`/resultats`);
+      }
+    },
+    [currentCategory],
+  );
+
   return (
-    <Container h="full" display="flex" flexDirection="column" justifyContent="center">
-      <Heading>Category {currentCategory.title}</Heading>
-      <HStack spacing={4}>
-        {previousCategory && <Link href={`/categorie/${previousCategory.slug}`}>Previous</Link>}
-        <Link href="/">Back home</Link>
-        {nextCategory ? (
-          <Link href={`/categorie/${nextCategory.slug}`}>Next</Link>
-        ) : (
-          <Link href="/">Finish</Link>
-        )}
-      </HStack>
-      <OrderedList>
-        {currentCategory.questions.map(question => (
-          <ListItem key={question.id}>{question.title}</ListItem>
-        ))}
-      </OrderedList>
-    </Container>
+    <>
+      <Head>
+        <title>JeVote - {currentCategory.title}</title>
+        <meta
+          name="description"
+          content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <SurveyLayout survey={survey} currentCategory={currentCategory}>
+        <Container
+          maxW="container.lg"
+          display="flex"
+          flexDirection="column"
+          justifyContent="center"
+          p={0}
+        >
+          <CategoryForm
+            key={
+              currentCategory.id /* Important so that form gets regenerated between two categories */
+            }
+            currentCategory={currentCategory}
+            nextCategory={nextCategory}
+            previousCategory={previousCategory}
+            defaultValues={defaultValues}
+            onSubmit={onSubmit}
+          />
+        </Container>
+      </SurveyLayout>
+    </>
   );
 };
 
