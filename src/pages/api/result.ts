@@ -1,11 +1,9 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
 import type { NextApiRequest, NextApiResponse } from 'next';
+import { createResult } from '../../services/result';
+import { ResultDto } from '../../types/resultDto';
 
-type Data = {
-  name: string;
-};
-
-export default function resultHandler(req: NextApiRequest, res: NextApiResponse<Data>) {
+export default async function resultHandler(req: NextApiRequest, res: NextApiResponse<void>) {
   const {
     body: { result },
     method,
@@ -13,6 +11,7 @@ export default function resultHandler(req: NextApiRequest, res: NextApiResponse<
 
   switch (method) {
     case 'POST':
+      await createResult(result as ResultDto);
       res.status(204);
       break;
     default:
