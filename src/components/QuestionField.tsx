@@ -1,6 +1,6 @@
 import { Box, Text, Heading, VStack, useRadioGroup } from '@chakra-ui/react';
 import React from 'react';
-import ImportanceMeter from './ImportanceMeter';
+import { ImportanceMeter } from './ImportanceMeter';
 import { useController, Control } from 'react-hook-form';
 import Question from '../types/question';
 import { QuestionAnswer } from '../types/answers';
@@ -37,7 +37,7 @@ const Question = (props: QuestionProps) => {
   });
 
   return (
-    <Box width="full" mb={5}>
+    <Box width="full" mb={['116px', '116px', 5]}>
       <Box mb={5}>
         {isMobile && (
           <QuestionsStepper currentCategory={currentCategory} currentQuestion={question} />

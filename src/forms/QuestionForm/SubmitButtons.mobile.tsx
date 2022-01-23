@@ -23,7 +23,6 @@ export function SubmitButtonsMobile(props: SubmitButtonsProps) {
         right={0}
         bgColor={bgColor}
         width="full"
-        boxShadow="1px -1px 10px -3px rgb(0 0 0 / 30%)"
       >
         {previousPath && (
           <Link href={previousPath} passHref>
