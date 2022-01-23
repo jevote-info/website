@@ -1,5 +1,5 @@
-import { useBreakpointValue } from '@chakra-ui/react';
 import { ReactNode } from 'react';
+import { useIsMobile } from '../../hooks/useIsMobile';
 import Category from '../../types/category';
 import Question from '../../types/question';
 import Survey from '../../types/survey';
@@ -14,11 +14,7 @@ interface SurveyLayoutProps {
 }
 
 export function SurveyLayout(props: SurveyLayoutProps) {
-  const variant = useBreakpointValue({ base: 'mobile', lg: 'desktop' });
+  const isMobile = useIsMobile();
 
-  return variant === 'desktop' ? (
-    <SurveyLayoutDesktop {...props} />
-  ) : (
-    <SurveyLayoutMobile {...props} />
-  );
+  return isMobile ? <SurveyLayoutMobile {...props} /> : <SurveyLayoutDesktop {...props} />;
 }

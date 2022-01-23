@@ -1,6 +1,6 @@
-import { useBreakpointValue, VStack } from '@chakra-ui/react';
 import { useForm } from 'react-hook-form';
 import QuestionField from '../../components/QuestionField';
+import { useIsMobile } from '../../hooks/useIsMobile';
 import { QuestionAnswer } from '../../types/answers';
 import Category from '../../types/category';
 import Question from '../../types/question';
@@ -20,7 +20,7 @@ export function QuestionForm(props: CategoryFormProps) {
   const { currentCategory, currentQuestion, defaultValues, onSubmit, nextPath, previousPath } =
     props;
 
-  const variant = useBreakpointValue({ base: 'mobile', lg: 'desktop' });
+  const isMobile = useIsMobile();
   const { control, handleSubmit } = useForm({
     defaultValues,
   });
@@ -34,10 +34,10 @@ export function QuestionForm(props: CategoryFormProps) {
         question={currentQuestion}
         control={control}
       />
-      {variant === 'desktop' ? (
-        <SubmitButtonsDesktop isFinal={isFinal} previousPath={previousPath} />
-      ) : (
+      {isMobile ? (
         <SubmitButtonsMobile isFinal={isFinal} previousPath={previousPath} />
+      ) : (
+        <SubmitButtonsDesktop isFinal={isFinal} previousPath={previousPath} />
       )}
     </form>
   );
