@@ -13,6 +13,7 @@ import {
   DrawerBody,
   Link,
   DrawerFooter,
+  Box,
 } from '@chakra-ui/react';
 import { ReactNode, useEffect, useRef } from 'react';
 import Survey from '../../types/survey';
@@ -42,7 +43,7 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
 
   return (
     <>
-      <VStack px={5}>
+      <VStack height="full" px={5}>
         <Flex width="full" py={3}>
           <Flex flex={1} alignItems="start">
             <NextLink href="/" passHref>
@@ -76,7 +77,9 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
             <ColorModeSwitch />
           </Flex>
         </Flex>
-        {children}
+        <Box height="full" position="relative">
+          {children}
+        </Box>
       </VStack>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={buttonRef}>
         <DrawerOverlay />
