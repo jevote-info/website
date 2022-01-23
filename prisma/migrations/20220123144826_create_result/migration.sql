@@ -15,6 +15,18 @@ CREATE TABLE "Politician" (
 );
 
 -- CreateTable
+CREATE TABLE "QuestionAnswer" (
+    "id" TEXT NOT NULL,
+    "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP(3) NOT NULL,
+    "questionId" TEXT NOT NULL,
+    "choiceId" TEXT NOT NULL,
+    "categoryScoreId" TEXT NOT NULL,
+
+    CONSTRAINT "QuestionAnswer_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
 CREATE TABLE "CategoryScore" (
     "id" TEXT NOT NULL,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -55,6 +67,15 @@ CREATE UNIQUE INDEX "Politician_name_key" ON "Politician"("name");
 
 -- AddForeignKey
 ALTER TABLE "PoliticianScore" ADD CONSTRAINT "PoliticianScore_politicianId_fkey" FOREIGN KEY ("politicianId") REFERENCES "Politician"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "QuestionAnswer" ADD CONSTRAINT "QuestionAnswer_questionId_fkey" FOREIGN KEY ("questionId") REFERENCES "Question"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "QuestionAnswer" ADD CONSTRAINT "QuestionAnswer_choiceId_fkey" FOREIGN KEY ("choiceId") REFERENCES "Choice"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "QuestionAnswer" ADD CONSTRAINT "QuestionAnswer_categoryScoreId_fkey" FOREIGN KEY ("categoryScoreId") REFERENCES "CategoryScore"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "CategoryScore" ADD CONSTRAINT "CategoryScore_politicianResultId_fkey" FOREIGN KEY ("politicianResultId") REFERENCES "PoliticianResultScore"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

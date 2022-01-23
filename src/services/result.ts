@@ -10,12 +10,19 @@ export const createResult = async (result: ResultDto): Promise<void> => {
         createMany: {
           data: result.politicianResultScores.map(
             ({ categoriesScores, ...politicianResultScore }) => ({
+              ...politicianResultScore,
               categoriesScores: {
                 createMany: {
-                  data: categoriesScores,
+                  data: categoriesScores.map(({ questionAnswers, ...categoryScore }) => ({
+                    ...categoryScore,
+                    questionAnswers: {
+                      createMany: {
+                        data: questionAnswers,
+                      },
+                    },
+                  })),
                 },
               },
-              ...politicianResultScore,
             }),
           ),
         },

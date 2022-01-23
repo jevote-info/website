@@ -24,16 +24,3 @@ export function createPolitician(params: Partial<Politician> = {}): Politician {
     ...params,
   };
 }
-
-// id                     String                  @id @default(uuid())
-// createdAt              DateTime                @default(now())
-// updatedAt              DateTime                @updatedAt
-// slug                   String                  @unique
-// name                   String                  @unique
-// programUrl             String
-// pictureUrl             String
-// bannerUrl              String
-// politicalParty         String
-// description            String
-// politicianResultScores PoliticianResultScore[]
-// politicianScores       PoliticianScore[]
