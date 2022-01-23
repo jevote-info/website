@@ -1,14 +1,13 @@
 import { Box, Button, HStack, useColorModeValue } from '@chakra-ui/react';
 import Link from 'next/link';
-import Category from '../../types/category';
 
 interface SubmitButtonsProps {
-  previousCategory: Category | null;
-  nextCategory: Category | null;
+  isFinal: boolean;
+  previousPath: string | null;
 }
 
 export function SubmitButtonsMobile(props: SubmitButtonsProps) {
-  const { previousCategory, nextCategory } = props;
+  const { isFinal, previousPath } = props;
 
   const bgColor = useColorModeValue('white', 'black');
 
@@ -25,15 +24,15 @@ export function SubmitButtonsMobile(props: SubmitButtonsProps) {
         bgColor={bgColor}
         width="full"
       >
-        {previousCategory && (
-          <Link href={`/categorie/${previousCategory.slug}`} passHref>
+        {previousPath && (
+          <Link href={previousPath} passHref>
             <Button as="a" variant="outline" colorScheme="primary" flex={1}>
               Précédent
             </Button>
           </Link>
         )}
         <Button type="submit" colorScheme="primary" ml="auto" flex={1}>
-          {nextCategory ? 'Suivant' : 'Accéder aux résultats'}
+          {isFinal ? 'Accéder aux résultats' : 'Suivant'}
         </Button>
       </HStack>
     </Box>

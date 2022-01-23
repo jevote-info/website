@@ -33,7 +33,11 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
     <HStack alignItems="start">
       <VStack p={5} alignItems="start" spacing={3}>
         {survey.map(category => (
-          <CategoryItem category={category} isActive={category.id === currentCategory.id} />
+          <CategoryItem
+            key={category.id}
+            category={category}
+            isActive={category.id === currentCategory.id}
+          />
         ))}
       </VStack>
       <Flex flexDirection="column" flex={1} alignItems="center" p={5}>
@@ -85,7 +89,11 @@ function SurveyLayoutMobile(props: SurveyLayoutProps) {
           <DrawerBody>
             <VStack alignItems="start" spacing={3}>
               {survey.map(category => (
-                <CategoryItem category={category} isActive={category.id === currentCategory.id} />
+                <CategoryItem
+                  key={category.id}
+                  category={category}
+                  isActive={category.id === currentCategory.id}
+                />
               ))}
             </VStack>
           </DrawerBody>

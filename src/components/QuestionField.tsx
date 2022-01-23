@@ -18,7 +18,7 @@ const Question = (props: QuestionProps) => {
     field,
     fieldState: { error },
   } = useController({
-    name: `${question.id}.choiceId`,
+    name: 'choiceId',
     control,
     rules: {
       required: true,
@@ -55,7 +55,7 @@ const Question = (props: QuestionProps) => {
             </Radio>
           </VStack>
         </RadioGroup>
-        <ImportanceMeter questionId={question.id} control={control} />
+        <ImportanceMeter control={control} />
       </Box>
     </Box>
   );
