@@ -35,7 +35,7 @@ export function QuestionForm(props: CategoryFormProps) {
         control={control}
       />
       {isMobile ? (
-        <SubmitButtonsMobile isFinal={isFinal} previousPath={previousPath} />
+        <SubmitButtonsMobile isFinal={isFinal} previousPath={previousPath} control={control} />
       ) : (
         <SubmitButtonsDesktop isFinal={isFinal} previousPath={previousPath} />
       )}

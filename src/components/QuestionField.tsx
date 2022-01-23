@@ -37,7 +37,7 @@ const Question = (props: QuestionProps) => {
   });
 
   return (
-    <Box width="full" mb={5}>
+    <Box width="full" mb={isMobile ? 150 : 5}>
       <Box mb={5}>
         {isMobile && (
           <QuestionsStepper currentCategory={currentCategory} currentQuestion={question} />
@@ -65,7 +65,7 @@ const Question = (props: QuestionProps) => {
           ))}
           <ChoiceRadio {...getRadioProps({ value: 'NO_ANSWER' })}>Ne se prononce pas</ChoiceRadio>
         </VStack>
-        <ImportanceMeter control={control} />
+        {!isMobile && <ImportanceMeter control={control} />}
       </Box>
     </Box>
   );

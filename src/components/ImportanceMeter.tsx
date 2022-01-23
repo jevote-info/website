@@ -5,6 +5,7 @@ import { faFireAlt, faSnowflake, faMehBlank } from '@fortawesome/free-solid-svg-
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useController, Control } from 'react-hook-form';
 import { QuestionAnswer } from '../types/answers';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 export enum Importance {
   NOT_IMPORTANT = 0.5,
@@ -32,28 +33,50 @@ const ImportanceMeter = (props: ImportanceMeterProps) => {
     onChange: value => onChange(+value),
   });
 
+  const isMobile = useIsMobile();
+
   const group = getRootProps();
   const notImportantRadioProps = getRadioProps({ value: `${Importance.NOT_IMPORTANT}` });
   const neutralRadioProps = getRadioProps({ value: `${Importance.NEUTRAL}` });
   const importantRadioProps = getRadioProps({ value: `${Importance.IMPORTANT}` });
 
   return (
-    <Flex direction="column" mt={8}>
-      <Text mb={3} fontWeight="semibold">
-        Ce sujet est-il important pour vous ?
-      </Text>
-      <Stack {...group} direction={['column', 'column', 'row']}>
+    <Flex direction="column">
+      {!isMobile && (
+        <Text mt={8} mb={3} fontWeight="semibold">
+          Ce sujet est-il important pour vous ?
+        </Text>
+      )}
+      <Stack {...group} direction={['row', 'row', 'row']}>
         <ImportanceRadio {...notImportantRadioProps}>
           <FontAwesomeIcon width={15} height={15} icon={faSnowflake} />
-          <Text ml={2}>Peu important</Text>
+          {isMobile ? (
+            value === Importance.NOT_IMPORTANT ? (
+              <Text ml={2}>Peu important</Text>
+            ) : null
+          ) : (
+            <Text ml={2}>Peu important</Text>
+          )}
         </ImportanceRadio>
         <ImportanceRadio {...neutralRadioProps}>
           <FontAwesomeIcon width={15} height={15} icon={faMehBlank} />
-          <Text ml={2}>Neutre</Text>
+          {isMobile ? (
+            value === Importance.NEUTRAL ? (
+              <Text ml={2}>Neutre</Text>
+            ) : null
+          ) : (
+            <Text ml={2}>Neutre</Text>
+          )}
         </ImportanceRadio>
         <ImportanceRadio {...importantRadioProps}>
           <FontAwesomeIcon width={15} height={15} icon={faFireAlt} />
-          <Text ml={2}>Important</Text>
+          {isMobile ? (
+            value === Importance.IMPORTANT ? (
+              <Text ml={2}>Important</Text>
+            ) : null
+          ) : (
+            <Text ml={2}>Important</Text>
+          )}
         </ImportanceRadio>
       </Stack>
     </Flex>
