@@ -10,6 +10,7 @@ interface CategoryItemProps {
 export function CategoryItem(props: CategoryItemProps) {
   const { isActive, category } = props;
   const activeColor = useColorModeValue('primary.100', 'gray.700');
+  const hoverColor = useColorModeValue('primary.50', 'gray.700');
 
   return (
     <Link href={`/categorie/${category.slug}`} passHref>
@@ -21,6 +22,9 @@ export function CategoryItem(props: CategoryItemProps) {
         borderRadius="lg"
         boxShadow={isActive ? 'md' : undefined}
         p={5}
+        _hover={{
+          bgColor: isActive ? activeColor : hoverColor,
+        }}
       >
         <Flex width={10} justifyContent="center">
           <Image src={category.image} alt={category.title} height={8} />
