@@ -1,26 +1,8 @@
 import groupBy from 'lodash/groupBy';
 import sum from 'lodash/sum';
 import Answers from '../types/answers';
-import { ResultDto } from '../types/resultDto';
 import Survey from '../types/survey';
-
-export interface SurveyResultScore {
-  politicianId: string;
-  score: number;
-}
-
-export interface SurveyResult {
-  scores: SurveyResultScore[];
-  categoriesScores: {
-    categoryId: string;
-    scores: SurveyResultScore[];
-    questionScores: {
-      questionId: string;
-      choiceId: string;
-      scores: SurveyResultScore[];
-    }[];
-  }[];
-}
+import { SurveyResult, SurveyResultScore } from '../types/surveyResult';
 
 export function calculateSurveyResult(survey: Survey, answers: Answers): SurveyResult {
   const categoriesScores = survey.map(category => {
