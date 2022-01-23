@@ -12,7 +12,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { useMemo } from 'react';
 import { CategoryAnswers } from '../../types/answers';
-import Category from '../../types/category';
+import { Category } from '../../types/category';
 
 interface CategoryItemProps {
   isActive: boolean;

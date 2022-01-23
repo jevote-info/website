@@ -1,5 +1,5 @@
 import faker from 'faker';
-import Category from '../types/category';
+import { Category } from '../types/category';
 import RecursivePartial from '../utils/recursivePartial';
 import { createSurveyQuestion } from './createSurveyQuestion';
 

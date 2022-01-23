@@ -1,22 +1,24 @@
 import { Container } from '@chakra-ui/react';
 import Head from 'next/head';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import superjson from 'superjson';
 import { fetchSurvey } from '../../../../services/survey';
-import Survey from '../../../../types/survey';
+import { Survey, SurveyPoliticiansPossibleScores } from '../../../../types/survey';
 import { SurveyLayout } from '../../../../components/SurveyLayout';
 import { useRouter } from 'next/router';
 import { useSurveyStore } from '../../../../stores/survey';
 import { QuestionAnswer } from '../../../../types/answers';
 import { QuestionForm } from '../../../../forms/QuestionForm';
-import Category from '../../../../types/category';
-import Question from '../../../../types/question';
+import { Category } from '../../../../types/category';
+import { Question } from '../../../../types/question';
 import { AnimatePresence, motion } from 'framer-motion';
 import { calculatePoliticianFactor } from '../../../../utils/calculateSurveyResult';
+import { Importance } from '../../../../components/ImportanceMeter';
 
-interface SerialiazedCategoryProps {
+interface SerializedCategoryProps {
   survey: string;
+  politiciansPossibleScores: string;
   currentQuestion: string;
   currentCategory: string;
   previousPath: string | null;
@@ -38,7 +40,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 
-export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async ({
+export const getStaticProps: GetStaticProps<SerializedCategoryProps> = async ({
   params,
   preview = false,
 }) => {
@@ -49,6 +51,8 @@ export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async ({
   }
 
   const survey = await fetchSurvey({ previewMode: preview });
+  const politiciansPossibleScores = calculatePoliticianFactor(survey);
+
   const currentCategory = survey.find(({ slug }) => slug === params.slug);
 
   if (!currentCategory) {
@@ -99,6 +103,7 @@ export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async ({
   return {
     props: {
       survey: superjson.stringify(survey),
+      politiciansPossibleScores: superjson.stringify(politiciansPossibleScores),
       currentQuestion: superjson.stringify(currentQuestion),
       currentCategory: superjson.stringify(currentCategory),
       previousPath,
@@ -107,7 +112,7 @@ export const getStaticProps: GetStaticProps<SerialiazedCategoryProps> = async ({
   };
 };
 
-const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
+const CategoryPage = (serializedProps: SerializedCategoryProps) => {
   const { nextPath, previousPath } = serializedProps;
   const { push } = useRouter();
 
@@ -115,8 +120,13 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
     () => superjson.parse<Survey>(serializedProps.survey),
     [serializedProps.survey],
   );
-  const possibleScores = calculatePoliticianFactor(survey);
-  console.log(possibleScores);
+
+  const politiciansPossibleScores = useMemo(
+    () =>
+      superjson.parse<SurveyPoliticiansPossibleScores>(serializedProps.politiciansPossibleScores),
+    [serializedProps.politiciansPossibleScores],
+  );
+
   const currentQuestion = useMemo(
     () => superjson.parse<Question>(serializedProps.currentQuestion),
     [serializedProps.currentQuestion],
@@ -126,7 +136,22 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
     [serializedProps.currentCategory],
   );
 
-  const { answers, setQuestionAnswer } = useSurveyStore();
+  const { answers, setQuestionAnswer, setPoliticiansPossibleScores } = useSurveyStore();
+
+  const defaultValues = useMemo<QuestionAnswer>(() => {
+    const categoryAnswer = answers[currentCategory.id];
+    const questionAnswer = categoryAnswer?.[currentQuestion.id];
+
+    return {
+      choiceId: questionAnswer?.choiceId ?? null,
+      weight: questionAnswer?.weight ?? Importance.NEUTRAL,
+    };
+  }, [currentQuestion, currentCategory, answers]);
+
+  useEffect(() => {
+    console.log('toto');
+    setPoliticiansPossibleScores(politiciansPossibleScores);
+  }, [politiciansPossibleScores]);
 
   const onSubmit = useCallback(
     (formValues: QuestionAnswer) => {
