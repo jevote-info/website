@@ -1,4 +1,4 @@
-import { Box, Text, Heading, Radio, RadioGroup, VStack, useRadioGroup } from '@chakra-ui/react';
+import { Box, Text, Heading, VStack, useRadioGroup } from '@chakra-ui/react';
 import React from 'react';
 import ImportanceMeter from './ImportanceMeter';
 import { useController, Control } from 'react-hook-form';
@@ -45,7 +45,7 @@ const Question = (props: QuestionProps) => {
         {error?.type === 'required' && (
           <Box mb={5} p={3} borderRadius={6} bgColor="red.100">
             <Text color="red.600" fontWeight="bold">
-              Veuillez sélectionner une réponse ou "Ne se prononce pas".
+              Veuillez sélectionner une réponse ou &quot;Ne se prononce pas&quot;.
             </Text>
           </Box>
         )}

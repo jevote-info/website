@@ -38,7 +38,7 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
 
   useEffect(() => {
     onClose();
-  }, [asPath]);
+  }, [asPath, onClose]);
 
   return (
     <>

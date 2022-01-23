@@ -33,7 +33,7 @@ const Survey = (serializedProps: SerialiazedCategoryProps) => {
 
   useEffect(() => {
     replace(`/categories/${survey[0].slug}/questions/${survey[0].questions[0].order}`);
-  }, [replace]);
+  }, [replace, survey]);
 
   return (
     <Head>
