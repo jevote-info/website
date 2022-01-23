@@ -13,7 +13,7 @@ export function CategoryItem(props: CategoryItemProps) {
   const hoverColor = useColorModeValue('primary.50', 'gray.700');
 
   return (
-    <Link href={`/categorie/${category.slug}`} passHref>
+    <Link href={`/categories/${category.slug}/questions/${category.questions[0]?.order}`} passHref>
       <HStack
         as="a"
         width="full"
