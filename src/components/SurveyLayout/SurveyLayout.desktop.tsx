@@ -16,7 +16,7 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
   const { survey, currentCategory, children } = props;
 
   return (
-    <VStack align="start">
+    <VStack height="full" align="start">
       <HStack width="full" align="center" justify="space-between" px={[3, 3, 5]} py={3}>
         <NextLink href="/" passHref>
           <Link>
@@ -31,7 +31,7 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
           </Flex>
         </HStack>
       </HStack>
-      <Grid width="full" templateColumns="auto 1fr">
+      <Grid width="full" height="full" templateColumns="auto 1fr">
         <VStack p={5} alignItems="start" spacing={3}>
           {survey.map(category => (
             <CategoryItem
@@ -41,7 +41,14 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
             />
           ))}
         </VStack>
-        <Flex flexDirection="column" flex={1} alignItems="center" p={5}>
+        <Flex
+          flexDirection="column"
+          flex={1}
+          alignItems="center"
+          p={5}
+          height="full"
+          position="relative"
+        >
           {children}
         </Flex>
       </Grid>

@@ -32,7 +32,7 @@ const Question = (props: QuestionProps) => {
   });
 
   return (
-    <Box width="100%" mb={5}>
+    <Box width="full" mb={5}>
       <Box mb={5}>
         <Heading size="md" as="h2" marginBottom="4px">
           {question.title}

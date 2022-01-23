@@ -13,6 +13,7 @@ import { QuestionAnswer } from '../../../../types/answers';
 import { QuestionForm } from '../../../../forms/QuestionForm';
 import Category from '../../../../types/category';
 import Question from '../../../../types/question';
+import { AnimatePresence, motion } from 'framer-motion';
 
 interface SerialiazedCategoryProps {
   survey: string;
@@ -155,25 +156,28 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <SurveyLayout survey={survey} currentCategory={currentCategory}>
-        <Container
-          maxW="container.lg"
-          display="flex"
-          flexDirection="column"
-          justifyContent="center"
-          p={0}
-          m={0}
-        >
-          <QuestionForm
+        <AnimatePresence>
+          <motion.div
             key={
               currentQuestion.id /* Important so that form gets regenerated between two categories */
             }
-            currentQuestion={currentQuestion}
-            defaultValues={defaultValues}
-            onSubmit={onSubmit}
-            previousPath={previousPath}
-            nextPath={nextPath}
-          />
-        </Container>
+            style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
+            initial={{ y: 100, opacity: 0, position: 'absolute' }}
+            animate={{ y: 0, opacity: 1, position: 'relative' }}
+            exit={{ y: -100, opacity: 0, position: 'absolute' }}
+            transition={{ duration: 0.3 }}
+          >
+            <Container maxW="container.md" p={0} m={0}>
+              <QuestionForm
+                currentQuestion={currentQuestion}
+                defaultValues={defaultValues}
+                onSubmit={onSubmit}
+                previousPath={previousPath}
+                nextPath={nextPath}
+              />
+            </Container>
+          </motion.div>
+        </AnimatePresence>
       </SurveyLayout>
     </>
   );
