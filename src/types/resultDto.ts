@@ -1,14 +1,14 @@
-export interface CategoryScore {
+export interface CategoryScoreDto {
   categoryId: string;
   score: number;
 }
 
-export interface PoliticianResultScore {
+export interface PoliticianResultScoreDto {
   score: number;
-  categoriesScores: CategoryScore[];
+  categoriesScores: CategoryScoreDto[];
   politicianId: string;
 }
 
 export interface ResultDto {
-  politicianResultScores: PoliticianResultScore[];
+  politicianResultScores: PoliticianResultScoreDto[];
 }
