@@ -41,39 +41,30 @@ export function calculateSurveyResult(survey: Survey, answers: Answers): SurveyR
         })),
       };
     });
-    const categoryScoreByPolitician = groupBy(
-      questionScores.flatMap(({ scores }) => scores),
-      'politicianId',
-    );
-
-    const scores = Object.entries(categoryScoreByPolitician)
-      .map(([politicianId, scores]) => ({
-        politicianId,
-        score: sum(scores.map(e => e.score)),
-      }))
-      .sort((a, b) => a.score - b.score);
 
     return {
       categoryId: category.id,
       questionScores,
-      scores,
+      scores: groupPoliticianScores(questionScores),
     };
   });
 
-  const totalScoreByPolitician = groupBy(
-    categoriesScores.flatMap(({ scores }) => scores),
+  return {
+    scores: groupPoliticianScores(categoriesScores),
+    categoriesScores,
+  };
+}
+
+const groupPoliticianScores = (answers: { scores: SurveyResultScore[] }[]): SurveyResultScore[] => {
+  const scoresByPolitician = groupBy(
+    answers.flatMap(({ scores }) => scores),
     'politicianId',
   );
 
-  const scores = Object.entries(totalScoreByPolitician)
+  return Object.entries(scoresByPolitician)
     .map(([politicianId, scores]) => ({
       politicianId,
       score: sum(scores.map(e => e?.score)),
     }))
     .sort((a, b) => a.score - b.score);
-
-  return {
-    scores,
-    categoriesScores,
-  };
-}
+};
