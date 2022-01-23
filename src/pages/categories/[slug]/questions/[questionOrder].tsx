@@ -6,7 +6,6 @@ import superjson from 'superjson';
 import { fetchSurvey } from '../../../../services/survey';
 import Survey from '../../../../types/survey';
 import { SurveyLayout } from '../../../../components/SurveyLayout';
-import { Importance } from '../../../../components/ImportanceMeter';
 import { useRouter } from 'next/router';
 import { useSurveyStore } from '../../../../stores/survey';
 import { QuestionAnswer } from '../../../../types/answers';
@@ -126,16 +125,6 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
 
   const { answers, setQuestionAnswer } = useSurveyStore();
 
-  const defaultValues = useMemo<QuestionAnswer>(() => {
-    const categoryAnswer = answers[currentCategory.id];
-    const questionAnswer = categoryAnswer?.[currentQuestion.id];
-
-    return {
-      choiceId: questionAnswer?.choiceId ?? null,
-      weight: questionAnswer?.weight ?? Importance.NEUTRAL,
-    };
-  }, [currentQuestion, currentCategory, answers]);
-
   const onSubmit = useCallback(
     (formValues: QuestionAnswer) => {
       setQuestionAnswer(currentCategory.id, currentQuestion.id, formValues);
@@ -143,6 +132,13 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
       push(nextPath);
     },
     [currentCategory, currentQuestion, nextPath, push, setQuestionAnswer],
+  );
+
+  const onChange = useCallback(
+    (formValues: QuestionAnswer) => {
+      setQuestionAnswer(currentCategory.id, currentQuestion.id, formValues);
+    },
+    [currentCategory, currentQuestion, setQuestionAnswer],
   );
 
   return (
@@ -173,10 +169,11 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
           >
             <Container maxW="container.md" p={0} m={0}>
               <QuestionForm
+                answers={answers}
                 currentCategory={currentCategory}
                 currentQuestion={currentQuestion}
-                defaultValues={defaultValues}
                 onSubmit={onSubmit}
+                onChange={onChange}
                 previousPath={previousPath}
                 nextPath={nextPath}
               />
