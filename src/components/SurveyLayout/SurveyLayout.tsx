@@ -1,12 +1,15 @@
 import { useBreakpointValue } from '@chakra-ui/react';
 import { ReactNode } from 'react';
+import Category from '../../types/category';
+import Question from '../../types/question';
 import Survey from '../../types/survey';
 import { SurveyLayoutDesktop } from './SurveyLayout.desktop';
 import { SurveyLayoutMobile } from './SurveyLayout.mobile';
 
 interface SurveyLayoutProps {
   survey: Survey;
-  currentCategory: Survey[number];
+  currentCategory: Category;
+  currentQuestion: Question;
   children: ReactNode;
 }
 

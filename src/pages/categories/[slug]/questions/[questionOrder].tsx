@@ -155,7 +155,11 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SurveyLayout survey={survey} currentCategory={currentCategory}>
+      <SurveyLayout
+        survey={survey}
+        currentCategory={currentCategory}
+        currentQuestion={currentQuestion}
+      >
         <AnimatePresence>
           <motion.div
             key={
@@ -169,6 +173,7 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
           >
             <Container maxW="container.md" p={0} m={0}>
               <QuestionForm
+                currentCategory={currentCategory}
                 currentQuestion={currentQuestion}
                 defaultValues={defaultValues}
                 onSubmit={onSubmit}
