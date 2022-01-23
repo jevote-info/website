@@ -13,6 +13,7 @@ import { QuestionForm } from '../../../../forms/QuestionForm';
 import Category from '../../../../types/category';
 import Question from '../../../../types/question';
 import { AnimatePresence, motion } from 'framer-motion';
+import { calculatePoliticianFactor } from '../../../../utils/calculateSurveyResult';
 
 interface SerialiazedCategoryProps {
   survey: string;
@@ -114,6 +115,8 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
     () => superjson.parse<Survey>(serializedProps.survey),
     [serializedProps.survey],
   );
+  const possibleScores = calculatePoliticianFactor(survey);
+  console.log(possibleScores);
   const currentQuestion = useMemo(
     () => superjson.parse<Question>(serializedProps.currentQuestion),
     [serializedProps.currentQuestion],

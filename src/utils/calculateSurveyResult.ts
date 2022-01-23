@@ -2,11 +2,11 @@ import groupBy from 'lodash/groupBy';
 import sum from 'lodash/sum';
 import max from 'lodash/max';
 import min from 'lodash/min';
-import Answers from '../types/answers';
+import { SurveyAnswers } from '../types/answers';
 import Survey from '../types/survey';
 import { SurveyResult, SurveyResultScore } from '../types/surveyResult';
 
-export function calculateSurveyResult(survey: Survey, answers: Answers): SurveyResult {
+export function calculateSurveyResult(survey: Survey, answers: SurveyAnswers): SurveyResult {
   const categoriesScores = survey.map(({ id: categoryId, questions }) => {
     const questionScores = questions.map(({ id: questionId, choices }) => {
       const answer = answers[categoryId][questionId];
@@ -53,8 +53,8 @@ const groupPoliticianScores = (answers: { scores: SurveyResultScore[] }[]): Surv
     .sort((a, b) => a.score - b.score);
 };
 
-const calculatePoliticianFactor = (survey: Survey) => {
-  survey.map(category => {
+export const calculatePoliticianFactor = (survey: Survey) => {
+  const categoryPossibleScores = survey.map(category => {
     const questionScores = category.questions.map(({ id: questionId, choices }) => {
       const politicianScores = choices.flatMap(({ politicianScores }) =>
         politicianScores.map(({ politicianId, score }) => ({ politicianId, score })),
@@ -75,17 +75,37 @@ const calculatePoliticianFactor = (survey: Survey) => {
     });
 
     const possibleScoresByPolitician = Object.entries(
-      groupBy(politicianScores, 'politicianId'),
+      groupBy(
+        questionScores.flatMap(({ possibleScoresByPolitician }) => possibleScoresByPolitician),
+        'politicianId',
+      ),
     ).map(([politicianId, scores]) => ({
       politicianId,
-      minPossibleScore: min(scores.map(e => e.score)),
-      maxPossibleScore: max(scores.map(e => e.score)),
+      minPossibleScore: sum(scores.map(e => e.minPossibleScore)),
+      maxPossibleScore: sum(scores.map(e => e.maxPossibleScore)),
     }));
 
     return {
       categoryId: category.id,
-      questionScores,
-      scores: groupPoliticianScores(questionScores),
+      possibleScoresByPolitician,
     };
   });
+
+  const possibleScoresByPolitician = Object.entries(
+    groupBy(
+      categoryPossibleScores.flatMap(
+        ({ possibleScoresByPolitician }) => possibleScoresByPolitician,
+      ),
+      'politicianId',
+    ),
+  ).map(([politicianId, scores]) => ({
+    politicianId,
+    minPossibleScore: sum(scores.map(e => e.minPossibleScore)),
+    maxPossibleScore: sum(scores.map(e => e.maxPossibleScore)),
+  }));
+
+  return {
+    possibleScoresByPolitician,
+    categoryPossibleScores,
+  };
 };
