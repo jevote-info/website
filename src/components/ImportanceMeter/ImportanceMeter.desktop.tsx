@@ -3,34 +3,16 @@ import React from 'react';
 import { ImportanceRadio } from './ImportanceRadio';
 import { faFireAlt, faSnowflake, faMehBlank } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useController, Control } from 'react-hook-form';
-import { QuestionAnswer } from '../types/answers';
+import { Importance } from './ImportanceMeter.types';
 
-export enum Importance {
-  NOT_IMPORTANT = 0.5,
-  NEUTRAL = 1,
-  IMPORTANT = 1.5,
+interface ImportanceMeterDesktopProps {
+  radioGroup: ReturnType<typeof useRadioGroup>;
 }
 
-interface ImportanceMeterProps {
-  control: Control<QuestionAnswer>;
-}
+export function ImportanceMeterDesktop(props: ImportanceMeterDesktopProps) {
+  const { radioGroup } = props;
 
-const ImportanceMeter = (props: ImportanceMeterProps) => {
-  const { control } = props;
-
-  const {
-    field: { onChange, name, value },
-  } = useController({
-    name: `weight`,
-    control,
-  });
-
-  const { getRootProps, getRadioProps } = useRadioGroup({
-    value: `${value}`,
-    name,
-    onChange: value => onChange(+value),
-  });
+  const { getRootProps, getRadioProps } = radioGroup;
 
   const group = getRootProps();
   const notImportantRadioProps = getRadioProps({ value: `${Importance.NOT_IMPORTANT}` });
@@ -58,6 +40,4 @@ const ImportanceMeter = (props: ImportanceMeterProps) => {
       </Stack>
     </Flex>
   );
-};
-
-export default ImportanceMeter;
+}
