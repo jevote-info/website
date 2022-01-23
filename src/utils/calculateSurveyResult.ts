@@ -23,7 +23,6 @@ export interface SurveyResult {
 }
 
 export function calculateSurveyResult(survey: Survey, answers: Answers): SurveyResult {
-  const result = {};
   const categoriesScores = survey.map(category => {
     const questionScores = category.questions.map(question => {
       const answer = answers[category.id][question.id];
