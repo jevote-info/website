@@ -3,7 +3,7 @@ import type { GetStaticProps } from 'next';
 import { useMemo } from 'react';
 import superjson from 'superjson';
 import { fetchSurvey } from '../../services/survey';
-import Survey from '../../types/survey';
+import { Survey } from '../../types/survey';
 import { useRouter } from 'next/router';
 import Head from 'next/head';
 

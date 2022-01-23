@@ -2,9 +2,12 @@ import { Box, Text, Heading, VStack, useRadioGroup } from '@chakra-ui/react';
 import React from 'react';
 import { ImportanceMeter } from './ImportanceMeter';
 import { useController, Control } from 'react-hook-form';
-import Question from '../types/question';
+import { Question } from '../types/question';
 import { QuestionAnswer } from '../types/answers';
 import { ChoiceRadio } from './ChoiceRadio';
+import { QuestionsStepper } from './SurveyLayout/QuestionsStepper';
+import { Category } from '../types/category';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface QuestionProps {
   question: Question;
