@@ -13,17 +13,16 @@ export enum Importance {
 }
 
 interface ImportanceMeterProps {
-  questionId: Question['id'];
   control: Control<any>;
 }
 
 const ImportanceMeter = (props: ImportanceMeterProps) => {
-  const { questionId, control } = props;
+  const { control } = props;
 
   const {
     field: { onChange, name, value },
   } = useController({
-    name: `${questionId}.weight`,
+    name: `weight`,
     control,
   });
 

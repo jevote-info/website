@@ -34,7 +34,7 @@ const MainLayout: FC = ({ children }) => {
         {/* Desktop */}
         <Flex align="center">
           <Flex display={['none', 'none', 'flex', 'flex']}>
-            <NextLink href="/categorie" passHref>
+            <NextLink href="/categories" passHref>
               <Button as="a" colorScheme="primary" variant="ghost" aria-label="Questionnaire">
                 Questionnaire
               </Button>
