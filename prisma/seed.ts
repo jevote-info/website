@@ -1,4 +1,5 @@
 import { PrismaClient } from '@prisma/client';
+import { createPolitician } from '../src/factories/createPoliticians';
 import { createSurveyCategory } from '../src/factories/createSurveyCategory';
 const prisma = new PrismaClient();
 
@@ -124,6 +125,18 @@ async function main() {
     }),
   ];
 
+  const politicians = [
+    createPolitician(),
+    createPolitician(),
+    createPolitician(),
+    createPolitician(),
+  ];
+  console.log(politicians);
+
+  await Promise.all(
+    politicians.flatMap(politician => prisma.politician.create({ data: { ...politician } })),
+  );
+
   const categories = await Promise.all(
     survey.map(({ questions, ...category }) => {
       return prisma.category.upsert({
@@ -153,7 +166,10 @@ async function main() {
               ...choice,
               politicianScores: {
                 createMany: {
-                  data: politicianScores.map(({ choiceId, ...politicianScore }) => politicianScore),
+                  data: politicianScores.map(({ choiceId, ...politicianScore }, index) => ({
+                    ...politicianScore,
+                    politicianId: politicians[index].id,
+                  })),
                 },
               },
             },
@@ -165,6 +181,7 @@ async function main() {
 
   console.log('=========== DB SEED ===========');
   console.log(categories);
+  console.log(politicians);
 }
 
 main()

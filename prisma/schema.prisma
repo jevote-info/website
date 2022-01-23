@@ -10,57 +10,119 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Politician {
+  id                     String                  @id @default(uuid())
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @updatedAt
+  slug                   String                  @unique
+  name                   String                  @unique
+  programUrl             String
+  pictureUrl             String
+  bannerUrl              String
+  politicalParty         String
+  description            String
+  politicianResultScores PoliticianResultScore[]
+  politicianScores       PoliticianScore[]
+}
+
 model Category {
-  id                  String @id @default(uuid())
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  slug                String @unique
-  title               String
-  description         String
-  questions           Question[]
-  image               String 
-  order               Int @default(autoincrement())
-  published           Boolean @default(false)
+  id             String          @id @default(uuid())
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  slug           String          @unique
+  title          String
+  description    String
+  questions      Question[]
+  image          String
+  order          Int             @default(autoincrement())
+  published      Boolean         @default(false)
+  categoryScores CategoryScore[]
 }
 
 model Question {
-  id                  String @id @default(uuid())
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  category            Category @relation(fields: [categoryId], references: [id])
-  categoryId          String
-  title               String
-  description         String
-  help                String?
-  order               Int @default(autoincrement())
-  published           Boolean @default(false)
-  choices             Choice[]
+  id          String           @id @default(uuid())
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  category    Category         @relation(fields: [categoryId], references: [id])
+  categoryId  String
+  title       String
+  description String
+  help        String?
+  order       Int              @default(autoincrement())
+  published   Boolean          @default(false)
+  choices     Choice[]
+  answers     QuestionAnswer[]
 
   @@unique([categoryId, order])
 }
 
 model Choice {
-  id                  String @id @default(uuid())
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  question            Question @relation(fields: [questionId], references: [id])
-  questionId          String
-  text                String
-  order               Int
-  politicianScores    PoliticianScore[]
+  id               String            @id @default(uuid())
+  createdAt        DateTime          @default(now())
+  updatedAt        DateTime          @updatedAt
+  question         Question          @relation(fields: [questionId], references: [id])
+  questionId       String
+  text             String
+  order            Int
+  politicianScores PoliticianScore[]
+  questionAnswers  QuestionAnswer[]
 
   @@unique([questionId, order])
 }
 
 model PoliticianScore {
-  id                  String @id @default(uuid())
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  choice              Choice @relation(fields: [choiceId], references: [id])
-  choiceId            String
-  score               Int
-  source              String
-  politicianId        String
+  id           String     @id @default(uuid())
+  createdAt    DateTime   @default(now())
+  updatedAt    DateTime   @updatedAt
+  choice       Choice     @relation(fields: [choiceId], references: [id])
+  choiceId     String
+  score        Int
+  source       String
+  politician   Politician @relation(fields: [politicianId], references: [id])
+  politicianId String
 
   @@unique([politicianId, choiceId])
+}
+
+model QuestionAnswer {
+  id              String        @id @default(uuid())
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+  question        Question      @relation(fields: [questionId], references: [id])
+  questionId      String
+  choice          Choice        @relation(fields: [choiceId], references: [id])
+  choiceId        String
+  categoryScore   CategoryScore @relation(fields: [categoryScoreId], references: [id])
+  categoryScoreId String
+}
+
+model CategoryScore {
+  id                 String                @id @default(uuid())
+  createdAt          DateTime              @default(now())
+  updatedAt          DateTime              @updatedAt
+  score              Int
+  politicianResult   PoliticianResultScore @relation(fields: [politicianResultId], references: [id])
+  politicianResultId String
+  category           Category              @relation(fields: [categoryId], references: [id])
+  categoryId         String
+  questionAnswers    QuestionAnswer[]
+}
+
+model PoliticianResultScore {
+  id               String          @id @default(uuid())
+  createdAt        DateTime        @default(now())
+  updatedAt        DateTime        @updatedAt
+  score            Int
+  result           Result          @relation(fields: [resultId], references: [id])
+  resultId         String
+  categoriesScores CategoryScore[]
+  politician       Politician      @relation(fields: [politicianId], references: [id])
+  politicianId     String
+}
+
+model Result {
+  id               String                  @id @default(uuid())
+  createdAt        DateTime                @default(now())
+  updatedAt        DateTime                @updatedAt
+  politicianScores PoliticianResultScore[]
 }
