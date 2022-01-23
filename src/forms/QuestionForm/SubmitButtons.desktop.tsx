@@ -1,26 +1,26 @@
 import { Button, HStack } from '@chakra-ui/react';
 import Link from 'next/link';
-import Category from '../../types/category';
+import { useRouter } from 'next/router';
 
 interface SubmitButtonsProps {
-  previousCategory: Category | null;
-  nextCategory: Category | null;
+  isFinal: boolean;
+  previousPath: string | null;
 }
 
 export function SubmitButtonsDesktop(props: SubmitButtonsProps) {
-  const { previousCategory, nextCategory } = props;
+  const { isFinal, previousPath } = props;
 
   return (
     <HStack mt={5} spacing={5} justifyContent="space-between">
-      {previousCategory && (
-        <Link href={`/categorie/${previousCategory.slug}`} passHref>
+      {previousPath && (
+        <Link href={previousPath} passHref>
           <Button as="a" variant="outline" colorScheme="primary" size="lg">
             Précédent
           </Button>
         </Link>
       )}
       <Button type="submit" colorScheme="primary" ml="auto" size="lg">
-        {nextCategory ? 'Suivant' : 'Accéder aux résultats'}
+        {isFinal ? 'Accéder aux résultats' : 'Suivant'}
       </Button>
     </HStack>
   );

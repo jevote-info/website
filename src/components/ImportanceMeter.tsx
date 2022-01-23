@@ -4,7 +4,7 @@ import { ImportanceRadio } from './ImportanceRadio';
 import { faFireAlt, faSnowflake, faMehBlank } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useController, Control } from 'react-hook-form';
-import Question from '../types/question';
+import { QuestionAnswer } from '../types/answers';
 
 export enum Importance {
   NOT_IMPORTANT = 0.5,
@@ -13,17 +13,16 @@ export enum Importance {
 }
 
 interface ImportanceMeterProps {
-  questionId: Question['id'];
-  control: Control<any>;
+  control: Control<QuestionAnswer>;
 }
 
 const ImportanceMeter = (props: ImportanceMeterProps) => {
-  const { questionId, control } = props;
+  const { control } = props;
 
   const {
     field: { onChange, name, value },
   } = useController({
-    name: `${questionId}.weight`,
+    name: `weight`,
     control,
   });
 

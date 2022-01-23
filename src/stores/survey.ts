@@ -1,12 +1,16 @@
-import { get } from 'lodash';
 import create, { State, UseBoundStore } from 'zustand';
 import createContext from 'zustand/context';
-import Answers from '../types/answers';
+import { QuestionAnswer, SurveyAnswers } from '../types/answers';
 import Category from '../types/category';
+import Question from '../types/question';
 
 interface SurveyState extends State {
-  answers: Answers;
-  setCategoryAnswers: (categoryId: Category['id'], answers: Answers[Category['id']]) => void;
+  answers: SurveyAnswers;
+  setQuestionAnswer: (
+    categoryId: Category['id'],
+    questionId: Question['id'],
+    answer: QuestionAnswer,
+  ) => void;
 }
 
 const { Provider, useStore } = createContext<SurveyState>();
@@ -19,8 +23,16 @@ export const createSurveyStore = () => {
   if (!store || typeof window === 'undefined') {
     store = create<SurveyState>((set, get) => ({
       answers: {},
-      setCategoryAnswers(categoryId, answers) {
-        set({ answers: { ...get().answers, [categoryId]: answers } });
+      setQuestionAnswer(categoryId, questionId, answer) {
+        set({
+          answers: {
+            ...get().answers,
+            [categoryId]: {
+              ...get().answers[categoryId],
+              [questionId]: answer,
+            },
+          },
+        });
       },
     }));
   }
