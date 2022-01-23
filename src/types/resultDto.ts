@@ -1,12 +1,12 @@
 export interface CategoryScore {
-  categoryId: number;
+  categoryId: string;
   score: number;
 }
 
 export interface PoliticianResultScore {
   score: number;
   categoriesScores: CategoryScore[];
-  politicianId: number;
+  politicianId: string;
 }
 
 export interface ResultDto {

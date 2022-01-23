@@ -4,5 +4,22 @@ import { ResultDto } from '../types/resultDto';
 let prisma: PrismaClient;
 
 export const createResult = async (result: ResultDto): Promise<void> => {
-  // do stuff
+  prisma.result.create({
+    data: {
+      politicianScores: {
+        createMany: {
+          data: result.politicianResultScores.map(
+            ({ categoriesScores, ...politicianResultScore }) => ({
+              categoriesScores: {
+                createMany: {
+                  data: categoriesScores,
+                },
+              },
+              ...politicianResultScore,
+            }),
+          ),
+        },
+      },
+    },
+  });
 };
