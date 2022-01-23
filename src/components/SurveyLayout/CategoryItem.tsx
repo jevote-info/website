@@ -1,4 +1,4 @@
-import { Flex, HStack, Image, Text } from '@chakra-ui/react';
+import { Flex, HStack, Image, Text, useColorModeValue } from '@chakra-ui/react';
 import Link from 'next/link';
 import Category from '../../types/category';
 
@@ -9,6 +9,7 @@ interface CategoryItemProps {
 
 export function CategoryItem(props: CategoryItemProps) {
   const { isActive, category } = props;
+  const activeColor = useColorModeValue('primary.100', 'gray.700');
 
   return (
     <Link href={`/categorie/${category.slug}`} passHref>
@@ -16,7 +17,7 @@ export function CategoryItem(props: CategoryItemProps) {
         as="a"
         width="full"
         spacing={3}
-        bgColor={isActive ? 'primary.100' : undefined}
+        bgColor={isActive ? activeColor : undefined}
         borderRadius="lg"
         boxShadow={isActive ? 'md' : undefined}
         p={5}
