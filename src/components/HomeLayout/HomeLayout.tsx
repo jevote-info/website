@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
-import { useBreakpointValue } from '@chakra-ui/react';
 import { HomeLayoutDesktop } from './HomeLayout.desktop';
 import { HomeLayoutMobile } from './HomeLayout.mobile';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 interface HomeLayoutProps {
   surveyPath: string;
@@ -9,7 +9,7 @@ interface HomeLayoutProps {
 }
 
 export function HomeLayout(props: HomeLayoutProps) {
-  const variant = useBreakpointValue({ base: 'mobile', lg: 'desktop' });
+  const isMobile = useIsMobile();
 
-  return variant === 'desktop' ? <HomeLayoutDesktop {...props} /> : <HomeLayoutMobile {...props} />;
+  return isMobile ? <HomeLayoutMobile {...props} /> : <HomeLayoutDesktop {...props} />;
 }
