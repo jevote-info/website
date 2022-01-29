@@ -3,6 +3,7 @@ import sum from 'lodash/sum';
 import max from 'lodash/max';
 import min from 'lodash/min';
 import { Survey, SurveyPoliticiansScoreBounds } from '../types/survey';
+import { Importance } from '../components/ImportanceMeter';
 
 export const calculatePoliticianFactor = (survey: Survey) => {
   const categoryPossibleScores = survey.map(category => {
@@ -15,8 +16,8 @@ export const calculatePoliticianFactor = (survey: Survey) => {
         groupBy(politicianScores, 'politicianId'),
       ).map(([politicianId, scores]) => ({
         politicianId,
-        minPossibleScore: min(scores.map(e => e.score))!,
-        maxPossibleScore: max(scores.map(e => e.score))!,
+        minPossibleScore: min(scores.map(e => e.score * Importance.NOT_IMPORTANT))!,
+        maxPossibleScore: max(scores.map(e => e.score * Importance.IMPORTANT))!,
       }));
 
       return {
