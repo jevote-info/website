@@ -8,6 +8,7 @@ async function main() {
   await prisma.choice.deleteMany();
   await prisma.question.deleteMany();
   await prisma.category.deleteMany();
+  await prisma.politician.deleteMany();
 
   const survey = [
     createSurveyCategory({
@@ -131,57 +132,46 @@ async function main() {
     createPolitician(),
     createPolitician(),
   ];
-  console.log(politicians);
 
-  await Promise.all(
-    politicians.flatMap(politician => prisma.politician.create({ data: { ...politician } })),
-  );
+  for (const politician of politicians) {
+    await prisma.politician.create({ data: { ...politician } });
+  }
 
-  const categories = await Promise.all(
-    survey.map(({ questions, ...category }) => {
-      return prisma.category.upsert({
-        include: { questions: true },
-        where: { slug: category.slug },
-        update: {},
-        create: {
-          ...category,
-          questions: {
-            createMany: {
-              data: questions.map(({ choices, categoryId, ...question }) => question),
-            },
+  for (const { questions, ...category } of survey) {
+    await prisma.category.upsert({
+      include: { questions: true },
+      where: { slug: category.slug },
+      update: {},
+      create: {
+        ...category,
+        questions: {
+          createMany: {
+            data: questions.map(({ choices, categoryId, ...question }) => question),
           },
         },
-      });
-    }),
-  );
+      },
+    });
 
-  await Promise.all(
-    survey.flatMap(category =>
-      category.questions.flatMap(question =>
-        question.choices.flatMap(({ politicianScores, ...choice }) =>
-          prisma.choice.upsert({
-            where: { id: choice.id },
-            update: {},
-            create: {
-              ...choice,
-              politicianScores: {
-                createMany: {
-                  data: politicianScores.map(({ choiceId, ...politicianScore }, index) => ({
-                    ...politicianScore,
-                    politicianId: politicians[index].id,
-                  })),
-                },
+    for (const question of questions) {
+      for (const { politicianScores, ...choice } of question.choices) {
+        await prisma.choice.upsert({
+          where: { id: choice.id },
+          update: {},
+          create: {
+            ...choice,
+            politicianScores: {
+              createMany: {
+                data: politicianScores.map(({ choiceId, ...politicianScore }, index) => ({
+                  ...politicianScore,
+                  politicianId: politicians[index].id,
+                })),
               },
             },
-          }),
-        ),
-      ),
-    ),
-  );
-
-  console.log('=========== DB SEED ===========');
-  console.log(categories);
-  console.log(politicians);
+          },
+        });
+      }
+    }
+  }
 }
 
 main()

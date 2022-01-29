@@ -15,7 +15,7 @@ export function createSurveyQuestion(params: RecursivePartial<Question> = {}): Q
     choices:
       params.choices && params.choices.length
         ? params.choices.map((choice, index) =>
-            createSurveyChoice({ questionId: id, order: index, ...choice }),
+            createSurveyChoice({ questionId: id, ...choice, order: index }),
           )
         : [
             createSurveyChoice({ questionId: id, order: 1 }),

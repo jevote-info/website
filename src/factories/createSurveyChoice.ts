@@ -20,7 +20,7 @@ export function createSurveyChoice(params: RecursivePartial<Choice> = {}): Choic
             createSurveyPoliticianScore({ choiceId: id }),
             createSurveyPoliticianScore({ choiceId: id }),
           ],
-    order: faker.datatype.number(),
+    order: params.order ?? faker.datatype.number(),
     createdAt: (params.createdAt as Date) && faker.date.past(),
     updatedAt: (params.updatedAt as Date) && faker.date.past(),
   };
