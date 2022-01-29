@@ -1,6 +1,6 @@
-import Category from './category';
+import { Category } from './category';
 import Choice from './choice';
-import Question from './question';
+import { Question } from './question';
 
 export interface QuestionAnswer {
   choiceId: Choice['id'];

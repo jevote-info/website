@@ -1,6 +1,6 @@
-import { Category, Choice, PoliticianScore, Question } from '@prisma/client';
+import { Category, Choice, Politician, PoliticianScore, Question } from '@prisma/client';
 
-type Survey = (Category & {
+export type Survey = (Category & {
   questions: (Question & {
     choices: (Choice & {
       politicianScores: PoliticianScore[];
@@ -8,4 +8,18 @@ type Survey = (Category & {
   })[];
 })[];
 
-export default Survey;
+export interface SurveyPoliticiansScoreBounds {
+  minPossibleScore: number;
+  maxPossibleScore: number;
+}
+
+export type SurveyPoliticianPossibleScore = Record<Politician['id'], SurveyPoliticiansScoreBounds>;
+
+export type SurveyCategoryPoliticianPossibleScore = Record<
+  Category['id'],
+  SurveyPoliticianPossibleScore
+>;
+export interface SurveyPoliticiansPossibleScores {
+  politiciansPossibleScores: SurveyPoliticianPossibleScore;
+  categoriesPoliticiansPossibleScores: SurveyCategoryPoliticianPossibleScore;
+}

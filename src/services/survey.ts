@@ -1,5 +1,5 @@
 import { PrismaClient } from '@prisma/client';
-import Survey from '../types/survey';
+import { Survey } from '../types/survey';
 
 let prisma: PrismaClient;
 
