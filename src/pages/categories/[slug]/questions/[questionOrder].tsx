@@ -204,7 +204,6 @@ const CategoryPage = (serializedProps: SerializedCategoryProps) => {
                 onSubmit={onSubmit}
                 onChange={onChange}
                 previousPath={previousPath}
-                nextPath={nextPath}
                 canGoToResult={canGoToResult}
               />
             </Container>

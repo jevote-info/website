@@ -15,12 +15,12 @@ export function createSurveyCategory(params: RecursivePartial<Category> = {}): C
     questions:
       params.questions && params.questions.length
         ? params.questions.map((question, index) =>
-            createSurveyQuestion({ categoryId: id, order: index, published: true, ...question }),
+            createSurveyQuestion({ categoryId: id, published: true, ...question, order: index }),
           )
         : [
-            createSurveyQuestion({ categoryId: id, order: 1 }),
-            createSurveyQuestion({ categoryId: id, order: 2 }),
-            createSurveyQuestion({ categoryId: id, order: 3 }),
+            createSurveyQuestion({ categoryId: id, published: true, order: 1 }),
+            createSurveyQuestion({ categoryId: id, published: true, order: 2 }),
+            createSurveyQuestion({ categoryId: id, published: true, order: 3 }),
           ],
     image: params.image ?? faker.internet.avatar(),
     order: params.order ?? faker.datatype.number(),

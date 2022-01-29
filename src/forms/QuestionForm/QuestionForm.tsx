@@ -15,7 +15,6 @@ interface CategoryFormProps {
   currentQuestion: Question;
   onSubmit(values: QuestionAnswer): void;
   onChange(values: QuestionAnswer): void;
-  nextPath: string;
   previousPath: string | null;
   canGoToResult: boolean;
 }
@@ -27,7 +26,6 @@ export function QuestionForm(props: CategoryFormProps) {
     currentQuestion,
     onSubmit,
     onChange,
-    nextPath,
     previousPath,
     canGoToResult,
   } = props;
