@@ -1,5 +1,4 @@
-import groupBy from 'lodash.groupBy';
-import sum from 'lodash.sum';
+import { Politician } from '@prisma/client';
 import { SurveyAnswers } from '../types/answers';
 import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
 import { SurveyResult, SurveyResultScore } from '../types/surveyResult';
@@ -91,15 +90,22 @@ const calculateSurveyScores = (survey: Survey, answers: SurveyAnswers): SurveyRe
 };
 
 const groupPoliticianScores = (answers: { scores: SurveyResultScore[] }[]): SurveyResultScore[] => {
-  const scoresByPolitician = groupBy(
-    answers.flatMap(({ scores }) => scores),
-    'politicianId',
+  const politicianScores = answers.reduce<Record<Politician['id'], number>>(
+    (answerAcc, { scores }) => ({
+      ...answerAcc,
+      ...scores.reduce<Record<Politician['id'], number>>(
+        (scoreAcc, { politicianId, score }) => ({
+          ...scoreAcc,
+          [politicianId]: score + (scoreAcc[politicianId] || 0) + (answerAcc[politicianId] || 0),
+        }),
+        {},
+      ),
+    }),
+    {},
   );
 
-  return Object.entries(scoresByPolitician)
-    .map(([politicianId, scores]) => ({
-      politicianId,
-      score: sum(scores.map(e => e?.score)),
-    }))
-    .sort((a, b) => a.score - b.score);
+  return Object.entries(politicianScores).map(([politicianId, score]) => ({
+    politicianId,
+    score,
+  }));
 };
