@@ -51,11 +51,13 @@ const Question = (props: QuestionProps) => {
         )}
         <VStack {...getRootProps()} alignItems="flex-start" spacing={5}>
           {question.choices.map(choice => (
-            <ChoiceRadio {...getRadioProps({ value: choice.id })} key={choice.id}>
-              {choice.text}
-            </ChoiceRadio>
+            <ChoiceRadio
+              {...getRadioProps({ value: choice.id })}
+              key={choice.id}
+              label={choice.text}
+            />
           ))}
-          <ChoiceRadio {...getRadioProps({ value: 'NO_ANSWER' })}>Ne se prononce pas</ChoiceRadio>
+          <ChoiceRadio {...getRadioProps({ value: 'NO_ANSWER' })} label="Ne se prononce pas" />
         </VStack>
         <ImportanceMeter control={control} />
       </Box>
