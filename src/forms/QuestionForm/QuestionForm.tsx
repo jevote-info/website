@@ -4,8 +4,8 @@ import { Importance } from '../../components/ImportanceMeter';
 import QuestionField from '../../components/QuestionField';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import { QuestionAnswer, SurveyAnswers } from '../../types/answers';
-import Category from '../../types/category';
-import Question from '../../types/question';
+import { Category } from '../../types/category';
+import { Question } from '../../types/question';
 import { SubmitButtonsDesktop } from './SubmitButtons.desktop';
 import { SubmitButtonsMobile } from './SubmitButtons.mobile';
 

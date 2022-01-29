@@ -1,12 +1,12 @@
-import { Image, VStack, HStack, Flex, Link, Grid } from '@chakra-ui/react';
-import { ReactNode } from 'react';
-import Survey from '../../types/survey';
-import { CategoryItem } from './CategoryItem';
+import { Flex, Grid, HStack, Image, Link, VStack } from '@chakra-ui/react';
 import NextLink from 'next/link';
-import { MenuLinks } from '../MenuLinks';
-import { ColorModeSwitch } from '../ColorModeSwitch';
-import Category from '../../types/category';
+import { ReactNode } from 'react';
 import { useSurveyStore } from '../../stores/survey';
+import { Category } from '../../types/category';
+import { Survey } from '../../types/survey';
+import { ColorModeSwitch } from '../ColorModeSwitch';
+import { MenuLinks } from '../MenuLinks';
+import { CategoryItem } from './CategoryItem';
 
 interface SurveyLayoutProps {
   survey: Survey;

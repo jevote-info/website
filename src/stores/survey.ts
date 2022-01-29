@@ -2,15 +2,24 @@ import create, { State, UseBoundStore } from 'zustand';
 import createContext from 'zustand/context';
 import { persist } from 'zustand/middleware';
 import { QuestionAnswer, SurveyAnswers } from '../types/answers';
-import Category from '../types/category';
-import Question from '../types/question';
+import { Category } from '../types/category';
+import { Question } from '../types/question';
+import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
+import { SurveyResult } from '../types/surveyResult';
+import { calculateSurveyResult } from '../utils/calculateSurveyResult';
 interface SurveyState extends State {
   answers: SurveyAnswers;
+  politiciansPossibleScores?: SurveyPoliticiansPossibleScores;
+  result?: SurveyResult;
   setQuestionAnswer: (
     categoryId: Category['id'],
     questionId: Question['id'],
     answer: QuestionAnswer,
   ) => void;
+  setPoliticiansPossibleScores: (
+    politiciansPossibleScores: SurveyPoliticiansPossibleScores,
+  ) => void;
+  calculateResult: (survey: Survey) => void;
 }
 
 const { Provider, useStore, useStoreApi } = createContext<SurveyState>();
@@ -29,6 +38,20 @@ export const createSurveyStore = () => {
       persist(
         (set, get) => ({
           answers: {},
+          result: undefined,
+          politiciansPossibleScores: undefined,
+          setPoliticiansPossibleScores(politiciansPossibleScores) {
+            set({
+              politiciansPossibleScores,
+            });
+          },
+          calculateResult(survey: Survey) {
+            const { answers, politiciansPossibleScores } = get();
+            const result = calculateSurveyResult(survey, answers, politiciansPossibleScores!);
+            set({
+              result,
+            });
+          },
           setQuestionAnswer(categoryId, questionId, answer) {
             const answers = get().answers;
             const existingAnswer = answers[categoryId]?.[questionId];

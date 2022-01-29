@@ -3,8 +3,8 @@ import { Box, Button, HStack, useColorModeValue } from '@chakra-ui/react';
 import Link from 'next/link';
 import { QuestionsStepper } from '../../components/SurveyLayout/QuestionsStepper';
 import { CategoryAnswers } from '../../types/answers';
-import Category from '../../types/category';
-import Question from '../../types/question';
+import { Category } from '../../types/category';
+import { Question } from '../../types/question';
 
 interface SubmitButtonsProps {
   previousPath: string | null;
