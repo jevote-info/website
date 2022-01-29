@@ -1,8 +1,6 @@
 import { useRadioGroup, Stack, Flex, Text } from '@chakra-ui/react';
-import React from 'react';
 import { ImportanceRadio } from './ImportanceRadio';
 import { faFireAlt, faSnowflake, faMehBlank } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Importance } from './ImportanceMeter.types';
 
 interface ImportanceMeterDesktopProps {
@@ -25,18 +23,24 @@ export function ImportanceMeterDesktop(props: ImportanceMeterDesktopProps) {
         Ce sujet est-il important pour vous ?
       </Text>
       <Stack {...group} direction={['column', 'column', 'row']}>
-        <ImportanceRadio checkedColor="green.300" {...notImportantRadioProps}>
-          <FontAwesomeIcon width={15} height={15} icon={faSnowflake} />
-          <Text ml={2}>Peu important</Text>
-        </ImportanceRadio>
-        <ImportanceRadio checkedColor="primary.300" {...neutralRadioProps}>
-          <FontAwesomeIcon width={15} height={15} icon={faMehBlank} />
-          <Text ml={2}>Neutre</Text>
-        </ImportanceRadio>
-        <ImportanceRadio checkedColor="red.300" {...importantRadioProps}>
-          <FontAwesomeIcon width={15} height={15} icon={faFireAlt} />
-          <Text ml={2}>Important</Text>
-        </ImportanceRadio>
+        <ImportanceRadio
+          checkedColor="green.300"
+          icon={faSnowflake}
+          label="Peu important"
+          {...notImportantRadioProps}
+        />
+        <ImportanceRadio
+          checkedColor="primary.300"
+          icon={faMehBlank}
+          label="Neutre"
+          {...neutralRadioProps}
+        />
+        <ImportanceRadio
+          checkedColor="red.300"
+          icon={faFireAlt}
+          label="Important"
+          {...importantRadioProps}
+        />
       </Stack>
     </Flex>
   );

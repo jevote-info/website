@@ -56,10 +56,20 @@ export function CategoryItem(props: CategoryItemProps) {
         </Text>
         {isComplete ? (
           <Box p={1} color="green.400">
-            <FontAwesomeIcon width="30px" height="30px" icon={faCheckCircle} />
+            <FontAwesomeIcon
+              aria-label="complétée"
+              width="30px"
+              height="30px"
+              icon={faCheckCircle}
+            />
           </Box>
         ) : (
-          <CircularProgress alignSelf="end" value={progress} size="40px">
+          <CircularProgress
+            alignSelf="end"
+            value={progress}
+            size="40px"
+            aria-label={`${nbAnswers} questions remplies sur ${category.questions.length}`}
+          >
             <CircularProgressLabel>
               {nbAnswers}/{category.questions.length}
             </CircularProgressLabel>

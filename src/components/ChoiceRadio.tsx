@@ -1,25 +1,26 @@
 import { useRadio, UseRadioProps, Box, Button } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { ReactNode } from 'react';
 import { faCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 
 interface ChoiceRadioProps extends UseRadioProps {
-  children: ReactNode;
+  label: string;
 }
 
 export function ChoiceRadio(props: ChoiceRadioProps) {
+  const { label, ...radioProps } = props;
+
   const {
     getInputProps,
     getCheckboxProps,
     state: { isChecked },
-  } = useRadio(props);
+  } = useRadio(radioProps);
 
   const input = getInputProps();
   const checkbox = getCheckboxProps();
 
   return (
     <Box as="label" width="full">
-      <input {...input} />
+      <input {...input} aria-label={label} />
       <Button
         {...checkbox}
         maxWidth="100%"
@@ -41,7 +42,7 @@ export function ChoiceRadio(props: ChoiceRadioProps) {
         <Box mr={3} color="white">
           <FontAwesomeIcon width={20} height={20} icon={isChecked ? faCheckCircle : faCircle} />
         </Box>
-        {props.children}
+        {label}
       </Button>
     </Box>
   );

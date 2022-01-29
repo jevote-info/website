@@ -10,7 +10,12 @@ export function ColorModeSwitch() {
   return (
     <HStack align="center">
       <SunIcon color={primaryColor} mr={2} />
-      <Switch colorScheme="primary" isChecked={isDark} onChange={toggleColorMode} />
+      <Switch
+        colorScheme="primary"
+        isChecked={isDark}
+        onChange={toggleColorMode}
+        aria-label="inverser le mode de couleur"
+      />
       <MoonIcon color={primaryColor} ml={2} />
     </HStack>
   );

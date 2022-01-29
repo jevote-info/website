@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useMemo } from 'react';
 import superjson from 'superjson';
 import { Importance } from '../../../../components/ImportanceMeter';
 import { SurveyLayout } from '../../../../components/SurveyLayout';
@@ -13,12 +13,10 @@ import { useSurveyStore } from '../../../../stores/survey';
 import { QuestionAnswer } from '../../../../types/answers';
 import { Category } from '../../../../types/category';
 import { Question } from '../../../../types/question';
-import { Survey, SurveyPoliticiansPossibleScores } from '../../../../types/survey';
-import { calculatePoliticianFactor } from '../../../../utils/calculatePoliticianPossibleScores';
+import { Survey } from '../../../../types/survey';
 
 interface SerializedCategoryProps {
   survey: string;
-  politiciansPossibleScores: string;
   currentQuestion: string;
   currentCategory: string;
   previousPath: string | null;
@@ -51,7 +49,6 @@ export const getStaticProps: GetStaticProps<SerializedCategoryProps> = async ({
   }
 
   const survey = await fetchSurvey({ previewMode: preview });
-  const politiciansPossibleScores = calculatePoliticianFactor(survey);
 
   const currentCategory = survey.find(({ slug }) => slug === params.slug);
 
@@ -103,7 +100,6 @@ export const getStaticProps: GetStaticProps<SerializedCategoryProps> = async ({
   return {
     props: {
       survey: superjson.stringify(survey),
-      politiciansPossibleScores: superjson.stringify(politiciansPossibleScores),
       currentQuestion: superjson.stringify(currentQuestion),
       currentCategory: superjson.stringify(currentCategory),
       previousPath,
@@ -121,12 +117,6 @@ const CategoryPage = (serializedProps: SerializedCategoryProps) => {
     [serializedProps.survey],
   );
 
-  const politiciansPossibleScores = useMemo(
-    () =>
-      superjson.parse<SurveyPoliticiansPossibleScores>(serializedProps.politiciansPossibleScores),
-    [serializedProps.politiciansPossibleScores],
-  );
-
   const currentQuestion = useMemo(
     () => superjson.parse<Question>(serializedProps.currentQuestion),
     [serializedProps.currentQuestion],
@@ -136,7 +126,7 @@ const CategoryPage = (serializedProps: SerializedCategoryProps) => {
     [serializedProps.currentCategory],
   );
 
-  const { answers, setQuestionAnswer, setPoliticiansPossibleScores } = useSurveyStore();
+  const { answers, setQuestionAnswer } = useSurveyStore();
 
   useMemo<QuestionAnswer>(() => {
     const categoryAnswer = answers[currentCategory.id];
@@ -147,10 +137,6 @@ const CategoryPage = (serializedProps: SerializedCategoryProps) => {
       weight: questionAnswer?.weight ?? Importance.NEUTRAL,
     };
   }, [currentQuestion, currentCategory, answers]);
-
-  useEffect(() => {
-    setPoliticiansPossibleScores(politiciansPossibleScores);
-  }, [setPoliticiansPossibleScores, politiciansPossibleScores]);
 
   const onSubmit = useCallback(
     (formValues: QuestionAnswer) => {

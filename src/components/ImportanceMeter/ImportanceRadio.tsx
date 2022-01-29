@@ -1,22 +1,31 @@
-import { useRadio, UseRadioProps, Box, Button } from '@chakra-ui/react';
-import React, { ReactNode } from 'react';
+import { useRadio, UseRadioProps, Box, Button, Text } from '@chakra-ui/react';
+import { IconDefinition } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useIsMobile } from '../../hooks/useIsMobile';
 
 interface ImportanceRadioProps extends UseRadioProps {
   checkedColor: string;
-  children: ReactNode;
+  label: string;
+  icon: IconDefinition;
 }
 
 export function ImportanceRadio(props: ImportanceRadioProps) {
-  const { checkedColor, children } = props;
+  const { checkedColor, label, icon } = props;
 
-  const { getInputProps, getCheckboxProps } = useRadio(props);
+  const isMobile = useIsMobile();
+
+  const {
+    getInputProps,
+    getCheckboxProps,
+    state: { isChecked },
+  } = useRadio(props);
 
   const input = getInputProps();
   const checkbox = getCheckboxProps();
 
   return (
     <Box as="label">
-      <input {...input} />
+      <input {...input} aria-label={label} />
       <Button
         {...checkbox}
         as={Box}
@@ -30,7 +39,8 @@ export function ImportanceRadio(props: ImportanceRadioProps) {
           boxShadow: 'outline',
         }}
       >
-        {children}
+        <FontAwesomeIcon width={15} height={15} icon={icon} />
+        {(!isMobile || isChecked) && <Text ml={2}>{label}</Text>}
       </Button>
     </Box>
   );

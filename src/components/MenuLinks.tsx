@@ -13,19 +13,40 @@ export function MenuLinks() {
       </NextLink>
 
       <NextLink href="https://www.instagram.com/" passHref>
-        <Button as="a" colorScheme="primary" variant="ghost" aria-label="Instagram" target="_blank">
+        <Button
+          as="a"
+          colorScheme="primary"
+          variant="ghost"
+          aria-label="Instagram"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <FontAwesomeIcon width={16} icon={faInstagram} />
         </Button>
       </NextLink>
 
       <NextLink href="https://www.facebook.com/" passHref>
-        <Button as="a" colorScheme="primary" variant="ghost" aria-label="Facebook" target="_blank">
+        <Button
+          as="a"
+          colorScheme="primary"
+          variant="ghost"
+          aria-label="Facebook"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <FontAwesomeIcon width={16} icon={faFacebook} />
         </Button>
       </NextLink>
 
       <NextLink href="https://twitter.com/" passHref>
-        <Button as="a" colorScheme="primary" variant="ghost" aria-label="Twitter" target="_blank">
+        <Button
+          as="a"
+          colorScheme="primary"
+          variant="ghost"
+          aria-label="Twitter"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
           <FontAwesomeIcon width={16} icon={faTwitter} />
         </Button>
       </NextLink>
