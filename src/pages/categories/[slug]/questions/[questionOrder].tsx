@@ -149,7 +149,6 @@ const CategoryPage = (serializedProps: SerializedCategoryProps) => {
   }, [currentQuestion, currentCategory, answers]);
 
   useEffect(() => {
-    console.log('toto');
     setPoliticiansPossibleScores(politiciansPossibleScores);
   }, [politiciansPossibleScores]);
 
