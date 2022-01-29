@@ -13,7 +13,7 @@ import { QuestionForm } from '../../../../forms/QuestionForm';
 import { Category } from '../../../../types/category';
 import { Question } from '../../../../types/question';
 import { AnimatePresence, motion } from 'framer-motion';
-import { calculatePoliticianFactor } from '../../../../utils/calculateSurveyResult';
+import { calculatePoliticianFactor } from '../../../../utils/calculatePoliticianPossibleScores';
 import { Importance } from '../../../../components/ImportanceMeter';
 
 interface SerializedCategoryProps {

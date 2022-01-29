@@ -46,8 +46,8 @@ export const createSurveyStore = () => {
             });
           },
           calculateResult(survey: Survey) {
-            const answers = get().answers;
-            const result = calculateSurveyResult(survey, answers);
+            const { answers, politiciansPossibleScores } = get();
+            const result = calculateSurveyResult(survey, answers, politiciansPossibleScores!);
             set({
               result,
             });
