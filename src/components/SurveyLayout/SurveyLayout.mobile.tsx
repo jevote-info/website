@@ -23,13 +23,11 @@ import NextLink from 'next/link';
 import { MenuLinks } from '../MenuLinks';
 import { ColorModeSwitch } from '../ColorModeSwitch';
 import Category from '../../types/category';
-import Question from '../../types/question';
 import { useSurveyStore } from '../../stores/survey';
 
 interface SurveyLayoutProps {
   survey: Survey;
   currentCategory: Category;
-  currentQuestion: Question;
   children: ReactNode;
 }
 

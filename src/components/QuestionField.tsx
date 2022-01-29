@@ -5,20 +5,15 @@ import { useController, Control } from 'react-hook-form';
 import Question from '../types/question';
 import { QuestionAnswer } from '../types/answers';
 import { ChoiceRadio } from './ChoiceRadio';
-import { QuestionsStepper } from './SurveyLayout/QuestionsStepper';
-import Category from '../types/category';
-import { useIsMobile } from '../hooks/useIsMobile';
 
 interface QuestionProps {
-  currentCategory: Category;
   question: Question;
   control: Control<QuestionAnswer>;
 }
 
 const Question = (props: QuestionProps) => {
-  const { currentCategory, question, control } = props;
+  const { question, control } = props;
 
-  const isMobile = useIsMobile();
   const {
     field: { onChange, name, value },
     fieldState: { error },
@@ -39,9 +34,6 @@ const Question = (props: QuestionProps) => {
   return (
     <Box width="full" mb={['116px', '116px', 5]}>
       <Box mb={5}>
-        {isMobile && (
-          <QuestionsStepper currentCategory={currentCategory} currentQuestion={question} />
-        )}
         <Heading size="md" as="h2" marginBottom="4px">
           {question.title}
         </Heading>
