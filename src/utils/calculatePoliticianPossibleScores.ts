@@ -1,8 +1,11 @@
 import groupBy from 'lodash/groupBy';
-import sum from 'lodash/sum';
 import max from 'lodash/max';
 import min from 'lodash/min';
-import { Survey, SurveyPoliticiansScoreBounds } from '../types/survey';
+import {
+  Survey,
+  SurveyCategoryPoliticianPossibleScore,
+  SurveyPoliticianPossibleScore,
+} from '../types/survey';
 import { Importance } from '../components/ImportanceMeter';
 
 export const calculatePoliticianFactor = (survey: Survey) => {
@@ -12,17 +15,20 @@ export const calculatePoliticianFactor = (survey: Survey) => {
         politicianScores.map(({ politicianId, score }) => ({ politicianId, score })),
       );
 
-      const possibleScoresByPolitician = Object.entries(
-        groupBy(politicianScores, 'politicianId'),
-      ).map(([politicianId, scores]) => ({
-        politicianId,
-        minPossibleScore: min(scores.map(e => e.score * Importance.NOT_IMPORTANT))!,
-        maxPossibleScore: max(scores.map(e => e.score * Importance.IMPORTANT))!,
-      }));
-
       return {
         questionId,
-        possibleScoresByPolitician,
+        possibleScoresByPolitician: Object.entries(
+          groupBy(politicianScores, 'politicianId'),
+        ).reduce<SurveyPoliticianPossibleScore>(
+          (prev, [politicianId, scores]) => ({
+            ...prev,
+            [politicianId]: {
+              minPossibleScore: min(scores.map(e => e.score * Importance.NOT_IMPORTANT))!,
+              maxPossibleScore: max(scores.map(e => e.score * Importance.IMPORTANT))!,
+            },
+          }),
+          {},
+        ),
       };
     });
 
@@ -38,21 +44,40 @@ export const calculatePoliticianFactor = (survey: Survey) => {
 
   return {
     possibleScoresByPolitician,
-    categoryPossibleScores,
+    categoryPossibleScores: Object.entries(
+      groupBy(categoryPossibleScores, 'categoryId'),
+    ).reduce<SurveyCategoryPoliticianPossibleScore>(
+      (prev, [categoryId, scores]) => ({
+        ...prev,
+        [categoryId]: scores[0].possibleScoresByPolitician,
+      }),
+      {},
+    ),
   };
 };
 
 const groupPoliticianPossibleScores = (
-  possibleScores: { possibleScoresByPolitician: SurveyPoliticiansScoreBounds[] }[],
-): SurveyPoliticiansScoreBounds[] => {
-  const scoresBoundsByPolitician = groupBy(
-    possibleScores.flatMap(({ possibleScoresByPolitician }) => possibleScoresByPolitician),
-    'politicianId',
-  );
-
-  return Object.entries(scoresBoundsByPolitician).map(([politicianId, scores]) => ({
-    politicianId,
-    minPossibleScore: sum(scores.map(e => e.minPossibleScore)),
-    maxPossibleScore: sum(scores.map(e => e.maxPossibleScore)),
-  }));
-};
+  possibleScores: { possibleScoresByPolitician: SurveyPoliticianPossibleScore }[],
+) =>
+  possibleScores
+    .flatMap<SurveyPoliticianPossibleScore>(
+      ({ possibleScoresByPolitician }) => possibleScoresByPolitician,
+    )
+    .reduce<SurveyPoliticianPossibleScore>(
+      (acc, scores) => ({
+        ...acc,
+        ...Object.entries(scores).reduce<SurveyPoliticianPossibleScore>(
+          (accumulator, [politicianId, politicianScores]) => ({
+            ...accumulator,
+            [politicianId]: {
+              minPossibleScore:
+                (acc[politicianId]?.minPossibleScore || 0) + politicianScores.minPossibleScore,
+              maxPossibleScore:
+                (acc[politicianId]?.maxPossibleScore || 0) + politicianScores.maxPossibleScore,
+            },
+          }),
+          {},
+        ),
+      }),
+      {},
+    );

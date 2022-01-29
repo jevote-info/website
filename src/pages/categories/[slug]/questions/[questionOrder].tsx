@@ -52,6 +52,7 @@ export const getStaticProps: GetStaticProps<SerializedCategoryProps> = async ({
 
   const survey = await fetchSurvey({ previewMode: preview });
   const politiciansPossibleScores = calculatePoliticianFactor(survey);
+  console.log(politiciansPossibleScores);
 
   const currentCategory = survey.find(({ slug }) => slug === params.slug);
 
