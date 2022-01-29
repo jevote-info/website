@@ -52,7 +52,6 @@ export const getStaticProps: GetStaticProps<SerializedCategoryProps> = async ({
 
   const survey = await fetchSurvey({ previewMode: preview });
   const politiciansPossibleScores = calculatePoliticianFactor(survey);
-  console.log(politiciansPossibleScores);
 
   const currentCategory = survey.find(({ slug }) => slug === params.slug);
 
@@ -139,7 +138,7 @@ const CategoryPage = (serializedProps: SerializedCategoryProps) => {
 
   const { answers, setQuestionAnswer, setPoliticiansPossibleScores } = useSurveyStore();
 
-  const defaultValues = useMemo<QuestionAnswer>(() => {
+  useMemo<QuestionAnswer>(() => {
     const categoryAnswer = answers[currentCategory.id];
     const questionAnswer = categoryAnswer?.[currentQuestion.id];
 
@@ -151,7 +150,7 @@ const CategoryPage = (serializedProps: SerializedCategoryProps) => {
 
   useEffect(() => {
     setPoliticiansPossibleScores(politiciansPossibleScores);
-  }, [politiciansPossibleScores]);
+  }, [setPoliticiansPossibleScores, politiciansPossibleScores]);
 
   const onSubmit = useCallback(
     (formValues: QuestionAnswer) => {
