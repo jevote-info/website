@@ -25,15 +25,15 @@ export function ImportanceMeterDesktop(props: ImportanceMeterDesktopProps) {
         Ce sujet est-il important pour vous ?
       </Text>
       <Stack {...group} direction={['column', 'column', 'row']}>
-        <ImportanceRadio {...notImportantRadioProps}>
+        <ImportanceRadio checkedColor="green.300" {...notImportantRadioProps}>
           <FontAwesomeIcon width={15} height={15} icon={faSnowflake} />
           <Text ml={2}>Peu important</Text>
         </ImportanceRadio>
-        <ImportanceRadio {...neutralRadioProps}>
+        <ImportanceRadio checkedColor="primary.300" {...neutralRadioProps}>
           <FontAwesomeIcon width={15} height={15} icon={faMehBlank} />
           <Text ml={2}>Neutre</Text>
         </ImportanceRadio>
-        <ImportanceRadio {...importantRadioProps}>
+        <ImportanceRadio checkedColor="red.300" {...importantRadioProps}>
           <FontAwesomeIcon width={15} height={15} icon={faFireAlt} />
           <Text ml={2}>Important</Text>
         </ImportanceRadio>

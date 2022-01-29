@@ -8,6 +8,7 @@ import { ColorModeSwitch } from '../ColorModeSwitch';
 import Category from '../../types/category';
 import Question from '../../types/question';
 import { QuestionsStepper } from './QuestionsStepper';
+import { useSurveyStore } from '../../stores/survey';
 
 interface SurveyLayoutProps {
   survey: Survey;
@@ -18,6 +19,8 @@ interface SurveyLayoutProps {
 
 export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
   const { survey, currentCategory, currentQuestion, children } = props;
+
+  const { answers } = useSurveyStore();
 
   return (
     <VStack height="full" align="start">
@@ -40,6 +43,7 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
             <CategoryItem
               key={category.id}
               category={category}
+              categoryAnswers={answers[category.id]}
               isActive={category.id === currentCategory.id}
             />
           ))}
