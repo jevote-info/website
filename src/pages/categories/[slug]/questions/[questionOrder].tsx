@@ -141,6 +141,12 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
     [currentCategory, currentQuestion, setQuestionAnswer],
   );
 
+  const canGoToResult = useMemo(() => {
+    return !survey.find(category =>
+      category.questions.find(question => !answers[category.id]?.[question.id]?.choiceId),
+    );
+  }, [answers, survey]);
+
   return (
     <>
       <Head>
@@ -151,11 +157,7 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SurveyLayout
-        survey={survey}
-        currentCategory={currentCategory}
-        currentQuestion={currentQuestion}
-      >
+      <SurveyLayout survey={survey} currentCategory={currentCategory}>
         <AnimatePresence>
           <motion.div
             key={
@@ -176,6 +178,7 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
                 onChange={onChange}
                 previousPath={previousPath}
                 nextPath={nextPath}
+                canGoToResult={canGoToResult}
               />
             </Container>
           </motion.div>

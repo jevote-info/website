@@ -2,7 +2,6 @@ import {
   Box,
   CircularProgress,
   CircularProgressLabel,
-  Flex,
   HStack,
   Image,
   Text,
