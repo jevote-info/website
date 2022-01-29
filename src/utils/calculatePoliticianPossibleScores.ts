@@ -1,12 +1,12 @@
 import groupBy from 'lodash/groupBy';
 import max from 'lodash/max';
 import min from 'lodash/min';
+import { Importance } from '../components/ImportanceMeter';
 import {
   Survey,
   SurveyCategoryPoliticianPossibleScore,
   SurveyPoliticianPossibleScore,
 } from '../types/survey';
-import { Importance } from '../components/ImportanceMeter';
 
 export const calculatePoliticianFactor = (survey: Survey) => {
   const categoryPossibleScores = survey.map(category => {

@@ -1,30 +1,29 @@
 import {
-  Text,
-  Image,
-  VStack,
-  Flex,
-  Button,
-  useDisclosure,
-  Drawer,
-  DrawerOverlay,
-  DrawerContent,
-  DrawerCloseButton,
-  DrawerHeader,
-  DrawerBody,
-  Link,
-  DrawerFooter,
   Box,
+  Button,
+  Drawer,
+  DrawerBody,
+  DrawerCloseButton,
+  DrawerContent,
+  DrawerFooter,
+  DrawerHeader,
+  DrawerOverlay,
+  Flex,
+  Image,
+  Link,
+  Text,
+  useDisclosure,
+  VStack,
 } from '@chakra-ui/react';
-import { ReactNode, useEffect, useRef } from 'react';
-import { Survey } from '../../types/survey';
-import { CategoryItem } from './CategoryItem';
-import { useRouter } from 'next/router';
 import NextLink from 'next/link';
-import { MenuLinks } from '../MenuLinks';
-import { ColorModeSwitch } from '../ColorModeSwitch';
+import { useRouter } from 'next/router';
+import { ReactNode, useEffect, useRef } from 'react';
 import { useSurveyStore } from '../../stores/survey';
 import { Category } from '../../types/category';
-import { Question } from '../../types/question';
+import { Survey } from '../../types/survey';
+import { ColorModeSwitch } from '../ColorModeSwitch';
+import { MenuLinks } from '../MenuLinks';
+import { CategoryItem } from './CategoryItem';
 
 interface SurveyLayoutProps {
   survey: Survey;

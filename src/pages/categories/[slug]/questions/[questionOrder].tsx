@@ -1,20 +1,20 @@
 import { Container } from '@chakra-ui/react';
+import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
 import { useCallback, useEffect, useMemo } from 'react';
 import superjson from 'superjson';
-import { fetchSurvey } from '../../../../services/survey';
-import { Survey, SurveyPoliticiansPossibleScores } from '../../../../types/survey';
+import { Importance } from '../../../../components/ImportanceMeter';
 import { SurveyLayout } from '../../../../components/SurveyLayout';
-import { useRouter } from 'next/router';
+import { QuestionForm } from '../../../../forms/QuestionForm';
+import { fetchSurvey } from '../../../../services/survey';
 import { useSurveyStore } from '../../../../stores/survey';
 import { QuestionAnswer } from '../../../../types/answers';
-import { QuestionForm } from '../../../../forms/QuestionForm';
 import { Category } from '../../../../types/category';
 import { Question } from '../../../../types/question';
-import { AnimatePresence, motion } from 'framer-motion';
+import { Survey, SurveyPoliticiansPossibleScores } from '../../../../types/survey';
 import { calculatePoliticianFactor } from '../../../../utils/calculatePoliticianPossibleScores';
-import { Importance } from '../../../../components/ImportanceMeter';
 
 interface SerializedCategoryProps {
   survey: string;
