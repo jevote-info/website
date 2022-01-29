@@ -17,11 +17,20 @@ interface CategoryFormProps {
   onChange(values: QuestionAnswer): void;
   nextPath: string;
   previousPath: string | null;
+  canGoToResult: boolean;
 }
 
 export function QuestionForm(props: CategoryFormProps) {
-  const { answers, currentCategory, currentQuestion, onSubmit, onChange, nextPath, previousPath } =
-    props;
+  const {
+    answers,
+    currentCategory,
+    currentQuestion,
+    onSubmit,
+    onChange,
+    nextPath,
+    previousPath,
+    canGoToResult,
+  } = props;
 
   const isMobile = useIsMobile();
 
@@ -44,19 +53,25 @@ export function QuestionForm(props: CategoryFormProps) {
     onChange(answer);
   }, [onChange, answer]);
 
-  const isFinal = nextPath === '/resultats';
-
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
-      <QuestionField
-        currentCategory={currentCategory}
-        question={currentQuestion}
-        control={control}
-      />
+      <QuestionField question={currentQuestion} control={control} />
       {isMobile ? (
-        <SubmitButtonsMobile isFinal={isFinal} previousPath={previousPath} />
+        <SubmitButtonsMobile
+          previousPath={previousPath}
+          currentCategory={currentCategory}
+          currentQuestion={currentQuestion}
+          categoryAnswers={answers[currentCategory.id]}
+          canGoToResult={canGoToResult}
+        />
       ) : (
-        <SubmitButtonsDesktop isFinal={isFinal} previousPath={previousPath} />
+        <SubmitButtonsDesktop
+          previousPath={previousPath}
+          currentCategory={currentCategory}
+          currentQuestion={currentQuestion}
+          categoryAnswers={answers[currentCategory.id]}
+          canGoToResult={canGoToResult}
+        />
       )}
     </form>
   );

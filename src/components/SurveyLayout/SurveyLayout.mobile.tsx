@@ -23,12 +23,11 @@ import NextLink from 'next/link';
 import { MenuLinks } from '../MenuLinks';
 import { ColorModeSwitch } from '../ColorModeSwitch';
 import Category from '../../types/category';
-import Question from '../../types/question';
+import { useSurveyStore } from '../../stores/survey';
 
 interface SurveyLayoutProps {
   survey: Survey;
   currentCategory: Category;
-  currentQuestion: Question;
   children: ReactNode;
 }
 
@@ -39,6 +38,7 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
   const { asPath } = useRouter();
 
   const buttonRef = useRef(null);
+  const { answers } = useSurveyStore();
 
   useEffect(() => {
     onClose();
@@ -90,12 +90,13 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
           <DrawerCloseButton />
           <DrawerHeader>Catégories</DrawerHeader>
 
-          <DrawerBody>
-            <VStack alignItems="start" spacing={3}>
+          <DrawerBody paddingInlineStart={2} paddingInlineEnd={2}>
+            <VStack alignItems="start">
               {survey.map(category => (
                 <CategoryItem
                   key={category.id}
                   category={category}
+                  categoryAnswers={answers[category.id]}
                   isActive={category.id === currentCategory.id}
                 />
               ))}
