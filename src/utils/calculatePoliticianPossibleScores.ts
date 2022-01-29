@@ -1,34 +1,37 @@
-import groupBy from 'lodash.groupby';
-import max from 'lodash.max';
-import min from 'lodash.min';
-import { Importance } from '../components/ImportanceMeter';
-import {
-  Survey,
-  SurveyCategoryPoliticianPossibleScore,
-  SurveyPoliticianPossibleScore,
-} from '../types/survey';
+import { Survey, SurveyPoliticianPossibleScore } from '../types/survey';
 
 export const calculatePoliticianFactor = (survey: Survey) => {
-  const categoryPossibleScores = survey.map(category => {
+  const categoryPossibleScoresByPolitician = survey.map(category => {
     const questionScores = category.questions.map(({ id: questionId, choices }) => {
       const politicianScores = choices.flatMap(({ politicianScores }) =>
         politicianScores.map(({ politicianId, score }) => ({ politicianId, score })),
       );
 
+      const possibleScoresByPolitician = politicianScores.reduce<SurveyPoliticianPossibleScore>(
+        (acc, { politicianId, score }) => ({
+          ...acc,
+          [politicianId]: acc[politicianId]
+            ? {
+                minPossibleScore:
+                  score < acc[politicianId].minPossibleScore
+                    ? score
+                    : acc[politicianId].minPossibleScore,
+                maxPossibleScore:
+                  score < acc[politicianId].maxPossibleScore
+                    ? score
+                    : acc[politicianId].maxPossibleScore,
+              }
+            : {
+                minPossibleScore: score,
+                maxPossibleScore: score,
+              },
+        }),
+        {},
+      );
+
       return {
         questionId,
-        possibleScoresByPolitician: Object.entries(
-          groupBy(politicianScores, 'politicianId'),
-        ).reduce<SurveyPoliticianPossibleScore>(
-          (prev, [politicianId, scores]) => ({
-            ...prev,
-            [politicianId]: {
-              minPossibleScore: min(scores.map(e => e.score * Importance.NOT_IMPORTANT))!,
-              maxPossibleScore: max(scores.map(e => e.score * Importance.IMPORTANT))!,
-            },
-          }),
-          {},
-        ),
+        possibleScoresByPolitician,
       };
     });
 
@@ -40,19 +43,21 @@ export const calculatePoliticianFactor = (survey: Survey) => {
     };
   });
 
-  const possibleScoresByPolitician = groupPoliticianPossibleScores(categoryPossibleScores);
+  const possibleScoresByPolitician = groupPoliticianPossibleScores(
+    categoryPossibleScoresByPolitician,
+  );
+
+  const categoryPossibleScores = categoryPossibleScoresByPolitician.reduce(
+    (acc, { categoryId, possibleScoresByPolitician }) => ({
+      ...acc,
+      [categoryId]: possibleScoresByPolitician,
+    }),
+    {},
+  );
 
   return {
     possibleScoresByPolitician,
-    categoryPossibleScores: Object.entries(
-      groupBy(categoryPossibleScores, 'categoryId'),
-    ).reduce<SurveyCategoryPoliticianPossibleScore>(
-      (prev, [categoryId, scores]) => ({
-        ...prev,
-        [categoryId]: scores[0].possibleScoresByPolitician,
-      }),
-      {},
-    ),
+    categoryPossibleScores,
   };
 };
 
