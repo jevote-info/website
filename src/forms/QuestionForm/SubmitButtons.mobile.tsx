@@ -1,13 +1,21 @@
+import { ChevronUpIcon } from '@chakra-ui/icons';
 import { Box, Button, HStack, useColorModeValue } from '@chakra-ui/react';
 import Link from 'next/link';
+import { QuestionsStepper } from '../../components/SurveyLayout/QuestionsStepper';
+import { CategoryAnswers } from '../../types/answers';
+import Category from '../../types/category';
+import Question from '../../types/question';
 
 interface SubmitButtonsProps {
-  isFinal: boolean;
   previousPath: string | null;
+  currentCategory: Category;
+  currentQuestion: Question;
+  categoryAnswers?: CategoryAnswers;
+  canGoToResult: boolean;
 }
 
 export function SubmitButtonsMobile(props: SubmitButtonsProps) {
-  const { isFinal, previousPath } = props;
+  const { previousPath, currentCategory, currentQuestion, categoryAnswers, canGoToResult } = props;
 
   const bgColor = useColorModeValue('white', 'black');
 
@@ -16,7 +24,7 @@ export function SubmitButtonsMobile(props: SubmitButtonsProps) {
       <HStack
         spacing={3}
         p={3}
-        justifyContent="space-between"
+        justifyContent="start"
         position="fixed"
         bottom={0}
         left={0}
@@ -24,15 +32,30 @@ export function SubmitButtonsMobile(props: SubmitButtonsProps) {
         bgColor={bgColor}
         width="full"
       >
+        <Box flex={1}>
+          {canGoToResult ? (
+            <Link href="/resultat" passHref>
+              <Button as="a" colorScheme="blue">
+                Voir les résultats
+              </Button>
+            </Link>
+          ) : (
+            <QuestionsStepper
+              currentCategory={currentCategory}
+              currentQuestion={currentQuestion}
+              categoryAnswers={categoryAnswers}
+            />
+          )}
+        </Box>
         {previousPath && (
           <Link href={previousPath} passHref>
-            <Button as="a" variant="outline" colorScheme="primary" flex={1}>
-              Précédent
+            <Button as="a" variant="outline" colorScheme="primary">
+              <ChevronUpIcon />
             </Button>
           </Link>
         )}
-        <Button type="submit" colorScheme="primary" ml="auto" flex={1}>
-          {isFinal ? 'Voir les résultats' : 'Suivant'}
+        <Button type="submit" colorScheme="primary">
+          Suivant
         </Button>
       </HStack>
     </Box>
