@@ -1,29 +1,48 @@
+import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
+import { Importance } from '../../components/ImportanceMeter';
 import QuestionField from '../../components/QuestionField';
 import { useIsMobile } from '../../hooks/useIsMobile';
-import { QuestionAnswer } from '../../types/answers';
+import { QuestionAnswer, SurveyAnswers } from '../../types/answers';
 import Category from '../../types/category';
 import Question from '../../types/question';
 import { SubmitButtonsDesktop } from './SubmitButtons.desktop';
 import { SubmitButtonsMobile } from './SubmitButtons.mobile';
 
 interface CategoryFormProps {
+  answers: SurveyAnswers;
   currentCategory: Category;
   currentQuestion: Question;
-  defaultValues: QuestionAnswer;
   onSubmit(values: QuestionAnswer): void;
+  onChange(values: QuestionAnswer): void;
   nextPath: string;
   previousPath: string | null;
 }
 
 export function QuestionForm(props: CategoryFormProps) {
-  const { currentCategory, currentQuestion, defaultValues, onSubmit, nextPath, previousPath } =
+  const { answers, currentCategory, currentQuestion, onSubmit, onChange, nextPath, previousPath } =
     props;
 
   const isMobile = useIsMobile();
-  const { control, handleSubmit } = useForm({
+
+  const defaultValues = useMemo<QuestionAnswer>(() => {
+    const categoryAnswer = answers[currentCategory.id];
+    const questionAnswer = categoryAnswer?.[currentQuestion.id];
+
+    return {
+      choiceId: questionAnswer?.choiceId ?? null,
+      weight: questionAnswer?.weight ?? Importance.NEUTRAL,
+    };
+  }, [currentQuestion, currentCategory, answers]);
+
+  const { control, handleSubmit, watch } = useForm({
     defaultValues,
   });
+
+  const answer = watch();
+  useEffect(() => {
+    onChange(answer);
+  }, [onChange, answer]);
 
   const isFinal = nextPath === '/resultats';
 
