@@ -1,6 +1,6 @@
-import groupBy from 'lodash/groupBy';
-import max from 'lodash/max';
-import min from 'lodash/min';
+import groupBy from 'lodash.groupby';
+import max from 'lodash.max';
+import min from 'lodash.min';
 import { Importance } from '../components/ImportanceMeter';
 import {
   Survey,

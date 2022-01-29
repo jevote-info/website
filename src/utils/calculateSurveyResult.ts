@@ -1,5 +1,5 @@
-import groupBy from 'lodash/groupBy';
-import sum from 'lodash/sum';
+import groupBy from 'lodash.groupBy';
+import sum from 'lodash.sum';
 import { SurveyAnswers } from '../types/answers';
 import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
 import { SurveyResult, SurveyResultScore } from '../types/surveyResult';
