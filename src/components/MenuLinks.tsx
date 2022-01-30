@@ -1,14 +1,14 @@
 import NextLink from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faFacebook, faInstagram, faTwitter } from '@fortawesome/free-brands-svg-icons';
+import { faFacebook, faInstagram, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
 import { Button } from '@chakra-ui/react';
 
 export function MenuLinks() {
   return (
     <>
-      <NextLink href="/equipe" passHref>
-        <Button as="a" colorScheme="primary" variant="ghost" aria-label="L'équipe">
-          L&apos;équipe
+      <NextLink href="/contributeurs" passHref>
+        <Button as="a" colorScheme="primary" variant="ghost" aria-label="Contributeurs">
+          Contributeurs
         </Button>
       </NextLink>
 
@@ -48,6 +48,18 @@ export function MenuLinks() {
           rel="noopener noreferrer"
         >
           <FontAwesomeIcon width={16} icon={faTwitter} />
+        </Button>
+      </NextLink>
+      <NextLink href="https://linkedin.com/" passHref>
+        <Button
+          as="a"
+          colorScheme="primary"
+          variant="ghost"
+          aria-label="LinkedIn"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          <FontAwesomeIcon width={16} icon={faLinkedin} />
         </Button>
       </NextLink>
     </>
