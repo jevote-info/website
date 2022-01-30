@@ -63,7 +63,7 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
           <Flex flex={1} alignItems="start">
             <NextLink href="/" passHref>
               <Link>
-                <Image src="/logo.png" alt="logo" w="64px" />
+                <Image src="/logo.png" alt="logo" w="128px" />
               </Link>
             </NextLink>
           </Flex>

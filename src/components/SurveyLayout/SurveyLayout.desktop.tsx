@@ -27,7 +27,7 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
       <HStack width="full" align="center" justify="space-between" px={[3, 3, 5]} py={3}>
         <NextLink href="/" passHref>
           <Link>
-            <Image src="/logo.png" alt="logo" w="64px" />
+            <Image src="/logo.png" alt="logo" w="128px" />
           </Link>
         </NextLink>
         <HStack>
