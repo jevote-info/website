@@ -18,34 +18,40 @@ const normalizeResult = (
   result: SurveyResult,
   politiciansPossibleScores: SurveyPoliticiansPossibleScores,
 ): SurveyResult => {
-  const normalizedScores = result.scores.map(({ politicianId, score }) => {
-    const politicianBounds = politiciansPossibleScores.politiciansPossibleScores[politicianId];
-    const gap = Math.abs(politicianBounds.minPossibleScore) + politicianBounds.maxPossibleScore;
-    const factor = SURVEY_RESULT_SCORE_GAP / gap;
-    const sub = politicianBounds.maxPossibleScore * factor - 100;
-    return {
-      politicianId,
-      score: Math.round(score * factor - sub),
-    };
-  });
+  const normalizedScores = result.scores
+    .map(({ politicianId, score }) => {
+      const politicianBounds = politiciansPossibleScores.politiciansPossibleScores[politicianId];
+      const gap = Math.abs(politicianBounds.minPossibleScore) + politicianBounds.maxPossibleScore;
+      const factor = SURVEY_RESULT_SCORE_GAP / gap;
+      const sub = politicianBounds.maxPossibleScore * factor - 100;
+      return {
+        politicianId,
+        score: Math.round(score * factor - sub),
+      };
+    })
+    .sort((a, b) => b.score - a.score);
 
   const normalizedCategoriesScores = result.categoriesScores.map(
     ({ categoryId, questionScores, scores }) => {
       return {
         categoryId,
         questionScores,
-        scores: scores.map(({ politicianId, score }) => {
-          const politicianBounds =
-            politiciansPossibleScores.categoriesPoliticiansPossibleScores[categoryId][politicianId];
-          const gap =
-            Math.abs(politicianBounds.minPossibleScore) + politicianBounds.maxPossibleScore;
-          const factor = SURVEY_RESULT_SCORE_GAP / gap;
-          const sub = politicianBounds.maxPossibleScore * factor - 100;
-          return {
-            politicianId,
-            score: Math.round(score * factor - sub),
-          };
-        }),
+        scores: scores
+          .map(({ politicianId, score }) => {
+            const politicianBounds =
+              politiciansPossibleScores.categoriesPoliticiansPossibleScores[categoryId][
+                politicianId
+              ];
+            const gap =
+              Math.abs(politicianBounds.minPossibleScore) + politicianBounds.maxPossibleScore;
+            const factor = SURVEY_RESULT_SCORE_GAP / gap;
+            const sub = politicianBounds.maxPossibleScore * factor - 100;
+            return {
+              politicianId,
+              score: Math.round(score * factor - sub),
+            };
+          })
+          .sort((a, b) => b.score - a.score),
       };
     },
   );
