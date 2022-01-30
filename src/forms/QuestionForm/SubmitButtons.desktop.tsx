@@ -19,7 +19,7 @@ export function SubmitButtonsDesktop(props: SubmitButtonsProps) {
         </Link>
       )}
       {canGoToResult && (
-        <Link href="/resultat" passHref>
+        <Link href="/resultats" passHref>
           <Button as="a" colorScheme="primary" size="lg">
             Voir les résultats
           </Button>

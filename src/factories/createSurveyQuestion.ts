@@ -1,4 +1,4 @@
-import faker from 'faker';
+import faker from '@faker-js/faker';
 import { Question } from '../types/question';
 import RecursivePartial from '../utils/recursivePartial';
 import { createSurveyChoice } from './createSurveyChoice';

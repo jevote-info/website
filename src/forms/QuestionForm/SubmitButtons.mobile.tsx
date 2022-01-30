@@ -27,7 +27,7 @@ export function SubmitButtonsMobile(props: SubmitButtonsProps) {
       >
         <Box flex={1}>
           {canGoToResult && (
-            <Link href="/resultat" passHref>
+            <Link href="/resultats" passHref>
               <Button as="a" colorScheme="blue">
                 Voir les résultats
               </Button>

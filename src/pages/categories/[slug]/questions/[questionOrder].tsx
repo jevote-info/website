@@ -107,7 +107,7 @@ export const getStaticProps: GetStaticProps<SerializedCategoryProps> = async ({
   };
 };
 
-const CategoryPage = (serializedProps: SerializedCategoryProps) => {
+function QuestionPage(serializedProps: SerializedCategoryProps) {
   const { nextPath, previousPath } = serializedProps;
   const { push } = useRouter();
 
@@ -199,6 +199,6 @@ const CategoryPage = (serializedProps: SerializedCategoryProps) => {
       </SurveyLayout>
     </>
   );
-};
+}
 
-export default CategoryPage;
+export default QuestionPage;

@@ -1,5 +1,5 @@
 import { Politician } from '@prisma/client';
-import faker from 'faker';
+import faker from '@faker-js/faker';
 
 export function createPolitician(params: Partial<Politician> = {}): Politician {
   const name = `${faker.name.firstName()} ${faker.name.lastName()}`;

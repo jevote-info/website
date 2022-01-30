@@ -1,5 +1,5 @@
 import { PoliticianScore } from '@prisma/client';
-import faker from 'faker';
+import faker from '@faker-js/faker';
 import RecursivePartial from '../utils/recursivePartial';
 
 export function createSurveyPoliticianScore(
