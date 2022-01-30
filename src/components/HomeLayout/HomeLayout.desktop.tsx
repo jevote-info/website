@@ -17,12 +17,17 @@ export function HomeLayoutDesktop(props: HomeLayoutProps) {
       <HStack width="full" align="center" justify="space-between" px={[3, 3, 5]} py={3}>
         <NextLink href="/" passHref>
           <Link>
-            <Image src="/logo.png" alt="logo" w="64px" />
+            <Image src="/logo.png" alt="logo" w="128px" />
           </Link>
         </NextLink>
         <HStack>
           <NextLink href={surveyPath} passHref>
-            <Button as="a" colorScheme="primary" variant="ghost" aria-label="Questionnaire">
+            <Button
+              as="a"
+              colorScheme="primary"
+              variant="ghost"
+              aria-label="Lancer le questionnaire"
+            >
               Questionnaire
             </Button>
           </NextLink>
