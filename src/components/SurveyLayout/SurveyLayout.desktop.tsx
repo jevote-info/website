@@ -48,15 +48,16 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
             />
           ))}
         </VStack>
-        <Flex
-          flexDirection="column"
-          flex={1}
-          alignItems="center"
-          p={5}
-          height="full"
-          position="relative"
-        >
-          <Container as={VStack} alignItems="start" maxW="container.md" p={0} m={0} spacing={3}>
+        <Flex flexDirection="column" flex={1} alignItems="center" p={5} height="full">
+          <Container
+            as={VStack}
+            alignItems="start"
+            maxW="container.md"
+            p={0}
+            m={0}
+            spacing={3}
+            position="relative"
+          >
             <QuestionsStepper
               currentCategory={currentCategory}
               currentQuestion={currentQuestion}
