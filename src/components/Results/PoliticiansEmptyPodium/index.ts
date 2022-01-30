@@ -1,1 +1,0 @@
-export { PoliticiansEmptyPodium } from './PoliticiansEmptyPodium';

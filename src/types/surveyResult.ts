@@ -14,3 +14,6 @@ export interface SurveyResult {
     }[];
   }[];
 }
+
+export type SharingVariant = 'story' | 'post' | 'text';
+export type ImageSharingVariant = Exclude<SharingVariant, 'text'>;

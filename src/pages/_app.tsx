@@ -1,5 +1,6 @@
 import { ChakraProvider } from '@chakra-ui/react';
 import type { AppProps } from 'next/app';
+import { NextQueryParamProvider } from 'next-query-params';
 import { BootstrapStores } from '../BootstrapStores';
 import theme from '../theme';
 import '@fontsource/quicksand/400.css';
@@ -10,7 +11,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ChakraProvider theme={theme}>
       <BootstrapStores>
-        <Component {...pageProps} />
+        <NextQueryParamProvider>
+          <Component {...pageProps} />
+        </NextQueryParamProvider>
       </BootstrapStores>
     </ChakraProvider>
   );

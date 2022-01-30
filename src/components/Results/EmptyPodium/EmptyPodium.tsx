@@ -11,7 +11,7 @@ import {
   Center,
 } from '@chakra-ui/react';
 
-interface PoliticiansEmptyPodiumProps {
+interface EmptyPodiumProps {
   nextSectionId: string;
 }
 
@@ -21,7 +21,7 @@ const move = keyframes`
   100% {transform: translateY(0px)}
 `;
 
-export function PoliticiansEmptyPodium(props: PoliticiansEmptyPodiumProps) {
+export function EmptyPodium(props: EmptyPodiumProps) {
   const { nextSectionId } = props;
 
   return (
