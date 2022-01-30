@@ -17,11 +17,11 @@ export const calculatePoliticianFactor = (survey: Survey): SurveyPoliticiansPoss
           [politicianId]: acc[politicianId]
             ? {
                 minPossibleScore:
-                  score < acc[politicianId].minPossibleScore
+                  score <= acc[politicianId].minPossibleScore
                     ? score
                     : acc[politicianId].minPossibleScore,
                 maxPossibleScore:
-                  score < acc[politicianId].maxPossibleScore
+                  score >= acc[politicianId].maxPossibleScore
                     ? score
                     : acc[politicianId].maxPossibleScore,
               }
