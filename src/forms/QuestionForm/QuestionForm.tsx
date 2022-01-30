@@ -52,24 +52,12 @@ export function QuestionForm(props: CategoryFormProps) {
   }, [onChange, answer]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form style={{ width: '100%' }} onSubmit={handleSubmit(onSubmit)}>
       <QuestionField question={currentQuestion} control={control} />
       {isMobile ? (
-        <SubmitButtonsMobile
-          previousPath={previousPath}
-          currentCategory={currentCategory}
-          currentQuestion={currentQuestion}
-          categoryAnswers={answers[currentCategory.id]}
-          canGoToResult={canGoToResult}
-        />
+        <SubmitButtonsMobile previousPath={previousPath} canGoToResult={canGoToResult} />
       ) : (
-        <SubmitButtonsDesktop
-          previousPath={previousPath}
-          currentCategory={currentCategory}
-          currentQuestion={currentQuestion}
-          categoryAnswers={answers[currentCategory.id]}
-          canGoToResult={canGoToResult}
-        />
+        <SubmitButtonsDesktop previousPath={previousPath} canGoToResult={canGoToResult} />
       )}
     </form>
   );

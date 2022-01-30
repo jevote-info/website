@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Container,
   Drawer,
   DrawerBody,
   DrawerCloseButton,
@@ -9,8 +10,10 @@ import {
   DrawerHeader,
   DrawerOverlay,
   Flex,
+  HStack,
   Image,
   Link,
+  Progress,
   Text,
   useDisclosure,
   VStack,
@@ -18,21 +21,25 @@ import {
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useRef } from 'react';
+import { useCategoryProgress } from '../../hooks/useCategoryProgress';
 import { useSurveyStore } from '../../stores/survey';
 import { Category } from '../../types/category';
+import { Question } from '../../types/question';
 import { Survey } from '../../types/survey';
 import { ColorModeSwitch } from '../ColorModeSwitch';
 import { MenuLinks } from '../MenuLinks';
 import { CategoryItem } from './CategoryItem';
+import { QuestionsStepper } from './QuestionsStepper';
 
 interface SurveyLayoutProps {
   survey: Survey;
   currentCategory: Category;
+  currentQuestion: Question;
   children: ReactNode;
 }
 
 export function SurveyLayoutMobile(props: SurveyLayoutProps) {
-  const { survey, currentCategory, children } = props;
+  const { survey, currentCategory, children, currentQuestion } = props;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { asPath } = useRouter();
@@ -44,10 +51,15 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
     onClose();
   }, [asPath, onClose]);
 
+  const { progress, isComplete, nbAnswers } = useCategoryProgress(
+    currentCategory,
+    answers[currentCategory.id],
+  );
+
   return (
     <>
-      <VStack height="full" px={5}>
-        <Flex width="full" py={3}>
+      <VStack height="full" px={5} spacing={0}>
+        <Flex width="full" pt={3}>
           <Flex flex={1} alignItems="start">
             <NextLink href="/" passHref>
               <Link>
@@ -80,8 +92,25 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
             <ColorModeSwitch />
           </Flex>
         </Flex>
-        <Box height="full" position="relative">
-          {children}
+        <Box height="full" width="full" position="relative">
+          <Container as={VStack} alignItems="start" maxW="container.md" p={0} m={0} spacing={5}>
+            <HStack width="full">
+              <QuestionsStepper
+                currentCategory={currentCategory}
+                currentQuestion={currentQuestion}
+                categoryAnswers={answers[currentCategory.id]}
+              />
+              <Box flex={1} p={3}>
+                <Progress
+                  value={progress}
+                  hasStripe
+                  colorScheme={isComplete ? 'green' : 'primary'}
+                  aria-label={`${nbAnswers} questions remplies sur ${currentCategory.questions.length}`}
+                />
+              </Box>
+            </HStack>
+            {children}
+          </Container>
         </Box>
       </VStack>
       <Drawer isOpen={isOpen} placement="left" onClose={onClose} finalFocusRef={buttonRef}>
