@@ -92,8 +92,16 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
             <ColorModeSwitch />
           </Flex>
         </Flex>
-        <Box height="full" width="full" position="relative">
-          <Container as={VStack} alignItems="start" maxW="container.md" p={0} m={0} spacing={5}>
+        <Box height="full" width="full">
+          <Container
+            as={VStack}
+            alignItems="start"
+            maxW="container.md"
+            p={0}
+            m={0}
+            spacing={5}
+            position="relative"
+          >
             <HStack width="full">
               <QuestionsStepper
                 currentCategory={currentCategory}
