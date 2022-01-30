@@ -44,7 +44,7 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
         <Grid width="full" templateColumns="1fr 1fr 1fr" p={3}>
           <NextLink href="/" passHref>
             <Link>
-              <Image src="/logo.png" alt="logo" w="64px" />
+              <Image src="/logo.png" alt="logo" w="128px" />
             </Link>
           </NextLink>
 
