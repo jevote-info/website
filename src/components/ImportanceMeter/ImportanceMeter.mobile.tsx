@@ -29,22 +29,23 @@ export function ImportanceMeterMobile(props: ImportanceMeterMobileProps) {
       bottom="64px"
       bgColor={bgColor}
       boxShadow="1px -1px 10px -3px rgb(0 0 0 / 30%)"
+      width="full"
     >
       <HStack {...group} justify="center">
         <ImportanceRadio
-          checkedColor="green.300"
+          checkedColor="blue.400"
           icon={faSnowflake}
           label="Peu important"
           {...notImportantRadioProps}
         />
         <ImportanceRadio
-          checkedColor="primary.300"
+          checkedColor="teal.400"
           icon={faMehBlank}
           label="Neutre"
           {...neutralRadioProps}
         />
         <ImportanceRadio
-          checkedColor="red.300"
+          checkedColor="red.400"
           icon={faFireAlt}
           label="Important"
           {...importantRadioProps}

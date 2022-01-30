@@ -24,19 +24,19 @@ export function ImportanceMeterDesktop(props: ImportanceMeterDesktopProps) {
       </Text>
       <Stack {...group} direction={['column', 'column', 'row']}>
         <ImportanceRadio
-          checkedColor="green.300"
+          checkedColor="blue.400"
           icon={faSnowflake}
           label="Peu important"
           {...notImportantRadioProps}
         />
         <ImportanceRadio
-          checkedColor="primary.300"
+          checkedColor="teal.400"
           icon={faMehBlank}
           label="Neutre"
           {...neutralRadioProps}
         />
         <ImportanceRadio
-          checkedColor="red.300"
+          checkedColor="red.400"
           icon={faFireAlt}
           label="Important"
           {...importantRadioProps}

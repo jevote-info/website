@@ -33,7 +33,7 @@ const Question = (props: QuestionProps) => {
 
   return (
     <Box width="full" mb={['116px', '116px', 5]}>
-      <Box mb={5}>
+      <Box width="full" mb={5}>
         <Heading size="md" as="h2" marginBottom="4px">
           {question.title}
         </Heading>
@@ -41,7 +41,7 @@ const Question = (props: QuestionProps) => {
           {question.description}
         </Heading>
       </Box>
-      <Box>
+      <Box width="full">
         {error?.type === 'required' && (
           <Box mb={5} p={3} borderRadius={6} bgColor="red.100">
             <Text color="red.600" fontWeight="bold">
