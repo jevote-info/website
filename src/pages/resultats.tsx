@@ -1,4 +1,4 @@
-import { Box, Container, Heading, HStack, Image } from '@chakra-ui/react';
+import { Box, Container, Heading, HStack, Image, useToken, VStack } from '@chakra-ui/react';
 import { Category, Politician } from '@prisma/client';
 import {
   VictoryArea,
@@ -18,6 +18,7 @@ import { useSurveyStore } from '../stores/survey';
 import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
 import { calculatePoliticianFactor } from '../utils/calculatePoliticianPossibleScores';
 import { SURVEY_RESULT_SCORE_GAP } from '../utils/calculateSurveyResult';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 interface SerializedResultsProps {
   survey: string;
@@ -79,7 +80,7 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
       survey.reduce<Record<Category['title'], number>>(
         (acc, { title }) => ({
           ...acc,
-          [title]: SURVEY_RESULT_SCORE_GAP,
+          [title.replace(' ', '\n')]: SURVEY_RESULT_SCORE_GAP,
         }),
         {},
       ),
@@ -100,13 +101,16 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
       );
       return {
         ...acc,
-        [title]: politicianScore ? politicianScore.score + 100 : 0,
+        [title.replace(' ', '\n')]: politicianScore ? politicianScore.score + 100 : 0,
       };
     }, {});
   }, [survey, results, favPolitician]);
 
   console.log(results);
   console.log(politicians);
+
+  const isMobile = useIsMobile();
+  const [primary500, gray100] = useToken('colors', ['primary.500', 'gray.300']);
 
   if (!favPolitician) {
     return null;
@@ -120,7 +124,13 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
 
   return (
     <Box>
-      <Container p={5} as={HStack} alignItems="center" justifyContent="center" spacing={10}>
+      <Container
+        p={5}
+        as={isMobile ? VStack : HStack}
+        alignItems="center"
+        justifyContent="center"
+        spacing={10}
+      >
         <Box>
           <Image
             src={favPolitician.pictureUrl}
@@ -133,7 +143,7 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
 
         <Box width="600px" maxWidth="full">
           <VictoryChart polar theme={VictoryTheme.material} domain={{ y: [0, 1] }}>
-            <VictoryGroup colorScale={['gold', 'orange', 'tomato']}>
+            <VictoryGroup colorScale={['gold', primary500]}>
               <VictoryArea
                 data={processData(radarChartCategoryMax)}
                 style={{ data: { fillOpacity: 0, strokeWidth: 0 } }}
@@ -144,20 +154,20 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
               />
             </VictoryGroup>
 
-            {survey.map(({ title }, index) => (
+            {survey.map((category, index) => (
               <VictoryPolarAxis
-                key={title}
+                key={category.slug}
                 dependentAxis
                 style={{
                   axisLabel: { padding: 10 },
                   axis: { stroke: 'none' },
-                  grid: { stroke: 'grey', strokeWidth: 0.25, opacity: 0.5 },
+                  grid: { stroke: gray100, strokeWidth: 0.25, opacity: 0.5 },
                 }}
                 tickLabelComponent={<VictoryLabel labelPlacement="vertical" />}
                 labelPlacement="perpendicular"
                 axisValue={index + 1}
-                label={title}
-                labelComponent={<VictoryLabel style={{ width: '50px', wordBreak: 'break-word' }} />}
+                label={category.slug}
+                axisLabelComponent={<VictoryLabel text={category.slug.split('-')} />}
                 tickFormat={() => ''}
                 tickValues={[0.25, 0.5, 0.75, 1]}
               />

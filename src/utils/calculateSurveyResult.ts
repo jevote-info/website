@@ -29,7 +29,7 @@ const normalizeResult = (
         score: Math.round(score * factor - sub),
       };
     })
-    .sort((a, b) => a.score - b.score);
+    .sort((a, b) => b.score - a.score);
 
   const normalizedCategoriesScores = result.categoriesScores.map(
     ({ categoryId, questionScores, scores }) => {
@@ -51,7 +51,7 @@ const normalizeResult = (
               score: Math.round(score * factor - sub),
             };
           })
-          .sort((a, b) => a.score - b.score),
+          .sort((a, b) => b.score - a.score),
       };
     },
   );
