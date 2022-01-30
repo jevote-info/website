@@ -1,5 +1,13 @@
 import { Box, Image } from '@chakra-ui/react';
-import { Politician } from '@prisma/client';
+import { Category, Politician } from '@prisma/client';
+import {
+  VictoryArea,
+  VictoryChart,
+  VictoryGroup,
+  VictoryLabel,
+  VictoryPolarAxis,
+  VictoryTheme,
+} from 'victory';
 import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
 import { useEffect, useMemo } from 'react';
@@ -9,6 +17,7 @@ import { fetchSurvey } from '../services/survey';
 import { useSurveyStore } from '../stores/survey';
 import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
 import { calculatePoliticianFactor } from '../utils/calculatePoliticianPossibleScores';
+import { SURVEY_RESULT_SCORE_GAP } from '../utils/calculateSurveyResult';
 
 interface SerializedResultsProps {
   survey: string;
@@ -61,23 +70,86 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
 
   const results = useMemo(() => {
     return typeof window === 'undefined'
-      ? { scores: [], categoriesScores: {} }
+      ? { scores: [], categoriesScores: [] }
       : calculateResult(survey, politicianPossibleScores);
   }, [survey, politicianPossibleScores, calculateResult]);
 
-  console.log(results);
-  console.log(politicians);
+  const radarChartCategoryMax = useMemo(
+    () =>
+      survey.reduce<Record<Category['title'], number>>(
+        (acc, { title }) => ({
+          ...acc,
+          [title]: SURVEY_RESULT_SCORE_GAP,
+        }),
+        {},
+      ),
+    [survey],
+  );
 
   const favPolitician = results.scores[0] && politicians[results.scores[0].politicianId];
+
+  const radarChartFavPolitician = useMemo(() => {
+    if (!favPolitician) {
+      return {};
+    }
+
+    return survey.reduce<Record<Category['title'], number>>((acc, { id, title }) => {
+      const categoryScores = results.categoriesScores.find(({ categoryId }) => categoryId === id);
+      const politicianScore = categoryScores?.scores.find(
+        ({ politicianId }) => politicianId === favPolitician.id,
+      );
+      return {
+        ...acc,
+        [title]: politicianScore ? politicianScore.score + 100 : 0,
+      };
+    }, {});
+  }, [survey, results, favPolitician]);
+
+  console.log(results);
+  console.log(politicians);
 
   if (!favPolitician) {
     return null;
   }
 
+  const processData = (data: Record<Category['title'], number>) =>
+    Object.keys(data).map(key => ({
+      x: key,
+      y: data[key] / SURVEY_RESULT_SCORE_GAP,
+    }));
+
   return (
     <Box>
       {favPolitician.name}
       <Image src={favPolitician.pictureUrl} alt={favPolitician.name} />
+
+      <VictoryChart polar theme={VictoryTheme.material} domain={{ y: [0, 1] }}>
+        <VictoryGroup
+          colorScale={['gold', 'orange', 'tomato']}
+          style={{ data: { fillOpacity: 0.2, strokeWidth: 2 } }}
+        >
+          <VictoryArea data={processData(radarChartCategoryMax)} />
+          <VictoryArea data={processData(radarChartFavPolitician)} />
+        </VictoryGroup>
+
+        {survey.map(({ title }, index) => (
+          <VictoryPolarAxis
+            key={title}
+            dependentAxis
+            style={{
+              axisLabel: { padding: 10 },
+              axis: { stroke: 'none' },
+              grid: { stroke: 'grey', strokeWidth: 0.25, opacity: 0.5 },
+            }}
+            tickLabelComponent={<VictoryLabel labelPlacement="vertical" />}
+            labelPlacement="perpendicular"
+            axisValue={index + 1}
+            label={title}
+            tickFormat={t => Math.ceil(t * SURVEY_RESULT_SCORE_GAP)}
+            tickValues={[0.5, 1]}
+          />
+        ))}
+      </VictoryChart>
     </Box>
   );
 }
