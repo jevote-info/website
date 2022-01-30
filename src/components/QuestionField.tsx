@@ -1,4 +1,19 @@
-import { Box, Heading, Text, useRadioGroup, VStack } from '@chakra-ui/react';
+import { InfoOutlineIcon } from '@chakra-ui/icons';
+import {
+  Box,
+  Heading,
+  HStack,
+  IconButton,
+  Popover,
+  PopoverArrow,
+  PopoverBody,
+  PopoverCloseButton,
+  PopoverContent,
+  PopoverTrigger,
+  Text,
+  useRadioGroup,
+  VStack,
+} from '@chakra-ui/react';
 import React from 'react';
 import { Control, useController } from 'react-hook-form';
 import { QuestionAnswer } from '../types/answers';
@@ -34,10 +49,29 @@ const Question = (props: QuestionProps) => {
   return (
     <Box width="full" mb={['116px', '116px', 5]}>
       <Box width="full" mb={5}>
-        <Heading size="md" as="h2" marginBottom="4px">
-          {question.title}
-        </Heading>
-        <Heading size="xs" as="h3">
+        <HStack align="center" mb={1}>
+          <Heading flex={1} size="md" as="h1">
+            {question.title}
+          </Heading>
+          {question.help && (
+            <Popover>
+              <PopoverTrigger>
+                <IconButton
+                  variant="outline"
+                  icon={<InfoOutlineIcon />}
+                  aria-label="Informations"
+                  borderRadius="full"
+                />
+              </PopoverTrigger>
+              <PopoverContent>
+                <PopoverArrow />
+                <PopoverCloseButton />
+                <PopoverBody>{question.help}</PopoverBody>
+              </PopoverContent>
+            </Popover>
+          )}
+        </HStack>
+        <Heading size="xs" as="h2">
           {question.description}
         </Heading>
       </Box>
