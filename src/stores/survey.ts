@@ -19,6 +19,7 @@ interface SurveyState extends State {
     survey: Survey,
     politiciansPossibleScores: SurveyPoliticiansPossibleScores,
   ) => SurveyResult;
+  findMissingAnswer(survey: Survey): { category: Category; question: Question } | null;
 }
 
 const { Provider, useStore, useStoreApi } = createContext<SurveyState>();
@@ -64,6 +65,19 @@ export const createSurveyStore = () => {
                 },
               },
             });
+          },
+          findMissingAnswer(survey) {
+            const { answers } = get();
+
+            for (const category of survey) {
+              for (const question of category.questions) {
+                if (!answers[category.id]?.[question.id]?.choiceId) {
+                  return { category, question };
+                }
+              }
+            }
+
+            return null;
           },
         }),
         {

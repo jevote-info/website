@@ -1,6 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
-import { useMemo } from 'react';
+import { useRouter } from 'next/router';
+import { useEffect, useMemo } from 'react';
 import superjson from 'superjson';
 import { fetchSurvey } from '../services/survey';
 import { useSurveyStore } from '../stores/survey';
@@ -29,12 +30,22 @@ export const getStaticProps: GetStaticProps<SerializedResultsProps> = async ({
 function ResultsPage(serializedProps: SerializedResultsProps) {
   const { politicianPossibleScores } = serializedProps;
 
+  const { push } = useRouter();
+
   const survey = useMemo(
     () => superjson.parse<Survey>(serializedProps.survey),
     [serializedProps.survey],
   );
 
-  const { calculateResult } = useSurveyStore();
+  const { calculateResult, findMissingAnswer } = useSurveyStore();
+
+  useEffect(() => {
+    const missingAnswer = findMissingAnswer(survey);
+
+    if (missingAnswer) {
+      push(`/categories/${missingAnswer.category.slug}/questions/${missingAnswer.question.order}`);
+    }
+  }, [findMissingAnswer, survey, push]);
 
   const results = useMemo(() => {
     return typeof window === 'undefined'
