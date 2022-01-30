@@ -1,21 +1,24 @@
-import { Flex, Grid, HStack, Image, Link, VStack } from '@chakra-ui/react';
+import { Container, Flex, Grid, HStack, Image, Link, VStack } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { ReactNode } from 'react';
 import { useSurveyStore } from '../../stores/survey';
 import { Category } from '../../types/category';
+import { Question } from '../../types/question';
 import { Survey } from '../../types/survey';
 import { ColorModeSwitch } from '../ColorModeSwitch';
 import { MenuLinks } from '../MenuLinks';
 import { CategoryItem } from './CategoryItem';
+import { QuestionsStepper } from './QuestionsStepper';
 
 interface SurveyLayoutProps {
   survey: Survey;
   currentCategory: Category;
+  currentQuestion: Question;
   children: ReactNode;
 }
 
 export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
-  const { survey, currentCategory, children } = props;
+  const { survey, currentCategory, children, currentQuestion } = props;
 
   const { answers } = useSurveyStore();
 
@@ -53,7 +56,14 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
           height="full"
           position="relative"
         >
-          {children}
+          <Container as={VStack} alignItems="start" maxW="container.md" p={0} m={0} spacing={3}>
+            <QuestionsStepper
+              currentCategory={currentCategory}
+              currentQuestion={currentQuestion}
+              categoryAnswers={answers[currentCategory.id]}
+            />
+            {children}
+          </Container>
         </Flex>
       </Grid>
     </VStack>

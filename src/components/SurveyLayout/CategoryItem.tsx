@@ -10,7 +10,7 @@ import {
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-import { useMemo } from 'react';
+import { useCategoryProgress } from '../../hooks/useCategoryProgress';
 import { CategoryAnswers } from '../../types/answers';
 import { Category } from '../../types/category';
 
@@ -25,14 +25,7 @@ export function CategoryItem(props: CategoryItemProps) {
   const activeColor = useColorModeValue('primary.100', 'gray.700');
   const hoverColor = useColorModeValue('primary.50', 'gray.700');
 
-  const nbAnswers = useMemo(() => {
-    return category.questions.reduce(
-      (acc, question) => (categoryAnswers?.[question.id]?.choiceId ? acc + 1 : acc),
-      0,
-    );
-  }, [category, categoryAnswers]);
-  const progress = (nbAnswers * 100) / category.questions.length;
-  const isComplete = progress === 100;
+  const { progress, isComplete, nbAnswers } = useCategoryProgress(category, categoryAnswers);
 
   return (
     <Link href={`/categories/${category.slug}/questions/${category.questions[0]?.order}`} passHref>

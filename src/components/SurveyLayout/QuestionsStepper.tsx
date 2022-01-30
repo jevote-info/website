@@ -17,7 +17,7 @@ export function QuestionsStepper(props: QuestionsStepperProps) {
 
   return (
     <Menu>
-      <MenuButton as={Button}>
+      <MenuButton as={Button} variant="outline">
         Question {currentQuestion.order}/{currentCategory.questions.length}
       </MenuButton>
       <MenuList>
@@ -27,7 +27,7 @@ export function QuestionsStepper(props: QuestionsStepperProps) {
             href={`/categories/${currentCategory.slug}/questions/${question.order}`}
             passHref
           >
-            <MenuItem as="a" bgColor={currentQuestion.id === question.id ? 'green.100' : undefined}>
+            <MenuItem as="a" color={currentQuestion.id === question.id ? 'primary.300' : undefined}>
               Question {question.order}{' '}
               {categoryAnswers?.[question.id]?.choiceId ? (
                 <Box ml="auto" p={1} color="green.400">

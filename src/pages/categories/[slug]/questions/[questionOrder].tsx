@@ -1,4 +1,3 @@
-import { Container } from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
@@ -170,29 +169,31 @@ const CategoryPage = (serializedProps: SerializedCategoryProps) => {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <SurveyLayout survey={survey} currentCategory={currentCategory}>
+      <SurveyLayout
+        survey={survey}
+        currentCategory={currentCategory}
+        currentQuestion={currentQuestion}
+      >
         <AnimatePresence>
           <motion.div
             key={
               currentQuestion.id /* Important so that form gets regenerated between two categories */
             }
             style={{ width: '100%', display: 'flex', justifyContent: 'center' }}
-            initial={{ y: 100, opacity: 0, position: 'absolute' }}
+            initial={{ y: 100, opacity: 0, position: 'absolute', width: '100%' }}
             animate={{ y: 0, opacity: 1, position: 'relative' }}
             exit={{ y: -100, opacity: 0, position: 'absolute' }}
             transition={{ duration: 0.3 }}
           >
-            <Container maxW="container.md" p={0} m={0}>
-              <QuestionForm
-                answers={answers}
-                currentCategory={currentCategory}
-                currentQuestion={currentQuestion}
-                onSubmit={onSubmit}
-                onChange={onChange}
-                previousPath={previousPath}
-                canGoToResult={canGoToResult}
-              />
-            </Container>
+            <QuestionForm
+              answers={answers}
+              currentCategory={currentCategory}
+              currentQuestion={currentQuestion}
+              onSubmit={onSubmit}
+              onChange={onChange}
+              previousPath={previousPath}
+              canGoToResult={canGoToResult}
+            />
           </motion.div>
         </AnimatePresence>
       </SurveyLayout>
