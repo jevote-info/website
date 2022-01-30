@@ -7,19 +7,18 @@ import { Question } from '../types/question';
 import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
 import { SurveyResult } from '../types/surveyResult';
 import { calculateSurveyResult } from '../utils/calculateSurveyResult';
+
 interface SurveyState extends State {
   answers: SurveyAnswers;
-  politiciansPossibleScores?: SurveyPoliticiansPossibleScores;
-  result?: SurveyResult;
   setQuestionAnswer: (
     categoryId: Category['id'],
     questionId: Question['id'],
     answer: QuestionAnswer,
   ) => void;
-  setPoliticiansPossibleScores: (
+  calculateResult: (
+    survey: Survey,
     politiciansPossibleScores: SurveyPoliticiansPossibleScores,
-  ) => void;
-  calculateResult: (survey: Survey) => void;
+  ) => SurveyResult;
 }
 
 const { Provider, useStore, useStoreApi } = createContext<SurveyState>();
@@ -40,17 +39,10 @@ export const createSurveyStore = () => {
           answers: {},
           result: undefined,
           politiciansPossibleScores: undefined,
-          setPoliticiansPossibleScores(politiciansPossibleScores) {
-            set({
-              politiciansPossibleScores,
-            });
-          },
-          calculateResult(survey: Survey) {
-            const { answers, politiciansPossibleScores } = get();
-            const result = calculateSurveyResult(survey, answers, politiciansPossibleScores!);
-            set({
-              result,
-            });
+          calculateResult(survey, politiciansPossibleScores) {
+            const { answers } = get();
+
+            return calculateSurveyResult(survey, answers, politiciansPossibleScores);
           },
           setQuestionAnswer(categoryId, questionId, answer) {
             const answers = get().answers;

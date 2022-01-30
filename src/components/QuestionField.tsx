@@ -57,7 +57,6 @@ const Question = (props: QuestionProps) => {
               label={choice.text}
             />
           ))}
-          <ChoiceRadio {...getRadioProps({ value: 'NO_ANSWER' })} label="Ne se prononce pas" />
         </VStack>
         <ImportanceMeter control={control} />
       </Box>

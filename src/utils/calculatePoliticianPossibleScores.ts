@@ -1,6 +1,10 @@
-import { Survey, SurveyPoliticianPossibleScore } from '../types/survey';
+import {
+  Survey,
+  SurveyPoliticianPossibleScore,
+  SurveyPoliticiansPossibleScores,
+} from '../types/survey';
 
-export const calculatePoliticianFactor = (survey: Survey) => {
+export const calculatePoliticianFactor = (survey: Survey): SurveyPoliticiansPossibleScores => {
   const categoryPossibleScoresByPolitician = survey.map(category => {
     const questionScores = category.questions.map(({ id: questionId, choices }) => {
       const politicianScores = choices.flatMap(({ politicianScores }) =>
@@ -43,11 +47,11 @@ export const calculatePoliticianFactor = (survey: Survey) => {
     };
   });
 
-  const possibleScoresByPolitician = groupPoliticianPossibleScores(
+  const politiciansPossibleScores = groupPoliticianPossibleScores(
     categoryPossibleScoresByPolitician,
   );
 
-  const categoryPossibleScores = categoryPossibleScoresByPolitician.reduce(
+  const categoriesPoliticiansPossibleScores = categoryPossibleScoresByPolitician.reduce(
     (acc, { categoryId, possibleScoresByPolitician }) => ({
       ...acc,
       [categoryId]: possibleScoresByPolitician,
@@ -56,8 +60,8 @@ export const calculatePoliticianFactor = (survey: Survey) => {
   );
 
   return {
-    possibleScoresByPolitician,
-    categoryPossibleScores,
+    politiciansPossibleScores,
+    categoriesPoliticiansPossibleScores,
   };
 };
 
