@@ -1,4 +1,4 @@
-import { Box, Image } from '@chakra-ui/react';
+import { Box, Container, Heading, HStack, Image } from '@chakra-ui/react';
 import { Category, Politician } from '@prisma/client';
 import {
   VictoryArea,
@@ -120,36 +120,51 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
 
   return (
     <Box>
-      {favPolitician.name}
-      <Image src={favPolitician.pictureUrl} alt={favPolitician.name} />
-
-      <VictoryChart polar theme={VictoryTheme.material} domain={{ y: [0, 1] }}>
-        <VictoryGroup
-          colorScale={['gold', 'orange', 'tomato']}
-          style={{ data: { fillOpacity: 0.2, strokeWidth: 2 } }}
-        >
-          <VictoryArea data={processData(radarChartCategoryMax)} />
-          <VictoryArea data={processData(radarChartFavPolitician)} />
-        </VictoryGroup>
-
-        {survey.map(({ title }, index) => (
-          <VictoryPolarAxis
-            key={title}
-            dependentAxis
-            style={{
-              axisLabel: { padding: 10 },
-              axis: { stroke: 'none' },
-              grid: { stroke: 'grey', strokeWidth: 0.25, opacity: 0.5 },
-            }}
-            tickLabelComponent={<VictoryLabel labelPlacement="vertical" />}
-            labelPlacement="perpendicular"
-            axisValue={index + 1}
-            label={title}
-            tickFormat={t => Math.ceil(t * SURVEY_RESULT_SCORE_GAP)}
-            tickValues={[0.5, 1]}
+      <Container p={5} as={HStack} alignItems="center" justifyContent="center" spacing={10}>
+        <Box>
+          <Image
+            src={favPolitician.pictureUrl}
+            alt={favPolitician.name}
+            width="300px"
+            borderRadius={4}
           />
-        ))}
-      </VictoryChart>
+          <Heading>{favPolitician.name}</Heading>
+        </Box>
+
+        <Box width="600px" maxWidth="full">
+          <VictoryChart polar theme={VictoryTheme.material} domain={{ y: [0, 1] }}>
+            <VictoryGroup colorScale={['gold', 'orange', 'tomato']}>
+              <VictoryArea
+                data={processData(radarChartCategoryMax)}
+                style={{ data: { fillOpacity: 0, strokeWidth: 0 } }}
+              />
+              <VictoryArea
+                data={processData(radarChartFavPolitician)}
+                style={{ data: { fillOpacity: 0.2, strokeWidth: 2 } }}
+              />
+            </VictoryGroup>
+
+            {survey.map(({ title }, index) => (
+              <VictoryPolarAxis
+                key={title}
+                dependentAxis
+                style={{
+                  axisLabel: { padding: 10 },
+                  axis: { stroke: 'none' },
+                  grid: { stroke: 'grey', strokeWidth: 0.25, opacity: 0.5 },
+                }}
+                tickLabelComponent={<VictoryLabel labelPlacement="vertical" />}
+                labelPlacement="perpendicular"
+                axisValue={index + 1}
+                label={title}
+                labelComponent={<VictoryLabel style={{ width: '50px', wordBreak: 'break-word' }} />}
+                tickFormat={() => ''}
+                tickValues={[0.25, 0.5, 0.75, 1]}
+              />
+            ))}
+          </VictoryChart>
+        </Box>
+      </Container>
     </Box>
   );
 }
