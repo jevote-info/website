@@ -1,5 +1,6 @@
 import { extendTheme, ThemeConfig } from '@chakra-ui/react';
 import { globalStyles } from './globalStyles';
+import { ProgressTheme } from './progress';
 
 const config: ThemeConfig = {
   initialColorMode: 'system',
@@ -37,6 +38,7 @@ const theme = extendTheme({
       900: '#ae1d00',
     },
   },
+  ...ProgressTheme,
 });
 
 export default theme;
