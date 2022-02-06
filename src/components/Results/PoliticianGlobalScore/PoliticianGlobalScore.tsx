@@ -10,7 +10,7 @@ interface PoliticianGlobalScoreProps {
 export function PoliticianGlobalScore(props: PoliticianGlobalScoreProps) {
   const { politician, score, onClick } = props;
 
-  const defaultProgressBackground = useColorModeValue('teal.50', 'gray.500');
+  const defaultProgressBackground = useColorModeValue('primary.50', 'gray.500');
   const valueNow = Math.abs(score);
 
   return (
