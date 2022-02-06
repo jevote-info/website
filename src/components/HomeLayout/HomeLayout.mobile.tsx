@@ -40,7 +40,7 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
 
   return (
     <>
-      <VStack>
+      <VStack height="full">
         <Grid width="full" templateColumns="1fr 1fr 1fr" p={3}>
           <NextLink href="/" passHref>
             <Link>

@@ -24,6 +24,7 @@ import { PoliticianCategoriesChart } from '../components/Results/PoliticianCateg
 import { PoliticianGlobalScore } from '../components/Results/PoliticianGlobalScore';
 import { Category } from '../types/category';
 import { ChevronDownIcon } from '@chakra-ui/icons';
+import { PoliticiansPodium } from '../components/Results/PoliticiansPodium';
 
 interface SerializedResultsProps {
   survey: string;
@@ -85,6 +86,9 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
   }, [survey, politicianPossibleScores, calculateResult]);
 
   const favPolitician = results.scores[0] && politicians[results.scores[0].politicianId];
+  const topThreePoliticians = useMemo(() => {
+    return results.scores.slice(0, 3).map(({ politicianId }) => politicians[politicianId]);
+  }, [results, politicians]);
 
   const [selectedPolitician, setSelectedPolitician] = useState(favPolitician);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
@@ -104,12 +108,15 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <HomeLayout surveyPath={surveyPath}>
-        <Box>
-          <PoliticianCategoriesChart
-            politician={selectedPolitician}
-            survey={survey}
-            results={results}
-          />
+        <Box height="full">
+          <PoliticiansPodium politicians={topThreePoliticians} nextSectionId="graphique" />
+          <Box id="graphique">
+            <PoliticianCategoriesChart
+              politician={selectedPolitician}
+              survey={survey}
+              results={results}
+            />
+          </Box>
           <Container p={5} as={VStack} alignItems="start" spacing={5} maxW="container.lg">
             <Menu>
               <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>

@@ -78,7 +78,7 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
         <Heading>{politician.name}</Heading>
       </Box>
 
-      <Box width={[350, 350, 500]} maxWidth="full">
+      <Box width={[300, 350, 500]} maxWidth="full">
         <VictoryChart
           polar
           theme={VictoryTheme.material}
