@@ -1,7 +1,8 @@
 import create, { State, UseBoundStore } from 'zustand';
 import createContext from 'zustand/context';
 import { persist } from 'zustand/middleware';
-import { QuestionAnswer, SurveyAnswers } from '../types/answers';
+import isEqual from 'lodash.isequal';
+import { QuestionAnswer, SurveyAnswers, SimpleQuestionAnswer, MultichoiceQuestionAnswer } from '../types/answers';
 import { Category } from '../types/category';
 import { Question } from '../types/question';
 import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
@@ -49,10 +50,7 @@ export const createSurveyStore = () => {
             const answers = get().answers;
             const existingAnswer = answers[categoryId]?.[questionId];
 
-            if (
-              existingAnswer?.choiceId === answer.choiceId &&
-              existingAnswer?.weight === answer.weight
-            ) {
+            if (isEqual(existingAnswer, answer)) {
               return;
             }
 
@@ -71,8 +69,14 @@ export const createSurveyStore = () => {
 
             for (const category of survey) {
               for (const question of category.questions) {
-                if (!answers[category.id]?.[question.id]?.choiceId) {
-                  return { category, question };
+                if (question.multichoice) {
+                  if (!(answers[category.id]?.[question.id] as MultichoiceQuestionAnswer)?.choices?.length) {
+                    return { category, question };
+                  }
+                } else {
+                  if (!(answers[category.id]?.[question.id] as SimpleQuestionAnswer)?.choiceId) {
+                    return { category, question };
+                  }
                 }
               }
             }

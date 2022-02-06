@@ -10,7 +10,6 @@ export interface SurveyResult {
     scores: SurveyResultScore[];
     questionScores: {
       questionId: string;
-      choiceId: string;
       scores: SurveyResultScore[];
     }[];
   }[];

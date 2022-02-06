@@ -6,32 +6,54 @@ import {
 
 export const calculatePoliticianFactor = (survey: Survey): SurveyPoliticiansPossibleScores => {
   const categoryPossibleScoresByPolitician = survey.map(category => {
-    const questionScores = category.questions.map(({ id: questionId, choices }) => {
+    const questionScores = category.questions.map(({ id: questionId, choices, multichoice }) => {
       const politicianScores = choices.flatMap(({ politicianScores }) =>
         politicianScores.map(({ politicianId, score }) => ({ politicianId, score })),
       );
 
-      const possibleScoresByPolitician = politicianScores.reduce<SurveyPoliticianPossibleScore>(
-        (acc, { politicianId, score }) => ({
-          ...acc,
-          [politicianId]: acc[politicianId]
-            ? {
-                minPossibleScore:
-                  score <= acc[politicianId].minPossibleScore
-                    ? score
-                    : acc[politicianId].minPossibleScore,
-                maxPossibleScore:
-                  score >= acc[politicianId].maxPossibleScore
-                    ? score
-                    : acc[politicianId].maxPossibleScore,
-              }
-            : {
-                minPossibleScore: score,
-                maxPossibleScore: score,
-              },
-        }),
-        {},
-      );
+      const possibleScoresByPolitician = multichoice
+        ? politicianScores.reduce<SurveyPoliticianPossibleScore>(
+            (acc, { politicianId, score }) => ({
+              ...acc,
+              [politicianId]: acc[politicianId]
+                ? {
+                    minPossibleScore:
+                      score < 0
+                        ? acc[politicianId].minPossibleScore + score
+                        : acc[politicianId].minPossibleScore,
+                    maxPossibleScore:
+                      score > 0
+                        ? acc[politicianId].maxPossibleScore + score
+                        : acc[politicianId].maxPossibleScore,
+                  }
+                : {
+                    minPossibleScore: score,
+                    maxPossibleScore: score,
+                  },
+            }),
+            {},
+          )
+        : politicianScores.reduce<SurveyPoliticianPossibleScore>(
+            (acc, { politicianId, score }) => ({
+              ...acc,
+              [politicianId]: acc[politicianId]
+                ? {
+                    minPossibleScore:
+                      score <= acc[politicianId].minPossibleScore
+                        ? score
+                        : acc[politicianId].minPossibleScore,
+                    maxPossibleScore:
+                      score >= acc[politicianId].maxPossibleScore
+                        ? score
+                        : acc[politicianId].maxPossibleScore,
+                  }
+                : {
+                    minPossibleScore: score,
+                    maxPossibleScore: score,
+                  },
+            }),
+            {},
+          );
 
       return {
         questionId,
