@@ -37,6 +37,10 @@ const theme = extendTheme({
       900: '#ae1d00',
     },
   },
+  fonts: {
+    heading: 'Quicksand',
+    body: 'Quicksand',
+  },
 });
 
 export default theme;
