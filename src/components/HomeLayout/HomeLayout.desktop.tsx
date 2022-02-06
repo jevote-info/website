@@ -13,7 +13,7 @@ export function HomeLayoutDesktop(props: HomeLayoutProps) {
   const { surveyPath, children } = props;
 
   return (
-    <VStack>
+    <VStack height="full">
       <HStack width="full" align="center" justify="space-between" px={[3, 3, 5]} py={3}>
         <NextLink href="/" passHref>
           <Link>

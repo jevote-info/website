@@ -1,0 +1,1 @@
+export { PoliticianCategoriesChart } from './PoliticianCategoriesChart';
