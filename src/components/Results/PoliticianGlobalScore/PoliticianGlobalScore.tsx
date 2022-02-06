@@ -1,53 +1,65 @@
-import { Avatar, Box, Progress, ProgressLabel, Text, WrapItem } from '@chakra-ui/react';
+import { Avatar, Box, Button, HStack, Text, useColorModeValue } from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
 
 interface PoliticianGlobalScoreProps {
   politician: Politician;
   score: number;
+  onClick(): void;
 }
 
 export function PoliticianGlobalScore(props: PoliticianGlobalScoreProps) {
-  const { politician, score } = props;
+  const { politician, score, onClick } = props;
+
+  const defaultProgressBackground = useColorModeValue('teal.50', 'gray.500');
+  const valueNow = Math.abs(score);
 
   return (
-    <Box width="100%">
-      <WrapItem padding={2} alignItems="center">
-        <Avatar name={politician.name} src={politician.pictureUrl} />
-        <Text marginLeft={2} fontWeight="bold">
-          {politician.name}
+    <Button
+      isFullWidth
+      height="fit-content"
+      display="block"
+      variant="ghost"
+      p={5}
+      onClick={onClick}
+    >
+      <HStack justify="space-between">
+        <HStack padding={2} alignItems="center" mb={3} spacing={3}>
+          <Avatar name={politician.name} src={politician.pictureUrl} />
+          <Text marginLeft={2} fontWeight="bold">
+            {politician.name}
+          </Text>
+        </HStack>
+        <Text color={score > 0 ? 'primary.400' : 'secondary.400'} fontWeight="bold" fontSize="lg">
+          {score}
         </Text>
-      </WrapItem>
+      </HStack>
 
-      {score > 0 && (
-        <Progress
-          variant="multiSegment"
+      <Box
+        flex={1}
+        height={8}
+        bgColor={defaultProgressBackground}
+        borderRadius="lg"
+        position="relative"
+        mb={5}
+        role="progressbar"
+        aria-valuemax={100}
+        aria-valuemin={0}
+        aria-valuenow={valueNow}
+      >
+        <Box
           height={8}
-          min={0}
-          max={200}
-          values={[
-            { color: 'default', value: 100 },
-            { color: 'primary.500', value: score },
-            { color: 'default', value: 100 - score },
-          ]}
-        >
-          <ProgressLabel>{score}</ProgressLabel>
-        </Progress>
-      )}
-      {score <= 0 && (
-        <Progress
-          variant="multiSegment"
-          height={8}
-          min={0}
-          max={200}
-          values={[
-            { color: 'default', value: 100 - Math.abs(score) },
-            { color: 'secondary.500', value: Math.abs(score) },
-            { color: 'default', value: 100 },
-          ]}
-        >
-          <ProgressLabel>{score}</ProgressLabel>
-        </Progress>
-      )}
-    </Box>
+          width={`${valueNow / 2}%`}
+          position="absolute"
+          top={0}
+          bottom={0}
+          left="50%"
+          bgColor={score > 0 ? 'primary.500' : 'secondary.500'}
+          transform={score < 0 ? 'rotate(180deg)' : undefined}
+          transformOrigin="left"
+          borderRightRadius="lg"
+          transition="width 200ms ease"
+        />
+      </Box>
+    </Button>
   );
 }

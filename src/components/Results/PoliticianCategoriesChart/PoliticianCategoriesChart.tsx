@@ -8,9 +8,9 @@ import {
   VictoryLabel,
   VictoryPolarAxis,
   VictoryTheme,
+  VictoryTooltip,
 } from 'victory';
 import { useIsMobile } from '../../../hooks/useIsMobile';
-import { Category } from '../../../types/category';
 import { Survey } from '../../../types/survey';
 import { SurveyResult } from '../../../types/surveyResult';
 import { SURVEY_RESULT_SCORE_GAP } from '../../../utils/calculateSurveyResult';
@@ -29,61 +29,70 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
 
   const radarChartCategoryMax = useMemo(
     () =>
-      survey.reduce<Record<Category['title'], number>>(
-        (acc, { title }) => ({
-          ...acc,
-          [title.replace(' ', '\n')]: SURVEY_RESULT_SCORE_GAP,
-        }),
-        {},
-      ),
+      survey.map(category => ({
+        x: category.title,
+        y: SURVEY_RESULT_SCORE_GAP,
+      })),
     [survey],
   );
 
   const radarChart = useMemo(() => {
     if (!politician) {
-      return {};
+      return [];
     }
 
-    return survey.reduce<Record<Category['title'], number>>((acc, { id, title }) => {
-      const categoryScores = results.categoriesScores.find(({ categoryId }) => categoryId === id);
+    return survey.map(category => {
+      const categoryScores = results.categoriesScores.find(
+        ({ categoryId }) => categoryId === category.id,
+      );
       const politicianScore = categoryScores?.scores.find(
         ({ politicianId }) => politicianId === politician.id,
       );
-      return {
-        ...acc,
-        [title.replace(' ', '\n')]: politicianScore ? politicianScore.score + 100 : 0,
-      };
-    }, {});
-  }, [survey, results, politician]);
+      const categoryScore =
+        (politicianScore ? politicianScore.score + 100 : 0) / SURVEY_RESULT_SCORE_GAP;
 
-  const processData = (data: Record<Category['title'], number>) =>
-    Object.keys(data).map(key => ({
-      x: key,
-      y: data[key] / SURVEY_RESULT_SCORE_GAP,
-    }));
+      return {
+        x: category.title,
+        y: categoryScore,
+        label: `${categoryScore}%`,
+      };
+    });
+  }, [survey, results, politician]);
 
   return (
     <Container
       p={5}
       as={isMobile ? VStack : HStack}
       alignItems="center"
-      justifyContent="center"
-      spacing={10}
+      justifyContent="space-between"
+      maxW="container.lg"
     >
       <Box>
-        <Image src={politician.pictureUrl} alt={politician.name} width="300px" borderRadius={4} />
+        <Image
+          src={politician.pictureUrl}
+          alt={politician.name}
+          width={[250, 250, 300]}
+          maxWidth="full"
+          borderRadius={4}
+        />
         <Heading>{politician.name}</Heading>
       </Box>
 
-      <Box width="600px" maxWidth="full">
-        <VictoryChart polar theme={VictoryTheme.material} domain={{ y: [0, 1] }}>
+      <Box width={[350, 350, 500]} maxWidth="full">
+        <VictoryChart
+          polar
+          theme={VictoryTheme.material}
+          domain={{ y: [0, 1] }}
+          animate={{ duration: 700, easing: 'exp' }}
+        >
           <VictoryGroup colorScale={['gold', primary500]}>
             <VictoryArea
-              data={processData(radarChartCategoryMax)}
+              data={radarChartCategoryMax}
               style={{ data: { fillOpacity: 0, strokeWidth: 0 } }}
             />
             <VictoryArea
-              data={processData(radarChart)}
+              labelComponent={<VictoryTooltip />}
+              data={radarChart}
               style={{ data: { fillOpacity: 0.2, strokeWidth: 2 } }}
             />
           </VictoryGroup>

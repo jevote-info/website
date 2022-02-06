@@ -1,8 +1,17 @@
-import { Box, Container, VStack } from '@chakra-ui/react';
+import {
+  Box,
+  Button,
+  Container,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  VStack,
+} from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
 import { GetStaticProps } from 'next';
 import { useRouter } from 'next/router';
-import { useEffect, useMemo } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import superjson from 'superjson';
 import { HomeLayout } from '../components/HomeLayout';
 import { fetchPoliticians } from '../services/politicians';
@@ -13,6 +22,8 @@ import { calculatePoliticianFactor } from '../utils/calculatePoliticianPossibleS
 import Head from 'next/head';
 import { PoliticianCategoriesChart } from '../components/Results/PoliticianCategoriesChart';
 import { PoliticianGlobalScore } from '../components/Results/PoliticianGlobalScore';
+import { Category } from '../types/category';
+import { ChevronDownIcon } from '@chakra-ui/icons';
 
 interface SerializedResultsProps {
   survey: string;
@@ -75,6 +86,9 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
 
   const favPolitician = results.scores[0] && politicians[results.scores[0].politicianId];
 
+  const [selectedPolitician, setSelectedPolitician] = useState(favPolitician);
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
+
   if (!favPolitician) {
     return null;
   }
@@ -91,23 +105,43 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
       </Head>
       <HomeLayout surveyPath={surveyPath}>
         <Box>
-          <PoliticianCategoriesChart politician={favPolitician} survey={survey} results={results} />
-          <Container
-            p={5}
-            as={VStack}
-            alignItems="center"
-            justifyContent="center"
-            spacing={10}
-            width="600px"
-            maxWidth="full"
-          >
-            {results.scores.map(({ politicianId, score }) => (
-              <PoliticianGlobalScore
-                key={politicianId}
-                politician={politicians[politicianId]}
-                score={score}
-              />
-            ))}
+          <PoliticianCategoriesChart
+            politician={selectedPolitician}
+            survey={survey}
+            results={results}
+          />
+          <Container p={5} as={VStack} alignItems="start" spacing={5} maxW="container.lg">
+            <Menu>
+              <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                {selectedCategory?.title || 'Général'}
+              </MenuButton>
+              <MenuList>
+                <MenuItem onClick={() => setSelectedCategory(null)}>Général</MenuItem>
+                {survey.map(category => (
+                  <MenuItem key={category.id} onClick={() => setSelectedCategory(category)}>
+                    {category.title}
+                  </MenuItem>
+                ))}
+              </MenuList>
+            </Menu>
+            {results.scores.map(({ politicianId, score }) => {
+              const categoryScores = results.categoriesScores.find(
+                ({ categoryId }) => categoryId === selectedCategory?.id,
+              );
+              const politicianScore = categoryScores?.scores.find(
+                categoryScore => categoryScore.politicianId === politicianId,
+              );
+              const categoryScore = politicianScore ? politicianScore.score : 0;
+
+              return (
+                <PoliticianGlobalScore
+                  key={politicianId}
+                  politician={politicians[politicianId]}
+                  score={selectedCategory ? categoryScore : score}
+                  onClick={() => setSelectedPolitician(politicians[politicianId])}
+                />
+              );
+            })}
           </Container>
         </Box>
       </HomeLayout>
