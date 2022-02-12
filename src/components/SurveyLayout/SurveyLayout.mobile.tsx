@@ -11,7 +11,6 @@ import {
   DrawerOverlay,
   Flex,
   HStack,
-  Image,
   Link,
   Progress,
   Text,
@@ -27,7 +26,9 @@ import { Category } from '../../types/category';
 import { Question } from '../../types/question';
 import { Survey } from '../../types/survey';
 import { ColorModeSwitch } from '../ColorModeSwitch';
+import { Logo } from '../Logo';
 import { MenuLinks } from '../MenuLinks';
+import { CategoryIcon } from './CategoryIcon';
 import { CategoryItem } from './CategoryItem';
 import { QuestionsStepper } from './QuestionsStepper';
 
@@ -63,7 +64,7 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
           <Flex flex={1} alignItems="start">
             <NextLink href="/" passHref>
               <Link>
-                <Image src="/logo.png" alt="logo" w="128px" />
+                <Logo />
               </Link>
             </NextLink>
           </Flex>
@@ -81,7 +82,9 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
               width={150}
               height="fit-content"
             >
-              <Image src={currentCategory.image} alt={currentCategory.title} height="30px" mb={3} />
+              <Box mb={3}>
+                <CategoryIcon category={currentCategory} />
+              </Box>
               <Text fontSize="sm" fontWeight="semibold" whiteSpace="normal">
                 {currentCategory.title}
               </Text>

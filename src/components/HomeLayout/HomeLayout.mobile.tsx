@@ -3,7 +3,6 @@ import {
   Flex,
   Button,
   IconButton,
-  Image,
   Link,
   VStack,
   Grid,
@@ -20,6 +19,7 @@ import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { MenuLinks } from '../MenuLinks';
 import { ColorModeSwitch } from '../ColorModeSwitch';
+import { Logo } from '../Logo';
 
 interface HomeLayoutProps {
   surveyPath: string;
@@ -44,7 +44,7 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
         <Grid width="full" templateColumns="1fr 1fr 1fr" p={3}>
           <NextLink href="/" passHref>
             <Link>
-              <Image src="/logo.png" alt="logo" w="128px" />
+              <Logo />
             </Link>
           </NextLink>
 
@@ -70,7 +70,7 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
           <DrawerHeader>
             <NextLink href="/" passHref>
               <Link>
-                <Image src="/logo.png" alt="logo" w="64px" />
+                <Logo size="small" />
               </Link>
             </NextLink>
           </DrawerHeader>

@@ -3,16 +3,16 @@ import {
   CircularProgress,
   CircularProgressLabel,
   HStack,
-  Image,
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
 import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
-import { useCategoryProgress } from '../../hooks/useCategoryProgress';
-import { CategoryAnswers } from '../../types/answers';
-import { Category } from '../../types/category';
+import { useCategoryProgress } from '../../../hooks/useCategoryProgress';
+import { CategoryAnswers } from '../../../types/answers';
+import { Category } from '../../../types/category';
+import { CategoryIcon } from '../CategoryIcon';
 
 interface CategoryItemProps {
   isActive: boolean;
@@ -41,8 +41,8 @@ export function CategoryItem(props: CategoryItemProps) {
           bgColor: isActive ? activeColor : hoverColor,
         }}
       >
-        <Box width={10} justifyContent="center">
-          <Image src={category.image} alt={category.title} height={8} />
+        <Box width={10} justifyContent="center" color="white">
+          <CategoryIcon category={category} />
         </Box>
         <Text flex={1} fontSize="lg" fontWeight="semibold">
           {category.title}
