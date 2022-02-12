@@ -1,8 +1,8 @@
 import { useColorModeValue, useToken } from '@chakra-ui/react';
-import { Category } from '../../../types/category';
+import { LightweightCategory } from '../../../types/category';
 
 interface CategoryIconProps {
-  category: Category;
+  category: LightweightCategory;
 }
 
 export function CategoryIcon(props: CategoryIconProps) {

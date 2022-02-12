@@ -1,4 +1,5 @@
 import { Category, Choice, Politician, PoliticianScore, Question } from '@prisma/client';
+import { LightweightCategory } from './category';
 
 export type Survey = (Category & {
   questions: (Question & {
@@ -7,6 +8,8 @@ export type Survey = (Category & {
     })[];
   })[];
 })[];
+
+export type LightweightSurvey = LightweightCategory[];
 
 export interface SurveyPoliticiansScoreBounds {
   minPossibleScore: number;

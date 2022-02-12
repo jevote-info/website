@@ -3,12 +3,13 @@ import { Button, Flex, HStack, useColorModeValue } from '@chakra-ui/react';
 import Link from 'next/link';
 
 interface SubmitButtonsProps {
+  formId: string;
   previousPath: string | null;
   canGoToResult: boolean;
 }
 
 export function SubmitButtonsMobile(props: SubmitButtonsProps) {
-  const { previousPath, canGoToResult } = props;
+  const { formId, previousPath, canGoToResult } = props;
 
   const bgColor = useColorModeValue('#FFFFFF', '#1a202c');
 
@@ -30,7 +31,7 @@ export function SubmitButtonsMobile(props: SubmitButtonsProps) {
           <ChevronUpIcon />
         </Button>
       </Link>
-      <Button type="submit" colorScheme="primary">
+      <Button form={formId} type="submit" colorScheme="primary">
         Suivant
       </Button>
       <Flex flex={1} justify="flex-end">

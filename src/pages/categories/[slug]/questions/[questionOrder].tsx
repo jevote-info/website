@@ -7,17 +7,21 @@ import superjson from 'superjson';
 import { Importance } from '../../../../components/ImportanceMeter';
 import { SurveyLayout } from '../../../../components/SurveyLayout';
 import { QuestionForm } from '../../../../forms/QuestionForm';
+import { SubmitButtonsDesktop } from '../../../../forms/QuestionForm/SubmitButtons.desktop';
+import { SubmitButtonsMobile } from '../../../../forms/QuestionForm/SubmitButtons.mobile';
+import { useIsMobile } from '../../../../hooks/useIsMobile';
 import { fetchSurvey } from '../../../../services/survey';
 import { useSurveyStore } from '../../../../stores/survey';
 import { QuestionAnswer } from '../../../../types/answers';
-import { Category } from '../../../../types/category';
+import { LightweightCategory } from '../../../../types/category';
 import { Question } from '../../../../types/question';
-import { Survey } from '../../../../types/survey';
+import { LightweightSurvey } from '../../../../types/survey';
+import { categoryToLightweight } from '../../../../utils/categoryToLightweight';
 
 interface SerializedCategoryProps {
-  survey: string;
+  survey: LightweightSurvey;
   currentQuestion: string;
-  currentCategory: string;
+  currentCategory: LightweightCategory;
   previousPath: string | null;
   nextPath: string;
 }
@@ -98,9 +102,9 @@ export const getStaticProps: GetStaticProps<SerializedCategoryProps> = async ({
 
   return {
     props: {
-      survey: superjson.stringify(survey),
+      survey: survey.map(categoryToLightweight),
       currentQuestion: superjson.stringify(currentQuestion),
-      currentCategory: superjson.stringify(currentCategory),
+      currentCategory: categoryToLightweight(currentCategory),
       previousPath,
       nextPath,
     },
@@ -108,21 +112,12 @@ export const getStaticProps: GetStaticProps<SerializedCategoryProps> = async ({
 };
 
 function QuestionPage(serializedProps: SerializedCategoryProps) {
-  const { nextPath, previousPath } = serializedProps;
+  const { nextPath, previousPath, survey, currentCategory } = serializedProps;
   const { push } = useRouter();
-
-  const survey = useMemo(
-    () => superjson.parse<Survey>(serializedProps.survey),
-    [serializedProps.survey],
-  );
 
   const currentQuestion = useMemo(
     () => superjson.parse<Question>(serializedProps.currentQuestion),
     [serializedProps.currentQuestion],
-  );
-  const currentCategory = useMemo(
-    () => superjson.parse<Category>(serializedProps.currentCategory),
-    [serializedProps.currentCategory],
   );
 
   const { answers, setQuestionAnswer } = useSurveyStore();
@@ -159,6 +154,8 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
     );
   }, [answers, survey]);
 
+  const isMobile = useIsMobile();
+
   return (
     <>
       <Head>
@@ -188,16 +185,24 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
             transition={{ duration: 0.3 }}
           >
             <QuestionForm
+              formId="question-form"
               answers={answers}
               currentCategory={currentCategory}
               currentQuestion={currentQuestion}
               onSubmit={onSubmit}
               onChange={onChange}
-              previousPath={previousPath}
-              canGoToResult={canGoToResult}
             />
           </motion.div>
         </AnimatePresence>
+        {isMobile ? (
+          <SubmitButtonsMobile
+            formId="question-form"
+            previousPath={previousPath}
+            canGoToResult={canGoToResult}
+          />
+        ) : (
+          <SubmitButtonsDesktop formId="question-form" previousPath={previousPath} />
+        )}
       </SurveyLayout>
     </>
   );
