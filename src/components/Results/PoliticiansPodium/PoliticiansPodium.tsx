@@ -5,7 +5,6 @@ import {
   Flex,
   Heading,
   HStack,
-  Image,
   Text,
   usePrefersReducedMotion,
   useToken,
@@ -17,6 +16,7 @@ import {
 import { Politician } from '@prisma/client';
 import Confetti from 'react-confetti';
 import { useWindowSize } from '../../../hooks/useWindowSize';
+import { PoliticianPicture } from '../PoliticianPicture';
 
 interface PoliticiansPodiumProps {
   politicians: Politician[];
@@ -84,19 +84,30 @@ export function PoliticiansPodium(props: PoliticiansPodiumProps) {
           />
         </>
       )}
-      <Box width="full">
+      <VStack width="full" flex={1} justifyContent="center">
         <Center>
           <Heading as="h1" mb={[5, 10]}>
             Vos résultats
           </Heading>
         </Center>
-        <HStack alignItems="end" justifyContent="space-between" spacing={5} mb={5} width="full">
-          <VStack width="33%" height="fit-content">
-            <Image src={politicians[1].pictureUrl} alt={politicians[1].name} />
-            <Text fontWeight="bold">{politicians[1].name}</Text>
+        <HStack
+          align="flex-end"
+          justify="space-between"
+          spacing={5}
+          width="full"
+          borderBottomRadius={8}
+          borderBottomColor="primary.500"
+          borderBottomWidth={5}
+          borderBottomStyle="solid"
+        >
+          <VStack flex={1} justify="flex-end">
+            <PoliticianPicture politician={politicians[1]} />
+            <Text fontWeight="bold" align="center">
+              {politicians[1].name}
+            </Text>
             <Box
               width="full"
-              height="30vh"
+              height="23vh"
               bgColor="primary.200"
               borderTopRadius="lg"
               position="relative"
@@ -116,12 +127,14 @@ export function PoliticiansPodium(props: PoliticiansPodiumProps) {
               </Flex>
             </Box>
           </VStack>
-          <VStack width="33%" height="fit-content">
-            <Image src={politicians[0].pictureUrl} alt={politicians[0].name} />
-            <Text fontWeight="bold">{politicians[0].name}</Text>
+          <VStack flex={1} height="full" justify="flex-end">
+            <PoliticianPicture politician={politicians[0]} />
+            <Text fontWeight="bold" align="center">
+              {politicians[0].name}
+            </Text>
             <Box
               width="full"
-              height="50vh"
+              height="42vh"
               bgColor="primary.500"
               borderTopRadius="lg"
               position="relative"
@@ -141,12 +154,14 @@ export function PoliticiansPodium(props: PoliticiansPodiumProps) {
               </Flex>
             </Box>
           </VStack>
-          <VStack width="33%" height="fit-content">
-            <Image src={politicians[2].pictureUrl} alt={politicians[2].name} />
-            <Text fontWeight="bold">{politicians[2].name}</Text>
+          <VStack flex={1} height="full" justify="flex-end">
+            <PoliticianPicture politician={politicians[2]} />
+            <Text fontWeight="bold" align="center">
+              {politicians[2].name}
+            </Text>
             <Box
               width="full"
-              height="10vh"
+              height="12vh"
               bgColor="secondary.500"
               borderTopRadius="lg"
               position="relative"
@@ -167,7 +182,7 @@ export function PoliticiansPodium(props: PoliticiansPodiumProps) {
             </Box>
           </VStack>
         </HStack>
-      </Box>
+      </VStack>
       <VStack as={Link} alignItems="center" p={5} spacing={0} href={`#${nextSectionId}`}>
         <Text>Faites défiler pour plus de détails</Text>
         <ChevronDownIcon animation={`${move} infinite 2s ease`} fontSize={30} />

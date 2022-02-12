@@ -1,4 +1,4 @@
-import { useRadioGroup, HStack, Box, useColorModeValue } from '@chakra-ui/react';
+import { useRadioGroup, HStack, Text, Flex } from '@chakra-ui/react';
 import { ImportanceRadio } from './ImportanceRadio';
 import { faFireAlt, faSnowflake, faMehBlank } from '@fortawesome/free-solid-svg-icons';
 import { Importance } from './ImportanceMeter.types';
@@ -17,21 +17,12 @@ export function ImportanceMeterMobile(props: ImportanceMeterMobileProps) {
   const neutralRadioProps = getRadioProps({ value: `${Importance.NEUTRAL}` });
   const importantRadioProps = getRadioProps({ value: `${Importance.IMPORTANT}` });
 
-  const bgColor = useColorModeValue('white', 'black');
-
   return (
-    <Box
-      p={3}
-      pb={1}
-      position="fixed"
-      left={0}
-      right={0}
-      bottom="64px"
-      bgColor={bgColor}
-      boxShadow="1px -1px 10px -3px rgb(0 0 0 / 30%)"
-      width="full"
-    >
-      <HStack {...group} justify="center">
+    <Flex direction="column" mt={8}>
+      <Text mb={3} fontWeight="semibold">
+        Ce sujet est-il important pour vous ?
+      </Text>
+      <HStack {...group}>
         <ImportanceRadio
           checkedColor="blue.400"
           icon={faSnowflake}
@@ -51,6 +42,6 @@ export function ImportanceMeterMobile(props: ImportanceMeterMobileProps) {
           {...importantRadioProps}
         />
       </HStack>
-    </Box>
+    </Flex>
   );
 }

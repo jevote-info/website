@@ -1,4 +1,4 @@
-import { Container, Flex, Grid, HStack, Link, VStack } from '@chakra-ui/react';
+import { Box, Button, Container, Flex, Grid, HStack, Link, VStack } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { ReactNode } from 'react';
 import { useSurveyStore } from '../../stores/survey';
@@ -13,13 +13,14 @@ import { QuestionsStepper } from './QuestionsStepper';
 
 interface SurveyLayoutProps {
   survey: Survey;
+  canGoToResult: boolean;
   currentCategory: Category;
   currentQuestion: Question;
   children: ReactNode;
 }
 
 export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
-  const { survey, currentCategory, children, currentQuestion } = props;
+  const { survey, canGoToResult, currentCategory, children, currentQuestion } = props;
 
   const { answers } = useSurveyStore();
 
@@ -48,6 +49,23 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
               isActive={category.id === currentCategory.id}
             />
           ))}
+          {canGoToResult && (
+            <Box
+              width="full"
+              mt="auto"
+              p={3}
+              borderWidth={1}
+              borderStyle="solid"
+              borderColor="primary.50"
+              borderRadius="lg"
+            >
+              <NextLink href="/resultats" passHref>
+                <Button as="a" colorScheme="primary" size="lg" width="full">
+                  Découvrez vos résultats
+                </Button>
+              </NextLink>
+            </Box>
+          )}
         </VStack>
         <Flex flexDirection="column" flex={1} alignItems="center" p={5} height="full">
           <Container

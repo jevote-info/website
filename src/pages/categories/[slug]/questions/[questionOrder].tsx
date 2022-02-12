@@ -172,6 +172,7 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
       </Head>
       <SurveyLayout
         survey={survey}
+        canGoToResult={canGoToResult}
         currentCategory={currentCategory}
         currentQuestion={currentQuestion}
       >

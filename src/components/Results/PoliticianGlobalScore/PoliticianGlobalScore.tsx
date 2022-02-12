@@ -1,5 +1,6 @@
-import { Avatar, Box, Button, HStack, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Button, HStack, Text, useColorModeValue } from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
+import { PoliticianPicture } from '../PoliticianPicture';
 
 interface PoliticianGlobalScoreProps {
   politician: Politician;
@@ -24,7 +25,7 @@ export function PoliticianGlobalScore(props: PoliticianGlobalScoreProps) {
     >
       <HStack justify="space-between">
         <HStack padding={2} alignItems="center" mb={3} spacing={3}>
-          <Avatar name={politician.name} src={politician.pictureUrl} />
+          <PoliticianPicture politician={politician} size="small" />
           <Text marginLeft={2} fontWeight="bold">
             {politician.name}
           </Text>

@@ -1,0 +1,1 @@
+export { PoliticianPicture } from './PoliticianPicture';

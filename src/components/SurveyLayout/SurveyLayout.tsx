@@ -8,6 +8,7 @@ import { SurveyLayoutMobile } from './SurveyLayout.mobile';
 
 interface SurveyLayoutProps {
   survey: Survey;
+  canGoToResult: boolean;
   currentCategory: Category;
   currentQuestion: Question;
   children: ReactNode;
