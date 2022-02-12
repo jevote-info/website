@@ -2,35 +2,21 @@ import { useEffect, useMemo } from 'react';
 import { useForm } from 'react-hook-form';
 import { Importance } from '../../components/ImportanceMeter';
 import QuestionField from '../../components/QuestionField';
-import { useIsMobile } from '../../hooks/useIsMobile';
 import { QuestionAnswer, SurveyAnswers } from '../../types/answers';
-import { Category } from '../../types/category';
+import { LightweightCategory } from '../../types/category';
 import { Question } from '../../types/question';
-import { SubmitButtonsDesktop } from './SubmitButtons.desktop';
-import { SubmitButtonsMobile } from './SubmitButtons.mobile';
 
 interface CategoryFormProps {
+  formId: string;
   answers: SurveyAnswers;
-  currentCategory: Category;
+  currentCategory: LightweightCategory;
   currentQuestion: Question;
   onSubmit(values: QuestionAnswer): void;
   onChange(values: QuestionAnswer): void;
-  previousPath: string | null;
-  canGoToResult: boolean;
 }
 
 export function QuestionForm(props: CategoryFormProps) {
-  const {
-    answers,
-    currentCategory,
-    currentQuestion,
-    onSubmit,
-    onChange,
-    previousPath,
-    canGoToResult,
-  } = props;
-
-  const isMobile = useIsMobile();
+  const { formId, answers, currentCategory, currentQuestion, onSubmit, onChange } = props;
 
   const defaultValues = useMemo<QuestionAnswer>(() => {
     const categoryAnswer = answers[currentCategory.id];
@@ -52,13 +38,8 @@ export function QuestionForm(props: CategoryFormProps) {
   }, [onChange, answer]);
 
   return (
-    <form style={{ width: '100%' }} onSubmit={handleSubmit(onSubmit)}>
+    <form id={formId} style={{ width: '100%' }} onSubmit={handleSubmit(onSubmit)}>
       <QuestionField question={currentQuestion} control={control} />
-      {isMobile ? (
-        <SubmitButtonsMobile previousPath={previousPath} canGoToResult={canGoToResult} />
-      ) : (
-        <SubmitButtonsDesktop previousPath={previousPath} />
-      )}
     </form>
   );
 }

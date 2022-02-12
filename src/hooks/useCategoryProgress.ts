@@ -1,8 +1,8 @@
 import { useMemo } from 'react';
 import { CategoryAnswers } from '../types/answers';
-import { Category } from '../types/category';
+import { LightweightCategory } from '../types/category';
 
-export function useCategoryProgress(category: Category, answers?: CategoryAnswers) {
+export function useCategoryProgress(category: LightweightCategory, answers?: CategoryAnswers) {
   const nbAnswers = useMemo(() => {
     return category.questions.reduce(
       (acc, question) => (answers?.[question.id]?.choiceId ? acc + 1 : acc),

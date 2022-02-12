@@ -22,9 +22,9 @@ import { useRouter } from 'next/router';
 import { ReactNode, useEffect, useRef } from 'react';
 import { useCategoryProgress } from '../../hooks/useCategoryProgress';
 import { useSurveyStore } from '../../stores/survey';
-import { Category } from '../../types/category';
+import { LightweightCategory } from '../../types/category';
 import { Question } from '../../types/question';
-import { Survey } from '../../types/survey';
+import { LightweightSurvey } from '../../types/survey';
 import { ColorModeSwitch } from '../ColorModeSwitch';
 import { Logo } from '../Logo';
 import { MenuLinks } from '../MenuLinks';
@@ -33,8 +33,8 @@ import { CategoryItem } from './CategoryItem';
 import { QuestionsStepper } from './QuestionsStepper';
 
 interface SurveyLayoutProps {
-  survey: Survey;
-  currentCategory: Category;
+  survey: LightweightSurvey;
+  currentCategory: LightweightCategory;
   currentQuestion: Question;
   children: ReactNode;
 }

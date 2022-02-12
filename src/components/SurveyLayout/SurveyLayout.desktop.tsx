@@ -2,9 +2,9 @@ import { Box, Button, Container, Flex, Grid, HStack, Link, VStack } from '@chakr
 import NextLink from 'next/link';
 import { ReactNode } from 'react';
 import { useSurveyStore } from '../../stores/survey';
-import { Category } from '../../types/category';
+import { LightweightCategory } from '../../types/category';
 import { Question } from '../../types/question';
-import { Survey } from '../../types/survey';
+import { LightweightSurvey } from '../../types/survey';
 import { ColorModeSwitch } from '../ColorModeSwitch';
 import { Logo } from '../Logo';
 import { MenuLinks } from '../MenuLinks';
@@ -12,9 +12,9 @@ import { CategoryItem } from './CategoryItem';
 import { QuestionsStepper } from './QuestionsStepper';
 
 interface SurveyLayoutProps {
-  survey: Survey;
+  survey: LightweightSurvey;
   canGoToResult: boolean;
-  currentCategory: Category;
+  currentCategory: LightweightCategory;
   currentQuestion: Question;
   children: ReactNode;
 }

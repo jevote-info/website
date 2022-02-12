@@ -11,12 +11,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import Link from 'next/link';
 import { useCategoryProgress } from '../../../hooks/useCategoryProgress';
 import { CategoryAnswers } from '../../../types/answers';
-import { Category } from '../../../types/category';
+import { LightweightCategory } from '../../../types/category';
 import { CategoryIcon } from '../CategoryIcon';
 
 interface CategoryItemProps {
   isActive: boolean;
-  category: Category;
+  category: LightweightCategory;
   categoryAnswers?: CategoryAnswers;
 }
 

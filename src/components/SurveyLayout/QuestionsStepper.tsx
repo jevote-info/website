@@ -3,11 +3,11 @@ import { faCheckCircle } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import NextLink from 'next/link';
 import { CategoryAnswers } from '../../types/answers';
-import { Category } from '../../types/category';
+import { LightweightCategory } from '../../types/category';
 import { Question } from '../../types/question';
 
 interface QuestionsStepperProps {
-  currentCategory: Category;
+  currentCategory: LightweightCategory;
   currentQuestion: Question;
   categoryAnswers?: CategoryAnswers;
 }
