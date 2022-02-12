@@ -1,4 +1,4 @@
-import { Container, Flex, Grid, HStack, Image, Link, VStack } from '@chakra-ui/react';
+import { Container, Flex, Grid, HStack, Link, VStack } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { ReactNode } from 'react';
 import { useSurveyStore } from '../../stores/survey';
@@ -6,6 +6,7 @@ import { Category } from '../../types/category';
 import { Question } from '../../types/question';
 import { Survey } from '../../types/survey';
 import { ColorModeSwitch } from '../ColorModeSwitch';
+import { Logo } from '../Logo';
 import { MenuLinks } from '../MenuLinks';
 import { CategoryItem } from './CategoryItem';
 import { QuestionsStepper } from './QuestionsStepper';
@@ -27,7 +28,7 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
       <HStack width="full" align="center" justify="space-between" px={[3, 3, 5]} py={3}>
         <NextLink href="/" passHref>
           <Link>
-            <Image src="/logo.png" alt="logo" w="128px" />
+            <Logo />
           </Link>
         </NextLink>
         <HStack>

@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
-import { Flex, Button, Image, Link, VStack, HStack } from '@chakra-ui/react';
+import { Flex, Button, Link, VStack, HStack } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { MenuLinks } from '../MenuLinks';
 import { ColorModeSwitch } from '../ColorModeSwitch';
+import { Logo } from '../Logo';
 
 interface HomeLayoutProps {
   surveyPath: string;
@@ -17,7 +18,7 @@ export function HomeLayoutDesktop(props: HomeLayoutProps) {
       <HStack width="full" align="center" justify="space-between" px={[3, 3, 5]} py={3}>
         <NextLink href="/" passHref>
           <Link>
-            <Image src="/logo.png" alt="logo" w="128px" />
+            <Logo />
           </Link>
         </NextLink>
         <HStack>

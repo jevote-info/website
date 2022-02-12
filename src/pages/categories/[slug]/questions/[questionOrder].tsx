@@ -168,6 +168,7 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
           content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
         />
         <link rel="icon" href="/favicon.ico" />
+        <link rel="preload" as="image" href="/icons/categories.svg" />
       </Head>
       <SurveyLayout
         survey={survey}
