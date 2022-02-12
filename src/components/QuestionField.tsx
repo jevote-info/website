@@ -47,7 +47,7 @@ const Question = (props: QuestionProps) => {
   });
 
   return (
-    <Box width="full" mb={['116px', '116px', 5]}>
+    <Box width="full" mb={['64px', '64px', 5]}>
       <Box width="full" mb={5}>
         <HStack align="center" mb={1}>
           <Heading flex={1} size="md" as="h1">

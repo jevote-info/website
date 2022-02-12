@@ -1,4 +1,4 @@
-import { Box, Container, Heading, HStack, Image, useToken, VStack } from '@chakra-ui/react';
+import { Box, Container, Heading, HStack, useToken, VStack } from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
 import { useMemo } from 'react';
 import {
@@ -14,6 +14,7 @@ import { useIsMobile } from '../../../hooks/useIsMobile';
 import { Survey } from '../../../types/survey';
 import { SurveyResult } from '../../../types/surveyResult';
 import { SURVEY_RESULT_SCORE_GAP } from '../../../utils/calculateSurveyResult';
+import { PoliticianPicture } from '../PoliticianPicture';
 
 interface PoliticianGlobalScoreProps {
   politician: Politician;
@@ -68,13 +69,8 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
       maxW="container.lg"
     >
       <Box>
-        <Image
-          src={politician.pictureUrl}
-          alt={politician.name}
-          width={[250, 250, 300]}
-          maxWidth="full"
-          borderRadius={4}
-        />
+        <PoliticianPicture politician={politician} size="big" />
+
         <Heading>{politician.name}</Heading>
       </Box>
 
