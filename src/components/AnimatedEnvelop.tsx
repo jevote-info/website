@@ -62,7 +62,7 @@ const AnimatedEnvelop = () => {
         position="absolute"
         bottom="0"
         height="4px"
-        width={envelopRef.current?.getBoundingClientRect().width}
+        width={envelopRef.current ? envelopRef.current.getBoundingClientRect().width : '90%'}
         background="rgba(0, 0, 0, 0.16)"
         opacity="0.48"
         box-shadow="0px 16px 88px rgba(0, 0, 0, 0.04)"
