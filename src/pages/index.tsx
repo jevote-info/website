@@ -3,6 +3,8 @@ import { Box, Container, Heading, Text, useColorModeValue, Flex } from '@chakra-
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import NextLink from 'next/link';
+import React from 'react';
+import AnimatedEnvelop from '../components/AnimatedEnvelop';
 import HomeBox from '../components/HomeBox';
 import { HomeLayout } from '../components/HomeLayout';
 import { useIsMobile } from '../hooks/useIsMobile';
@@ -81,6 +83,7 @@ function Home(props: HomeProps) {
                 <ChevronRightIcon width="48px" height="48px" />
               </Box>
             </NextLink>
+            <AnimatedEnvelop />
             <Heading as="h2" size="3xl" textAlign="center" marginTop="64px">
               Une application{' '}
               <Text as="span" color="secondary.500">
