@@ -27,7 +27,7 @@ const HomeBox = ({
       padding={isMobile ? '16px' : '64px'}
       display="flex"
       flexDirection={isSmall ? 'column' : 'row'}
-      marginTop="32px"
+      margin="16px"
     >
       {isImageFirst && (
         <Flex flex={isSmall ? '1' : '0.5'} alignItems="center" justifyContent="center">
