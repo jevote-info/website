@@ -50,51 +50,58 @@ function Home(props: HomeProps) {
       <HomeLayout surveyPath={surveyPath}>
         <Container h="full" maxW="container.lg">
           <Flex direction="column" justifyContent="center" alignItems="center">
-            <Heading as="h1" size="3xl" textAlign="center" marginTop="64px">
-              Et vous ? Pour qui allez vous{' '}
-              <Text as="span" color="secondary.500">
-                voter
-              </Text>{' '}
-              le 10 avril prochain ?
-            </Heading>
-            <NextLink href={surveyPath} passHref>
-              <Box
-                as="a"
-                fontSize="40px"
-                marginTop="32px"
-                transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-                borderRadius="md"
-                fontWeight="semibold"
-                padding="0 32px"
-                color={surveyButtonColor}
-                background="transparent"
-                display="inline-flex"
-                alignItems="center"
-                justifyContent="center"
-                _hover={{ background: surveyButtonaHoverBackground }}
-                _active={{
-                  background: surveyButtonaActiveBackground,
-                }}
-                _focus={{
-                  boxShadow: 'outline',
-                }}
-              >
-                Je trouve mon candidat
-                <ChevronRightIcon width="48px" height="48px" />
-              </Box>
-            </NextLink>
-            <AnimatedEnvelop />
-            <Heading as="h2" size="3xl" textAlign="center" marginTop="64px">
-              Une application{' '}
-              <Text as="span" color="secondary.500">
-                citoyenne
-              </Text>
-              , pour{' '}
-              <Text as="span" color="primary.900">
-                citoyens
-              </Text>{' '}
-              engagés.
-            </Heading>
+            <Flex
+              direction="column"
+              justifyContent="center"
+              alignItems="center"
+              position="relative"
+            >
+              <Heading as="h1" size="3xl" textAlign="center" marginTop="64px">
+                Et vous ? Pour qui allez vous{' '}
+                <Text as="span" color="secondary.500">
+                  voter
+                </Text>{' '}
+                le 10 avril prochain ?
+              </Heading>
+              <NextLink href={surveyPath} passHref>
+                <Box
+                  as="a"
+                  fontSize="40px"
+                  marginTop="32px"
+                  transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
+                  borderRadius="md"
+                  fontWeight="semibold"
+                  padding="0 32px"
+                  color={surveyButtonColor}
+                  background="transparent"
+                  display="inline-flex"
+                  alignItems="center"
+                  justifyContent="center"
+                  _hover={{ background: surveyButtonaHoverBackground }}
+                  _active={{
+                    background: surveyButtonaActiveBackground,
+                  }}
+                  _focus={{
+                    boxShadow: 'outline',
+                  }}
+                >
+                  Je trouve mon candidat
+                  <ChevronRightIcon width="48px" height="48px" />
+                </Box>
+              </NextLink>
+              <AnimatedEnvelop />
+              <Heading as="h2" size="3xl" textAlign="center" marginTop="64px" marginBottom="32px">
+                Une application{' '}
+                <Text as="span" color="secondary.500">
+                  citoyenne
+                </Text>
+                , pour{' '}
+                <Text as="span" color="primary.900">
+                  citoyens
+                </Text>{' '}
+                engagés.
+              </Heading>
+            </Flex>
             <HomeBox
               title="Trouvez votre candidat, sans parcourir les programmes"
               description="Suspendisse dui enim, tempus volutpat cursus in, lobortis et massa. Mauris maximus
