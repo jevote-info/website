@@ -3,35 +3,38 @@ import { motion, useViewportScroll, useMotionValue } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 
 const AnimatedEnvelop = () => {
-  const { scrollY: viewportScrollY } = useViewportScroll();
-  const scrollY = useMotionValue(0);
+  const { scrollY } = useViewportScroll();
+  const y = useMotionValue(0);
+
   const containerRef = useRef<HTMLDivElement>(null);
-  const initialScrollPositionRef = useRef<number | null>(null);
+  const envelopRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (initialScrollPositionRef.current === null) {
-      initialScrollPositionRef.current = scrollY.get();
-    }
+    const setY = (currentScroll: number) => {
+      const containerRect = containerRef.current?.getBoundingClientRect();
 
-    const unsubscribe = viewportScrollY.onChange(value => {
-      const rect = containerRef.current?.getBoundingClientRect();
-
-      if (rect) {
-        const top = rect.top + window.scrollY;
-        const height = rect.height;
+      if (containerRect) {
+        const containerY = containerRect.top + window.scrollY;
+        const containerHeight = containerRect.height;
+        const containerBottomY = containerY + containerHeight;
         const windowHeight = window.innerHeight;
-        const bottomY = windowHeight + value;
-        const minimumScrollY = top + height + 32;
 
-        if (bottomY > minimumScrollY && bottomY - minimumScrollY < height - height / 3) {
-          scrollY.set(bottomY - minimumScrollY);
+        const minimumScrollBottomY =
+          windowHeight > containerBottomY + 32 ? 0 : containerBottomY - windowHeight + 32;
+        const maximumScrollBottomY = minimumScrollBottomY + containerHeight / 2;
+
+        if (currentScroll > minimumScrollBottomY && currentScroll < maximumScrollBottomY) {
+          y.set(currentScroll - minimumScrollBottomY);
         }
       }
-    });
+    };
+
+    const unsubscribe = scrollY.onChange(setY);
 
     return () => {
       unsubscribe();
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -43,7 +46,7 @@ const AnimatedEnvelop = () => {
       display="flex"
       justifyContent="center"
     >
-      <motion.div style={{ y: scrollY }}>
+      <motion.div style={{ y }} ref={envelopRef}>
         <Image alt="Bulletin de vote" src="/envelop.png" maxH="400px" />
       </motion.div>
       <Box
@@ -59,7 +62,7 @@ const AnimatedEnvelop = () => {
         position="absolute"
         bottom="0"
         height="4px"
-        width="60%"
+        width={envelopRef.current?.getBoundingClientRect().width}
         background="rgba(0, 0, 0, 0.16)"
         opacity="0.48"
         box-shadow="0px 16px 88px rgba(0, 0, 0, 0.04)"
