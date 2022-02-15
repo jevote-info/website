@@ -1,14 +1,14 @@
-import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, Container, Heading, Text, useColorModeValue, Flex } from '@chakra-ui/react';
+import { Container, Flex } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
-import NextLink from 'next/link';
 import React from 'react';
-import AnimatedEnvelop from '../components/AnimatedEnvelop';
 import HomeBox from '../components/HomeBox';
+import HomeHeader from '../components/HomeHeader';
 import { HomeLayout } from '../components/HomeLayout';
+import FAQ from '../components/FAQ';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { fetchSurvey } from '../services/survey';
+import SocialShare from '../components/SocialShare';
 
 interface HomeProps {
   surveyPath: string;
@@ -30,12 +30,6 @@ function Home(props: HomeProps) {
   const { surveyPath } = props;
 
   const isMobile = useIsMobile();
-  const surveyButtonColor = useColorModeValue('primary.600', 'primary.200');
-  const surveyButtonaHoverBackground = useColorModeValue('primary.50', 'rgba(167, 172, 224, 0.12)');
-  const surveyButtonaActiveBackground = useColorModeValue(
-    'primary.100',
-    'rgba(167, 172, 224, 0.24)',
-  );
 
   return (
     <>
@@ -50,58 +44,7 @@ function Home(props: HomeProps) {
       <HomeLayout surveyPath={surveyPath}>
         <Container h="full" maxW="container.lg">
           <Flex direction="column" justifyContent="center" alignItems="center">
-            <Flex
-              direction="column"
-              justifyContent="center"
-              alignItems="center"
-              position="relative"
-            >
-              <Heading as="h1" size="3xl" textAlign="center" marginTop="64px">
-                Et vous ? Pour qui allez vous{' '}
-                <Text as="span" color="secondary.500">
-                  voter
-                </Text>{' '}
-                le 10 avril prochain ?
-              </Heading>
-              <NextLink href={surveyPath} passHref>
-                <Box
-                  as="a"
-                  fontSize="40px"
-                  marginTop="32px"
-                  transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
-                  borderRadius="md"
-                  fontWeight="semibold"
-                  padding="0 32px"
-                  color={surveyButtonColor}
-                  background="transparent"
-                  display="inline-flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  _hover={{ background: surveyButtonaHoverBackground }}
-                  _active={{
-                    background: surveyButtonaActiveBackground,
-                  }}
-                  _focus={{
-                    boxShadow: 'outline',
-                  }}
-                >
-                  Je trouve mon candidat
-                  <ChevronRightIcon width="48px" height="48px" />
-                </Box>
-              </NextLink>
-              <AnimatedEnvelop />
-              <Heading as="h2" size="3xl" textAlign="center" marginTop="64px" marginBottom="32px">
-                Une application{' '}
-                <Text as="span" color="secondary.500">
-                  citoyenne
-                </Text>
-                , pour{' '}
-                <Text as="span" color="primary.900">
-                  citoyens
-                </Text>{' '}
-                engagés.
-              </Heading>
-            </Flex>
+            <HomeHeader surveyPath={surveyPath} />
             <HomeBox
               title="Trouvez votre candidat, sans parcourir les programmes"
               description="Suspendisse dui enim, tempus volutpat cursus in, lobortis et massa. Mauris maximus
@@ -127,6 +70,8 @@ function Home(props: HomeProps) {
                 isImageFirst
               />
             </Flex>
+            <FAQ />
+            <SocialShare />
           </Flex>
         </Container>
       </HomeLayout>
