@@ -1,3 +1,4 @@
+import crypto from 'crypto';
 import { PrismaClient } from '@prisma/client';
 import { ResultDto } from '../types/resultDto';
 import { SurveyResult } from '../types/surveyResult';
@@ -11,9 +12,20 @@ export async function createResult(result: SurveyResult, uniqueId: string): Prom
 
   const mappedResult = surveyResultToResultDto(result);
 
-  await deleteOldResultIfAny(uniqueId);
+  const resultHash = crypto.createHash('sha256').update(JSON.stringify(mappedResult)).digest('hex');
+
+  const existingResult = await prisma.result.findUnique({
+    where: {
+      uniqueId_resultHash: {
+        uniqueId,
+        resultHash
+      },
+    },
+  });
+  if (existingResult) return;
+
   const resultDb = await prisma.result.create({
-    data: { id: uniqueId },
+    data: { uniqueId, resultHash },
   });
 
   await Promise.all(
@@ -52,37 +64,4 @@ const surveyResultToResultDto = (result: SurveyResult): ResultDto => {
       }),
     })),
   };
-};
-
-const deleteOldResultIfAny = async (uniqueId: string): Promise<void> => {
-  const existingResult = await prisma.result.findUnique({
-    where: {
-      id: uniqueId,
-    },
-  });
-  if (!existingResult) return;
-
-  const politicianResultScores = await prisma.politicianResultScore.findMany({
-    where: {
-      resultId: uniqueId,
-    },
-  });
-
-  for (const { id: politicianResultScoreId } of politicianResultScores) {
-    await prisma.categoryScore.deleteMany({
-      where: {
-        politicianResultId: politicianResultScoreId,
-      },
-    });
-    await prisma.politicianResultScore.delete({
-      where: {
-        id: politicianResultScoreId,
-      },
-    });
-  }
-  await prisma.result.delete({
-    where: {
-      id: uniqueId,
-    },
-  });
 };
