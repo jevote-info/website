@@ -1,11 +1,6 @@
-export interface QuestionAnswerDto {
-  questionId: string;
-  choiceId: string;
-}
 export interface CategoryScoreDto {
   categoryId: string;
   score: number;
-  questionAnswers: QuestionAnswerDto[];
 }
 
 export interface PoliticianResultScoreDto {

@@ -69,27 +69,22 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
     [serializedProps.politicians],
   );
 
-  const { calculateResult, findMissingAnswer } = useSurveyStore();
+  const { calculateResult, findMissingAnswer, result } = useSurveyStore();
 
   useEffect(() => {
     const missingAnswer = findMissingAnswer(survey);
 
     if (missingAnswer) {
       push(`/categories/${missingAnswer.category.slug}/questions/${missingAnswer.question.order}`);
+    } else {
+      calculateResult(survey, politicianPossibleScores);
     }
-  }, [findMissingAnswer, survey, push]);
+  }, [findMissingAnswer, survey, push, calculateResult, politicianPossibleScores]);
 
-  const results = useMemo(() => {
-    console.log('gonna calculate results');
-    return typeof window === 'undefined'
-      ? { scores: [], categoriesScores: [] }
-      : calculateResult(survey, politicianPossibleScores);
-  }, [survey, politicianPossibleScores, calculateResult]);
-
-  const favPolitician = results.scores[0] && politicians[results.scores[0].politicianId];
+  const favPolitician = result?.scores[0] && politicians[result.scores[0].politicianId];
   const topThreePoliticians = useMemo(() => {
-    return results.scores.slice(0, 3).map(({ politicianId }) => politicians[politicianId]);
-  }, [results, politicians]);
+    return result?.scores.slice(0, 3).map(({ politicianId }) => politicians[politicianId]) || [];
+  }, [result, politicians]);
 
   const [selectedPolitician, setSelectedPolitician] = useState(favPolitician);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
@@ -112,11 +107,13 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
         <Box height="full">
           <PoliticiansPodium politicians={topThreePoliticians} nextSectionId="graphique" />
           <Box id="graphique">
-            <PoliticianCategoriesChart
-              politician={selectedPolitician}
-              survey={survey}
-              results={results}
-            />
+            {selectedPolitician && (
+              <PoliticianCategoriesChart
+                politician={selectedPolitician}
+                survey={survey}
+                results={result}
+              />
+            )}
           </Box>
           <Container p={5} as={VStack} alignItems="start" spacing={5} maxW="container.lg">
             <Menu>
@@ -132,8 +129,8 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
                 ))}
               </MenuList>
             </Menu>
-            {results.scores.map(({ politicianId, score }) => {
-              const categoryScores = results.categoriesScores.find(
+            {result.scores.map(({ politicianId, score }) => {
+              const categoryScores = result.categoriesScores.find(
                 ({ categoryId }) => categoryId === selectedCategory?.id,
               );
               const politicianScore = categoryScores?.scores.find(

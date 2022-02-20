@@ -1,7 +1,9 @@
+import axios from 'axios';
 import create, { State, UseBoundStore } from 'zustand';
 import createContext from 'zustand/context';
 import { persist } from 'zustand/middleware';
 import isEqual from 'lodash.isequal';
+import { v4 } from 'uuid';
 import { QuestionAnswer, SurveyAnswers } from '../types/answers';
 import { Category } from '../types/category';
 import { Question } from '../types/question';
@@ -11,16 +13,16 @@ import { calculateSurveyResult } from '../utils/calculateSurveyResult';
 import { isQuestionAnswered } from '../utils/isQuestionAnswered';
 
 interface SurveyState extends State {
+  uniqueId: string;
   answers: SurveyAnswers;
+  result: SurveyResult | null;
   setQuestionAnswer: (
     categoryId: Category['id'],
     questionId: Question['id'],
     answer: QuestionAnswer,
   ) => void;
-  calculateResult: (
-    survey: Survey,
-    politiciansPossibleScores: SurveyPoliticiansPossibleScores,
-  ) => SurveyResult;
+  calculateResult(survey: Survey, politiciansPossibleScores: SurveyPoliticiansPossibleScores): void;
+  saveResult(result: SurveyResult): void;
   findMissingAnswer(survey: Survey): { category: Category; question: Question } | null;
 }
 
@@ -39,13 +41,18 @@ export const createSurveyStore = () => {
     store = create<SurveyState>(
       persist(
         (set, get) => ({
+          uniqueId: v4(),
           answers: {},
-          result: undefined,
+          result: null,
           politiciansPossibleScores: undefined,
           calculateResult(survey, politiciansPossibleScores) {
-            const { answers } = get();
+            const { answers, saveResult } = get();
 
-            return calculateSurveyResult(survey, answers, politiciansPossibleScores);
+            const result = calculateSurveyResult(survey, answers, politiciansPossibleScores);
+
+            saveResult(result);
+
+            set({ result });
           },
           setQuestionAnswer(categoryId, questionId, answer) {
             const answers = get().answers;
@@ -78,12 +85,19 @@ export const createSurveyStore = () => {
 
             return null;
           },
+          saveResult(result: SurveyResult) {
+            const { uniqueId } = get();
+
+            axios.post('api/result', { result, uniqueId });
+          },
         }),
         {
           name: 'survey',
           version: 1,
           partialize: state => ({
+            uniqueId: state.uniqueId,
             answers: state.answers,
+            result: state.result,
           }),
           getStorage: () =>
             typeof window === 'undefined'
