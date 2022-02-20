@@ -93,8 +93,6 @@ model QuestionAnswer {
   questionId      String
   choice          Choice        @relation(fields: [choiceId], references: [id])
   choiceId        String
-  categoryScore   CategoryScore @relation(fields: [categoryScoreId], references: [id])
-  categoryScoreId String
 }
 
 model CategoryScore {
@@ -106,7 +104,6 @@ model CategoryScore {
   politicianResultId String
   category           Category              @relation(fields: [categoryId], references: [id])
   categoryId         String
-  questionAnswers    QuestionAnswer[]
 }
 
 model PoliticianResultScore {
@@ -125,5 +122,9 @@ model Result {
   id               String                  @id @default(uuid())
   createdAt        DateTime                @default(now())
   updatedAt        DateTime                @updatedAt
+  uniqueId         String
+  resultHash       String
   politicianScores PoliticianResultScore[]
+
+  @@unique([uniqueId, resultHash])
 }

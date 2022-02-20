@@ -1,4 +1,5 @@
 import { Politician } from '@prisma/client';
+import axios from 'axios';
 import { MultichoiceQuestionAnswer, SimpleQuestionAnswer, SurveyAnswers } from '../types/answers';
 import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
 import { SurveyResult, SurveyResultScore } from '../types/surveyResult';
@@ -11,7 +12,9 @@ export function calculateSurveyResult(
   politiciansPossibleScores: SurveyPoliticiansPossibleScores,
 ): SurveyResult {
   const rawResult = calculateSurveyScores(survey, answers);
-  return normalizeResult(rawResult, politiciansPossibleScores);
+  const normalizedResult = normalizeResult(rawResult, politiciansPossibleScores);
+  // saveResult(normalizedResult, uniqueId);
+  return normalizedResult;
 }
 
 const normalizeResult = (
