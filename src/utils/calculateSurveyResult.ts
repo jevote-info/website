@@ -1,4 +1,5 @@
 import { Politician } from '@prisma/client';
+import axios from 'axios';
 import { MultichoiceQuestionAnswer, SimpleQuestionAnswer, SurveyAnswers } from '../types/answers';
 import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
 import { SurveyResult, SurveyResultScore } from '../types/surveyResult';
@@ -9,11 +10,10 @@ export function calculateSurveyResult(
   survey: Survey,
   answers: SurveyAnswers,
   politiciansPossibleScores: SurveyPoliticiansPossibleScores,
-  uniqueId: string,
 ): SurveyResult {
   const rawResult = calculateSurveyScores(survey, answers);
   const normalizedResult = normalizeResult(rawResult, politiciansPossibleScores);
-  saveResult(normalizedResult, uniqueId);
+  // saveResult(normalizedResult, uniqueId);
   return normalizedResult;
 }
 
@@ -152,19 +152,4 @@ const isMultichoiceQuestionAnswer = (
   multichoice: boolean,
 ): answer is MultichoiceQuestionAnswer => {
   return multichoice;
-};
-
-const saveResult = (result: SurveyResult, uniqueId: string): void => {
-  try {
-    fetch('/api/result', {
-      method: 'POST',
-      mode: 'same-origin',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ result, uniqueId }),
-    });
-  } catch {
-    console.error('Error saving result');
-  }
 };

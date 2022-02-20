@@ -70,7 +70,7 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
           <DrawerHeader>
             <NextLink href="/" passHref>
               <Link _hover={{ textDecoration: 'none' }}>
-                <Logo size="small" />
+                <Logo />
               </Link>
             </NextLink>
           </DrawerHeader>
