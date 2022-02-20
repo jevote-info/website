@@ -18,10 +18,10 @@ const HomeBox = ({
   isImageFirst = false,
 }: HomeBoxProps) => {
   const isMobile = useIsMobile();
-  const [gray500, gray400] = useToken('colors', ['gray.500', 'gray.400']);
+  const [gray800, gray700] = useToken('colors', ['gray.800', 'gray.700']);
   const [bgGradiantStart, bgGradientEnd] = useColorModeValue(
     ['#F1F4F6', '#EFF2F5'],
-    [gray500, gray400],
+    [gray800, gray700],
   );
 
   return (
