@@ -1,5 +1,5 @@
 import { Politician } from '@prisma/client';
-import { SurveyAnswers } from '../types/answers';
+import { MultichoiceQuestionAnswer, SimpleQuestionAnswer, SurveyAnswers } from '../types/answers';
 import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
 import { SurveyResult, SurveyResultScore } from '../types/surveyResult';
 
@@ -64,22 +64,50 @@ const normalizeResult = (
 
 const calculateSurveyScores = (survey: Survey, answers: SurveyAnswers): SurveyResult => {
   const categoriesScores = survey.map(({ id: categoryId, questions }) => {
-    const questionScores = questions.map(({ id: questionId, choices }) => {
+    const questionScores = questions.map(({ id: questionId, choices, multichoice }) => {
       const answer = answers[categoryId][questionId];
-      const selectedChoice = choices.find(choice => choice.id === answer.choiceId);
+      if (isMultichoiceQuestionAnswer(answer, multichoice)) {
+        const selectedChoices = [];
+        for (const choiceId of answer.choices) {
+          const c = choices.find(choice => choice.id === choiceId);
+          if (c) {
+            selectedChoices.push(c);
+          } else {
+            throw `Couldn't find choice ${choiceId}`;
+          }
+        }
 
-      if (!selectedChoice) {
-        throw `Couldn't find choice ${answer.choiceId}`;
+        const scores = selectedChoices.reduce<SurveyResultScore[]>((acc, { politicianScores }) => {
+          return politicianScores.map(({ score, politicianId }) => {
+            const previousScore =
+              acc.find(({ politicianId: accPoliticianId }) => politicianId === accPoliticianId)
+                ?.score || 0;
+            return {
+              politicianId,
+              score: score * answer.weight + previousScore,
+            };
+          });
+        }, []);
+
+        return {
+          questionId,
+          scores,
+        };
+      } else {
+        const selectedChoice = choices.find(choice => choice.id === answer.choiceId);
+
+        if (!selectedChoice) {
+          throw `Couldn't find choice ${answer.choiceId}`;
+        }
+
+        return {
+          questionId,
+          scores: selectedChoice.politicianScores.map(({ score, politicianId }) => ({
+            politicianId,
+            score: score * answer.weight,
+          })),
+        };
       }
-
-      return {
-        questionId,
-        choiceId: answer.choiceId,
-        scores: selectedChoice.politicianScores.map(({ score, politicianId }) => ({
-          politicianId,
-          score: score * answer.weight,
-        })),
-      };
     });
 
     return {
@@ -114,4 +142,11 @@ const groupPoliticianScores = (answers: { scores: SurveyResultScore[] }[]): Surv
     politicianId,
     score,
   }));
+};
+
+const isMultichoiceQuestionAnswer = (
+  answer: MultichoiceQuestionAnswer | SimpleQuestionAnswer,
+  multichoice: boolean,
+): answer is MultichoiceQuestionAnswer => {
+  return multichoice;
 };

@@ -1,12 +1,14 @@
 import create, { State, UseBoundStore } from 'zustand';
 import createContext from 'zustand/context';
 import { persist } from 'zustand/middleware';
+import isEqual from 'lodash.isequal';
 import { QuestionAnswer, SurveyAnswers } from '../types/answers';
 import { Category } from '../types/category';
 import { Question } from '../types/question';
 import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
 import { SurveyResult } from '../types/surveyResult';
 import { calculateSurveyResult } from '../utils/calculateSurveyResult';
+import { isQuestionAnswered } from '../utils/isQuestionAnswered';
 
 interface SurveyState extends State {
   answers: SurveyAnswers;
@@ -49,10 +51,7 @@ export const createSurveyStore = () => {
             const answers = get().answers;
             const existingAnswer = answers[categoryId]?.[questionId];
 
-            if (
-              existingAnswer?.choiceId === answer.choiceId &&
-              existingAnswer?.weight === answer.weight
-            ) {
+            if (isEqual(existingAnswer, answer)) {
               return;
             }
 
@@ -71,7 +70,7 @@ export const createSurveyStore = () => {
 
             for (const category of survey) {
               for (const question of category.questions) {
-                if (!answers[category.id]?.[question.id]?.choiceId) {
+                if (!isQuestionAnswered(answers[category.id]?.[question.id])) {
                   return { category, question };
                 }
               }
@@ -82,6 +81,7 @@ export const createSurveyStore = () => {
         }),
         {
           name: 'survey',
+          version: 1,
           partialize: state => ({
             answers: state.answers,
           }),

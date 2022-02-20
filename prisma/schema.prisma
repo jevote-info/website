@@ -50,6 +50,7 @@ model Question {
   help        String?
   order       Int              @default(autoincrement())
   published   Boolean          @default(false)
+  multichoice Boolean          @default(false)
   choices     Choice[]
   answers     QuestionAnswer[]
 

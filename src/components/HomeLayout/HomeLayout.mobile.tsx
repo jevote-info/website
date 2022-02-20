@@ -41,9 +41,9 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
   return (
     <>
       <VStack height="full">
-        <Grid width="full" templateColumns="1fr 1fr 1fr" p={3}>
+        <Grid width="full" templateColumns="1fr 1fr 1fr" p={3} alignItems="center">
           <NextLink href="/" passHref>
-            <Link>
+            <Link _hover={{ textDecoration: 'none' }} height="fit-content">
               <Logo />
             </Link>
           </NextLink>
@@ -69,7 +69,7 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
           <DrawerCloseButton />
           <DrawerHeader>
             <NextLink href="/" passHref>
-              <Link>
+              <Link _hover={{ textDecoration: 'none' }}>
                 <Logo size="small" />
               </Link>
             </NextLink>
