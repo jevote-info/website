@@ -1,11 +1,20 @@
 import { Accordion, Heading, Text } from '@chakra-ui/react';
 import React from 'react';
+import { useIsMobile } from '../hooks/useIsMobile';
 import FAQItem from './FAQItem';
 
 const FAQ = () => {
+  const isMobile = useIsMobile();
+
   return (
     <>
-      <Heading as="h3" size="3xl" textAlign="center" marginTop="64px" marginBottom="64px">
+      <Heading
+        as="h3"
+        size={isMobile ? '2xl' : '3xl'}
+        textAlign="center"
+        marginTop="64px"
+        marginBottom="64px"
+      >
         En savoir plus sur notre{' '}
         <Text as="span" color="primary.600">
           initiative citoyenne :

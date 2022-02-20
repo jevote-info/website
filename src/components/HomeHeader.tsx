@@ -3,12 +3,15 @@ import { Box, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import React from 'react';
 import AnimatedEnvelop from '../components/AnimatedEnvelop';
+import { useIsMobile } from '../hooks/useIsMobile';
 
 type HomeHeaderProps = {
   surveyPath: string;
 };
 
 const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
+  const isMobile = useIsMobile();
+
   const surveyButtonColor = useColorModeValue('primary.600', 'primary.200');
   const surveyButtonaHoverBackground = useColorModeValue('primary.50', 'rgba(167, 172, 224, 0.12)');
   const surveyButtonaActiveBackground = useColorModeValue(
@@ -18,7 +21,7 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
 
   return (
     <Flex direction="column" justifyContent="center" alignItems="center" position="relative">
-      <Heading as="h1" size="3xl" textAlign="center" marginTop="64px">
+      <Heading as="h1" size={isMobile ? '2xl' : '3xl'} textAlign="center" marginTop={[8, 8, 16]}>
         Et vous ? Pour qui allez vous{' '}
         <Text as="span" color="secondary.500">
           voter
@@ -28,7 +31,7 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
       <NextLink href={surveyPath} passHref>
         <Box
           as="a"
-          fontSize="40px"
+          fontSize={isMobile ? '30px' : '40px'}
           marginTop="32px"
           transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
           borderRadius="md"
@@ -52,7 +55,13 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
         </Box>
       </NextLink>
       <AnimatedEnvelop />
-      <Heading as="h2" size="3xl" textAlign="center" marginTop="64px" marginBottom="32px">
+      <Heading
+        as="h2"
+        size={isMobile ? '2xl' : '3xl'}
+        textAlign="center"
+        marginTop="64px"
+        marginBottom="32px"
+      >
         Une application{' '}
         <Text as="span" color="secondary.500">
           citoyenne
