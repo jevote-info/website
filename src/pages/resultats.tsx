@@ -80,6 +80,7 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
   }, [findMissingAnswer, survey, push]);
 
   const results = useMemo(() => {
+    console.log('gonna calculate results');
     return typeof window === 'undefined'
       ? { scores: [], categoriesScores: [] }
       : calculateResult(survey, politicianPossibleScores);
