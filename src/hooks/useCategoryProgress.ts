@@ -1,11 +1,12 @@
 import { useMemo } from 'react';
 import { CategoryAnswers } from '../types/answers';
 import { LightweightCategory } from '../types/category';
+import { isQuestionAnswered } from '../utils/isQuestionAnswered';
 
 export function useCategoryProgress(category: LightweightCategory, answers?: CategoryAnswers) {
   const nbAnswers = useMemo(() => {
     return category.questions.reduce(
-      (acc, question) => (answers?.[question.id]?.choiceId ? acc + 1 : acc),
+      (acc, question) => (isQuestionAnswered(answers?.[question.id]) ? acc + 1 : acc),
       0,
     );
   }, [category, answers]);

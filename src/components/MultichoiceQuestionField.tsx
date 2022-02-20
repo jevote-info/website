@@ -26,7 +26,7 @@ interface MultichoiceQuestionProps {
   control: Control<MultichoiceQuestionAnswer>;
 }
 
-const MultichoiceQuestion = (props: MultichoiceQuestionProps) => {
+export function MultichoiceQuestionField(props: MultichoiceQuestionProps) {
   const { question, control } = props;
 
   const {
@@ -73,6 +73,9 @@ const MultichoiceQuestion = (props: MultichoiceQuestionProps) => {
         <Heading size="xs" as="h2">
           {question.description}
         </Heading>
+        <Heading mt={3} size="xs" as="h3" color="gray.500">
+          Plusieurs réponses possibles
+        </Heading>
       </Box>
       <Box width="full">
         {error?.type === 'required' && (
@@ -95,6 +98,4 @@ const MultichoiceQuestion = (props: MultichoiceQuestionProps) => {
       </Box>
     </Box>
   );
-};
-
-export default MultichoiceQuestion;
+}

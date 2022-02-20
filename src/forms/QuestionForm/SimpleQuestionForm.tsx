@@ -6,7 +6,7 @@ import SimpleQuestionField from '../../components/SimpleQuestionField';
 import { SimpleQuestionAnswer, SurveyAnswers } from '../../types/answers';
 import { Question } from '../../types/question';
 
-interface CategoryFormProps {
+interface SimpleQuestionFormProps {
   formId: string;
   answers: SurveyAnswers;
   currentCategory: LightweightCategory;
@@ -15,7 +15,7 @@ interface CategoryFormProps {
   onChange(values: SimpleQuestionAnswer): void;
 }
 
-export function QuestionForm(props: CategoryFormProps) {
+export function SimpleQuestionForm(props: SimpleQuestionFormProps) {
   const { formId, answers, currentCategory, currentQuestion, onSubmit, onChange } = props;
 
   const defaultValues = useMemo<SimpleQuestionAnswer>(() => {

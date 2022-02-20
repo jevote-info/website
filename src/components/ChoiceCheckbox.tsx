@@ -1,6 +1,6 @@
 import { useCheckbox, UseCheckboxProps, Box, Button } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCircle, faCheckCircle } from '@fortawesome/free-solid-svg-icons';
+import { faSquare, faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 
 interface ChoiceCheckboxProps extends UseCheckboxProps {
   label: string;
@@ -40,7 +40,7 @@ export function ChoiceCheckbox(props: ChoiceCheckboxProps) {
         p={[3, 3, 5]}
       >
         <Box mr={3} color="white">
-          <FontAwesomeIcon width={20} height={20} icon={isChecked ? faCheckCircle : faCircle} />
+          <FontAwesomeIcon width={20} height={20} icon={isChecked ? faCheckSquare : faSquare} />
         </Box>
         {label}
       </Button>

@@ -63,7 +63,7 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
         <Flex width="full" pt={3}>
           <Flex flex={1} alignItems="start">
             <NextLink href="/" passHref>
-              <Link>
+              <Link _hover={{ textDecoration: 'none' }}>
                 <Logo />
               </Link>
             </NextLink>

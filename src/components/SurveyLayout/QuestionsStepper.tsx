@@ -5,6 +5,7 @@ import NextLink from 'next/link';
 import { CategoryAnswers } from '../../types/answers';
 import { LightweightCategory } from '../../types/category';
 import { Question } from '../../types/question';
+import { isQuestionAnswered } from '../../utils/isQuestionAnswered';
 
 interface QuestionsStepperProps {
   currentCategory: LightweightCategory;
@@ -29,7 +30,7 @@ export function QuestionsStepper(props: QuestionsStepperProps) {
           >
             <MenuItem as="a" color={currentQuestion.id === question.id ? 'primary.300' : undefined}>
               Question {question.order}{' '}
-              {categoryAnswers?.[question.id]?.choiceId ? (
+              {isQuestionAnswered(categoryAnswers?.[question.id]) ? (
                 <Box ml="auto" p={1} color="green.400">
                   <FontAwesomeIcon width="15px" height="15px" icon={faCheckCircle} />
                 </Box>

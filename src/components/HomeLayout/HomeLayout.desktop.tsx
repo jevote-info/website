@@ -17,7 +17,7 @@ export function HomeLayoutDesktop(props: HomeLayoutProps) {
     <VStack height="full">
       <HStack width="full" align="center" justify="space-between" px={[3, 3, 5]} py={3}>
         <NextLink href="/" passHref>
-          <Link>
+          <Link _hover={{ textDecoration: 'none' }}>
             <Logo />
           </Link>
         </NextLink>
