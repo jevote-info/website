@@ -4,7 +4,6 @@ import { useRouter } from 'next/router';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
 import { useCallback, useMemo } from 'react';
 import superjson from 'superjson';
-import { Importance } from '../../../../components/ImportanceMeter';
 import { SurveyLayout } from '../../../../components/SurveyLayout';
 import { QuestionForm } from '../../../../forms/QuestionForm';
 import { SubmitButtonsDesktop } from '../../../../forms/QuestionForm/SubmitButtons.desktop';
@@ -17,6 +16,7 @@ import { LightweightCategory } from '../../../../types/category';
 import { Question } from '../../../../types/question';
 import { LightweightSurvey } from '../../../../types/survey';
 import { categoryToLightweight } from '../../../../utils/categoryToLightweight';
+import { isQuestionAnswered } from '../../../../utils/isQuestionAnswered';
 
 interface SerializedCategoryProps {
   survey: LightweightSurvey;
@@ -122,16 +122,6 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
 
   const { answers, setQuestionAnswer } = useSurveyStore();
 
-  useMemo<QuestionAnswer>(() => {
-    const categoryAnswer = answers[currentCategory.id];
-    const questionAnswer = categoryAnswer?.[currentQuestion.id];
-
-    return {
-      choiceId: questionAnswer?.choiceId ?? null,
-      weight: questionAnswer?.weight ?? Importance.NEUTRAL,
-    };
-  }, [currentQuestion, currentCategory, answers]);
-
   const onSubmit = useCallback(
     (formValues: QuestionAnswer) => {
       setQuestionAnswer(currentCategory.id, currentQuestion.id, formValues);
@@ -150,11 +140,17 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
 
   const canGoToResult = useMemo(() => {
     return !survey.find(category =>
-      category.questions.find(question => !answers[category.id]?.[question.id]?.choiceId),
+      category.questions.find(question => {
+        const answer = answers[category.id]?.[question.id];
+
+        return !isQuestionAnswered(answer);
+      }),
     );
   }, [answers, survey]);
 
   const isMobile = useIsMobile();
+
+  const formId = 'question-form';
 
   return (
     <>
@@ -185,7 +181,7 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
             transition={{ duration: 0.3 }}
           >
             <QuestionForm
-              formId="question-form"
+              formId={formId}
               answers={answers}
               currentCategory={currentCategory}
               currentQuestion={currentQuestion}
@@ -201,7 +197,7 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
             canGoToResult={canGoToResult}
           />
         ) : (
-          <SubmitButtonsDesktop formId="question-form" previousPath={previousPath} />
+          <SubmitButtonsDesktop formId={formId} previousPath={previousPath} />
         )}
       </SurveyLayout>
     </>

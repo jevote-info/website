@@ -13,7 +13,6 @@ import {
   HStack,
   Link,
   Progress,
-  Text,
   useDisclosure,
   VStack,
 } from '@chakra-ui/react';
@@ -60,38 +59,25 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
   return (
     <>
       <VStack height="full" px={5} spacing={0}>
-        <Flex width="full" pt={3}>
-          <Flex flex={1} alignItems="start">
-            <NextLink href="/" passHref>
-              <Link>
-                <Logo />
-              </Link>
-            </NextLink>
-          </Flex>
+        <Flex width="full" pt={3} pb={5} alignItems="center" justifyContent="space-between">
+          <NextLink href="/" passHref>
+            <Link flex={1} _hover={{ textDecoration: 'none' }}>
+              <Logo />
+            </Link>
+          </NextLink>
 
-          <Flex justifyContent="center" flex={1}>
-            <Button
-              ref={buttonRef}
-              p={0}
-              mb={3}
-              flexDirection="column"
-              alignItems="center"
-              variant="ghost"
-              bgColor="transparent"
-              onClick={onOpen}
-              width={150}
-              height="fit-content"
-            >
-              <Box mb={3}>
-                <CategoryIcon category={currentCategory} />
-              </Box>
-              <Text fontSize="sm" fontWeight="semibold" whiteSpace="normal">
-                {currentCategory.title}
-              </Text>
-            </Button>
-          </Flex>
+          <Button
+            ref={buttonRef}
+            p={0}
+            flexDirection="column"
+            alignItems="center"
+            variant="ghost"
+            onClick={onOpen}
+          >
+            <CategoryIcon category={currentCategory} />
+          </Button>
 
-          <Flex align="start" justifyContent="end" flex={1} pt={3}>
+          <Flex flex={1} justifyContent="end">
             <ColorModeSwitch />
           </Flex>
         </Flex>

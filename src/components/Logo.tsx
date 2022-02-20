@@ -1,16 +1,8 @@
 import { Flex, Text, useColorModeValue, useTheme } from '@chakra-ui/react';
+import { useIsMobile } from '../hooks/useIsMobile';
 
-interface LogoProps {
-  size?: 'medium' | 'small';
-}
-
-const sizes = {
-  medium: { height: 40 },
-  small: { height: 20 },
-};
-
-export function Logo(props: LogoProps) {
-  const { size = 'medium' } = props;
+export function Logo() {
+  const isMobile = useIsMobile();
 
   const theme = useTheme();
   const primaryStrokeColor = useColorModeValue(
@@ -25,7 +17,7 @@ export function Logo(props: LogoProps) {
   return (
     <Flex alignItems="center">
       <svg
-        height={sizes[size].height}
+        height={isMobile ? 20 : 40}
         viewBox="0 0 127 99"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"

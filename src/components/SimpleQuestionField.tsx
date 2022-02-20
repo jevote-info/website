@@ -16,17 +16,17 @@ import {
 } from '@chakra-ui/react';
 import React from 'react';
 import { Control, useController } from 'react-hook-form';
-import { QuestionAnswer } from '../types/answers';
+import { SimpleQuestionAnswer } from '../types/answers';
 import { Question } from '../types/question';
 import { ChoiceRadio } from './ChoiceRadio';
 import { ImportanceMeter } from './ImportanceMeter';
 
 interface QuestionProps {
   question: Question;
-  control: Control<QuestionAnswer>;
+  control: Control<SimpleQuestionAnswer>;
 }
 
-const Question = (props: QuestionProps) => {
+const SimpleQuestion = (props: QuestionProps) => {
   const { question, control } = props;
 
   const {
@@ -98,4 +98,4 @@ const Question = (props: QuestionProps) => {
   );
 };
 
-export default Question;
+export default SimpleQuestion;
