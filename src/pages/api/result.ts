@@ -11,8 +11,8 @@ export default async function resultHandler(req: NextApiRequest, res: NextApiRes
 
   switch (method) {
     case 'POST':
-      await createResult(result as SurveyResult, uniqueId);
-      res.status(204);
+      createResult(result as SurveyResult, uniqueId);
+      res.status(204).send();
       break;
     default:
       res.setHeader('Allow', ['POST']);
