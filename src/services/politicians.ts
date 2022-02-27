@@ -1,11 +1,8 @@
-import { Politician, PrismaClient } from '@prisma/client';
-
-let prisma: PrismaClient;
+import { Politician } from '@prisma/client';
+import { getDB } from './db';
 
 export const fetchPoliticians = async (): Promise<Politician[]> => {
-  if (!prisma) {
-    prisma = new PrismaClient();
-  }
+  const db = getDB();
 
-  return prisma.politician.findMany();
+  return db.politician.findMany();
 };
