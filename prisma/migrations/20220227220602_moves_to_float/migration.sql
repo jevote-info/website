@@ -1,0 +1,8 @@
+-- AlterTable
+ALTER TABLE "CategoryScore" ALTER COLUMN "score" SET DATA TYPE DOUBLE PRECISION;
+
+-- AlterTable
+ALTER TABLE "PoliticianResultScore" ALTER COLUMN "score" SET DATA TYPE DOUBLE PRECISION;
+
+-- AlterTable
+ALTER TABLE "PoliticianScore" ALTER COLUMN "score" SET DATA TYPE DOUBLE PRECISION;
