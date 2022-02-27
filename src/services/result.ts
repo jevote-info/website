@@ -1,36 +1,32 @@
 import crypto from 'crypto';
-import { PrismaClient } from '@prisma/client';
 import { ResultDto } from '../types/resultDto';
 import { SurveyResult } from '../types/surveyResult';
-
-let prisma: PrismaClient;
+import { getDB } from './db';
 
 export async function createResult(result: SurveyResult, uniqueId: string): Promise<void> {
-  if (!prisma) {
-    prisma = new PrismaClient();
-  }
+  const db = getDB();
 
   const mappedResult = surveyResultToResultDto(result);
 
   const resultHash = crypto.createHash('sha256').update(JSON.stringify(mappedResult)).digest('hex');
 
-  const existingResult = await prisma.result.findUnique({
+  const existingResult = await db.result.findUnique({
     where: {
       uniqueId_resultHash: {
         uniqueId,
-        resultHash
+        resultHash,
       },
     },
   });
   if (existingResult) return;
 
-  const resultDb = await prisma.result.create({
+  const resultDb = await db.result.create({
     data: { uniqueId, resultHash },
   });
 
   await Promise.all(
     mappedResult.politicianResultScores.map(politicianResultScore =>
-      prisma.politicianResultScore.create({
+      db.politicianResultScore.create({
         data: {
           ...politicianResultScore,
           resultId: resultDb.id,
