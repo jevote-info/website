@@ -1,9 +1,10 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, Flex, Heading, Text, useColorModeValue } from '@chakra-ui/react';
+import { Box, Flex, Heading, Image, Text, useColorModeValue } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import React from 'react';
 import AnimatedEnvelop from '../components/AnimatedEnvelop';
 import { useIsMobile } from '../hooks/useIsMobile';
+import ChoiceUnderline from './ChoiceUnderline';
 
 type HomeHeaderProps = {
   surveyPath: string;
@@ -22,11 +23,11 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
   return (
     <Flex direction="column" justifyContent="center" alignItems="center" position="relative">
       <Heading as="h1" size={isMobile ? '2xl' : '3xl'} textAlign="center" marginTop={[8, 8, 16]}>
-        Se{' '}
-        <Text as="span" color="secondary.500">
-          renseigner
+        Se renseigner, c’est être sûr de faire le bon{' '}
+        <Text as="span" color="secondary.500" position="relative" display="inline-block">
+          choix
+          <ChoiceUnderline />
         </Text>
-        , c’est être sûr de faire le bon choix
       </Heading>
       <NextLink href={surveyPath} passHref>
         <Box
@@ -61,15 +62,33 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
         textAlign="center"
         marginTop="64px"
         marginBottom="32px"
+        padding="24px"
+        position="relative"
       >
+        <Image
+          src="/icons/top-left-splash-effect.svg"
+          position="absolute"
+          width="32px"
+          top="0"
+          left="0"
+          alt="Element décoratif"
+        />
         Une application{' '}
         <Text as="span" color="secondary.500">
           citoyenne
         </Text>
-        , pour{' '}
+        , pour tous les{' '}
         <Text as="span" color="primary.600">
           citoyens
         </Text>
+        <Image
+          src="/icons/bottom-right-splash-effect.svg"
+          position="absolute"
+          width="32px"
+          bottom="0"
+          right="0"
+          alt="Element décoratif"
+        />
       </Heading>
     </Flex>
   );
