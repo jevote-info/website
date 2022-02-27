@@ -25,7 +25,7 @@ export function createSurveyQuestion(params: RecursivePartial<Question> = {}): Q
           ],
     order: params.order ?? faker.datatype.number(),
     published: params.published ?? faker.datatype.boolean(),
-    multichoice: params.published ?? faker.datatype.boolean(),
+    multichoice: params.multichoice ?? faker.datatype.boolean(),
     createdAt: (params.createdAt as Date) ?? faker.date.past(),
     updatedAt: (params.updatedAt as Date) ?? faker.date.past(),
   };
