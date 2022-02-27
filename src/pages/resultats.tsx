@@ -99,7 +99,7 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
   return (
     <>
       <Head>
-        <title>JeVote</title>
+        <title>jevote.info</title>
         <meta
           name="description"
           content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
@@ -122,7 +122,6 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
             <Stack
               justify="space-between"
               align="flex-start"
-              w="full"
               direction={['column', 'column', 'row']}
             >
               <Heading as="h3" size="md" maxW="600">

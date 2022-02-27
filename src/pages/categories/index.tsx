@@ -37,7 +37,7 @@ const Survey = (serializedProps: SerialiazedCategoryProps) => {
 
   return (
     <Head>
-      <title>JeVote</title>
+      <title>jevote.info</title>
       <meta
         name="description"
         content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
