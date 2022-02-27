@@ -29,7 +29,7 @@ function CGU(props: CGUProps) {
   return (
     <>
       <Head>
-        <title>JeVote - Conditions Générales d&apos;Utilisation</title>
+        <title>jevote.info - Conditions Générales d&apos;Utilisation</title>
         <meta
           name="description"
           content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
