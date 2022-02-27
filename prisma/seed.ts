@@ -26,14 +26,14 @@ async function main() {
       published: true,
     }),
     createSurveyCategory({
-      title: "Fonctionnement de l'Etat et des institutions",
+      title: "Fonctionnement de l'Etat & institutions",
       slug: 'institutions',
       image: 'taxation',
       order: 3,
       published: true,
     }),
     createSurveyCategory({
-      title: 'Politique Economique & Sociale, immigration',
+      title: 'Politique Économique & Sociale, immigration',
       slug: 'economie',
       image: 'economy',
       order: 4,
