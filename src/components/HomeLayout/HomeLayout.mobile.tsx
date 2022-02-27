@@ -1,7 +1,6 @@
 import { ReactNode, useEffect, useRef } from 'react';
 import {
   Flex,
-  Button,
   IconButton,
   Link,
   VStack,
@@ -24,10 +23,11 @@ import { Logo } from '../Logo';
 interface HomeLayoutProps {
   surveyPath: string;
   children: ReactNode;
+  withColorModeSwitch?: boolean;
 }
 
 export function HomeLayoutMobile(props: HomeLayoutProps) {
-  const { surveyPath, children } = props;
+  const { surveyPath, children, withColorModeSwitch = true } = props;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { asPath } = useRouter();
@@ -57,9 +57,11 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
             />
           </Flex>
 
-          <Flex align="center" justifyContent="end">
-            <ColorModeSwitch />
-          </Flex>
+          {withColorModeSwitch && (
+            <Flex align="center" justifyContent="end">
+              <ColorModeSwitch />
+            </Flex>
+          )}
         </Grid>
         {children}
       </VStack>
@@ -77,13 +79,7 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
 
           <DrawerBody>
             <VStack>
-              <NextLink href={surveyPath} passHref>
-                <Button as="a" colorScheme="primary" variant="ghost" aria-label="Questionnaire">
-                  Questionnaire
-                </Button>
-              </NextLink>
-
-              <MenuLinks />
+              <MenuLinks withSurveyLink surveyPath={surveyPath} withSocialNetworksNames />
             </VStack>
           </DrawerBody>
         </DrawerContent>
