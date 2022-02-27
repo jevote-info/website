@@ -14,9 +14,13 @@ import {
   Center,
 } from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
+import Image from 'next/image';
 import Confetti from 'react-confetti';
 import { useWindowSize } from '../../../hooks/useWindowSize';
 import { PoliticianPicture } from '../PoliticianPicture';
+import firstPlaceMedal from './images/1st-place-medal.png';
+import secondPlaceMedal from './images/2nd-place-medal.png';
+import thirdPlaceMedal from './images/3rd-place-medal.png';
 
 interface PoliticiansPodiumProps {
   politicians: Politician[];
@@ -114,16 +118,14 @@ export function PoliticiansPodium(props: PoliticiansPodiumProps) {
             >
               <Flex
                 position="absolute"
-                top={-15}
+                top={0}
                 left={0}
                 right={0}
                 bottom={0}
                 alignItems="start"
                 justifyContent="center"
               >
-                <Text bottom={5} fontSize={60}>
-                  🥈
-                </Text>
+                <Image src={secondPlaceMedal} alt="Deuxième place" width={50} height={50} />
               </Flex>
             </Box>
           </VStack>
@@ -141,16 +143,14 @@ export function PoliticiansPodium(props: PoliticiansPodiumProps) {
             >
               <Flex
                 position="absolute"
-                top={-15}
+                top={0}
                 left={0}
                 right={0}
                 bottom={0}
                 alignItems="start"
                 justifyContent="center"
               >
-                <Text bottom={5} fontSize={60}>
-                  🥇
-                </Text>
+                <Image src={firstPlaceMedal} alt="Première place" width={50} height={50} />
               </Flex>
             </Box>
           </VStack>
@@ -168,16 +168,14 @@ export function PoliticiansPodium(props: PoliticiansPodiumProps) {
             >
               <Flex
                 position="absolute"
-                top={-15}
+                top={0}
                 left={0}
                 right={0}
                 bottom={0}
                 alignItems="start"
                 justifyContent="center"
               >
-                <Text bottom={5} fontSize={60}>
-                  🥉
-                </Text>
+                <Image src={thirdPlaceMedal} alt="Troisième place" width={50} height={50} />
               </Flex>
             </Box>
           </VStack>
