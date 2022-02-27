@@ -56,7 +56,7 @@ export function PoliticiansPodium(props: PoliticiansPodiumProps) {
 
   return (
     <Container
-      minHeight="calc(100% - 64px)"
+      minHeight="calc(100vh - 64px)"
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
