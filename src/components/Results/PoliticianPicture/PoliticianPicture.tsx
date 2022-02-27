@@ -7,9 +7,9 @@ interface PoliticianPictureProps {
 }
 
 const sizes = {
-  small: { width: 40, height: 30 },
-  medium: { width: 60, height: 50 },
-  big: { width: 160, height: 120 },
+  small: { width: 40, height: 40 },
+  medium: { width: 90, height: 90 },
+  big: { width: 220, height: 220 },
 };
 
 export function PoliticianPicture(props: PoliticianPictureProps) {
