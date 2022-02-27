@@ -12,6 +12,7 @@ export function createSurveyQuestion(params: RecursivePartial<Question> = {}): Q
     title: params.title ?? faker.hacker.phrase(),
     description: params.description ?? faker.lorem.sentence(),
     help: params.help ?? faker.random.arrayElement([faker.lorem.sentence(), null]),
+    source: params.source ?? faker.internet.url(),
     choices:
       params.choices && params.choices.length
         ? params.choices.map((choice, index) =>
