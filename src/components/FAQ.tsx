@@ -3,6 +3,7 @@ import { Accordion, Heading, Text, Link } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import React from 'react';
 import { useIsMobile } from '../hooks/useIsMobile';
+import CitizenUnderline from './CitizenUnderline';
 import FAQItem from './FAQItem';
 
 const FAQ = () => {
@@ -18,8 +19,9 @@ const FAQ = () => {
         marginBottom="64px"
       >
         En savoir plus sur notre{' '}
-        <Text as="span" color="primary.600">
+        <Text as="span" color="primary.600" position="relative" display="inline-block">
           initiative citoyenne
+          <CitizenUnderline />
         </Text>{' '}
         :
       </Heading>
