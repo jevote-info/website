@@ -13,7 +13,6 @@ export function calculateSurveyResult(
 ): SurveyResult {
   const rawResult = calculateSurveyScores(survey, answers);
   const normalizedResult = normalizeResult(rawResult, politiciansPossibleScores);
-  // saveResult(normalizedResult, uniqueId);
   return normalizedResult;
 }
 
