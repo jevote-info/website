@@ -6,14 +6,13 @@ import {
   Heading,
   Text,
 } from '@chakra-ui/react';
-import React from 'react';
+import React, { FC } from 'react';
 
 type FAQItemProps = {
   title: string;
-  description: string;
 };
 
-const FAQItem = ({ title, description }: FAQItemProps) => {
+const FAQItem: FC<FAQItemProps> = ({ title, children }) => {
   return (
     <AccordionItem>
       <Heading as="h4">
@@ -24,7 +23,7 @@ const FAQItem = ({ title, description }: FAQItemProps) => {
           <AccordionIcon />
         </AccordionButton>
       </Heading>
-      <AccordionPanel pb={4}>{description}</AccordionPanel>
+      <AccordionPanel pb={4}>{children}</AccordionPanel>
     </AccordionItem>
   );
 };

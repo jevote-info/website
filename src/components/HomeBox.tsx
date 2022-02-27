@@ -33,6 +33,7 @@ const HomeBox = ({
       display="flex"
       flexDirection={isSmall ? 'column' : 'row'}
       margin="16px"
+      flex="1"
     >
       {isImageFirst && (
         <Flex flex={isSmall ? '1' : '0.5'} alignItems="center" justifyContent="center">

@@ -46,25 +46,21 @@ function Home(props: HomeProps) {
           <Flex direction="column" justifyContent="center" alignItems="center">
             <HomeHeader surveyPath={surveyPath} />
             <HomeBox
-              title="Trouvez votre candidat, sans parcourir les programmes"
-              description="Suspendisse dui enim, tempus volutpat cursus in, lobortis et massa. Mauris maximus
-          convallis vestibulum. Sed commodo, risus et laoreet commodo, enim mauris commodo felis, ac
-          auctor diam orci id nisl. Donec tristique finibus mi sed pretium. Ut condimentum nulla
-          diam, vel placerat ante posuere eget. In nec posuere mauris. Donec tristique finibus mi
-          sed pretium. Ut condimentum nulla diam."
+              title="Nous analysons les programmes, vous trouvez votre candidat"
+              description="Jevote.info est un questionnaire rapide, intuitif et complet qui a pour principal but d’intéresser et d’engager les citoyens à l’aube de cette élection présidentielle française. Nous avons parcouru, analysé et implémenté dans notre questionnaire les programmes des candidats à l’élection."
               imagePath="/people.png"
               isSmall={isMobile}
             />
             <Flex direction={isMobile ? 'column' : 'row'}>
               <HomeBox
-                title="Aucune donnée stockée, restez incognito."
-                description="Suspendisse dui enim, tempus volutpat cursus in, lobortis et massa. Mauris maximus convallis vestibulum. Sed commodo, risus et laoreet commodo, enim mauris commodo felis, ac auctor diam orci id nisl. Donec tristique finibus mi sed pretium."
+                title="Aucune donnée personnelle stockée, restez incognito"
+                description="Sur jevote.info, aucune donnée personnelle n’est enregistrée et vos réponses sont totalement anonymes. À des fins de transparence, l’ensemble du code du site, algorithme compris, est disponible en ligne (open source)."
                 imagePath="/lock.png"
                 isSmall
               />
               <HomeBox
-                title="Votez utile, contre l’abstention."
-                description="Suspendisse dui enim, tempus volutpat cursus in, lobortis et massa. Mauris maximus convallis vestibulum. Sed commodo, risus et laoreet commodo, enim mauris commodo felis, ac auctor diam orci id nisl. Donec tristique finibus mi sed pretium."
+                title="Votez pour vos idées"
+                description="Nos objectifs ? Pallier certains maux de la société qui n’ont cessé de croître ces dernières années : un désintéressement de la politique et un taux d’abstention élevé (22,23% au premier tour en 2017). À travers jevote.info, nous souhaitons rendre la politique accessible à tous les citoyens, lutter contre l'abstention et favoriser l’engagement de chacun."
                 imagePath="/vote.png"
                 isSmall
                 isImageFirst
