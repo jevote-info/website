@@ -26,111 +26,126 @@ async function main() {
       published: true,
     }),
     createSurveyCategory({
-      title: 'Politique économique & sociale',
-      slug: 'economie',
-      image: 'economy',
+      title: "Fonctionnement de l'Etat et des institutions",
+      slug: 'institutions',
+      image: 'taxation',
       order: 3,
       published: true,
-      questions: [
-        {
-          title: 'Mondialisation',
-          description: "Concernant la mondialisation de l'économie :",
-          order: 1,
-          published: true,
-          choices: [
-            {
-              text: "La France doit poursuivre l'intégration européenne en inistant sur une Europe sociale, et ne pas signer de nouveaux accourds de libre-échange (TAFTA, CETA, etc.)",
-              politicianScores: [],
-              order: 1,
-            },
-            {
-              text: 'La France doit sortir des traités économiques européens et internationaux pour pouvoir remettre en place des barrières dounaières.',
-              politicianScores: [],
-              order: 2,
-            },
-            {
-              text: "La France doit continuer à défendre l'intégration européenne et à signer des accords de libre-échange internationaux.",
-              politicianScores: [],
-              order: 3,
-            },
-          ],
-        },
-        {
-          title: 'Revenu universel',
-          description: "Etes-vous favorable à la création d'un revenu universel ?",
-          order: 2,
-          published: true,
-          choices: [
-            {
-              text: 'Oui',
-              politicianScores: [],
-              order: 1,
-            },
-            {
-              text: 'Non',
-              politicianScores: [],
-              order: 2,
-            },
-          ],
-        },
-        {
-          title: 'Aides sociales',
-          description: "Concernant les aides sociales de l'Etat, selon vous :",
-          order: 3,
-          published: true,
-          choices: [],
-        },
-      ],
+    }),
+    createSurveyCategory({
+      title: 'Politique Economique & Sociale, immigration',
+      slug: 'economie',
+      image: 'economy',
+      order: 4,
+      published: true,
     }),
     createSurveyCategory({
       title: 'Politique environnementale',
       slug: 'environnement',
       image: 'ecology',
-      order: 4,
-      published: true,
-    }),
-    createSurveyCategory({
-      title: 'Affaires étrangères',
-      slug: 'etranger',
-      image: 'foreign-affairs',
       order: 5,
       published: true,
     }),
     createSurveyCategory({
-      title: 'Défense',
-      slug: 'defense',
-      image: 'defense',
+      title: 'Affaires étrangères & Défense',
+      slug: 'etranger',
+      image: 'foreign-affairs',
       order: 6,
       published: true,
     }),
     createSurveyCategory({
-      title: 'Education nationale',
-      slug: 'education',
-      image: 'education',
+      title: 'Justice',
+      slug: 'justice',
+      image: 'justice',
       order: 7,
+      published: true,
+    }),
+    createSurveyCategory({
+      title: 'Energie',
+      slug: 'energie',
+      image: 'energy',
+      order: 8,
       published: true,
     }),
     createSurveyCategory({
       title: 'Santé',
       slug: 'sante',
       image: 'health',
-      order: 8,
-      published: true,
-    }),
-    createSurveyCategory({
-      title: 'Culture',
-      slug: 'culture',
-      image: 'culture',
       order: 9,
       published: true,
     }),
   ];
 
   const politicians = [
-    createPolitician(),
-    createPolitician(),
-    createPolitician(),
-    createPolitician(),
+    createPolitician({
+      name: 'Jean-Luc Mélenchon',
+      slug: 'jean-luc-melenchon',
+      programUrl: 'https://melenchon2022.fr/programme/',
+      pictureUrl: '/candidates/jean-luc-melenchon.png',
+      politicalParty: 'La France Insoumise',
+      description:
+        "Jean-Luc Mélenchon est le candidat de la France Insoumise et du mouvement L'union Populaire.",
+    }),
+    createPolitician({
+      name: 'Yannick Jadot',
+      slug: 'yannick-jadot',
+      programUrl: 'https://www.jadot2022.fr/programme',
+      pictureUrl: '/candidates/yannick-jadot.png',
+      politicalParty: 'Europe Écologie Les Verts',
+      description:
+        "Yannick Jadot est le candidat d'Europe Écologie Les Verts. Il a remporté la primaire écologiste en Septembre 2021.",
+    }),
+    createPolitician({
+      name: 'Valérie Pécresse',
+      slug: 'valerie-pecresse',
+      programUrl: 'https://valeriepecresse.fr/projets/',
+      pictureUrl: '/candidates/valerie-pecresse.png',
+      politicalParty: 'Les Républicains',
+      description:
+        'Valérie Pécresse est la candidate des Républicains. Elle a remporté la primaire des Républicains en Décembre 2021.',
+    }),
+    createPolitician({
+      name: 'Emmanuel Macron',
+      slug: 'emmanuel-macron',
+      programUrl: 'https://avecvous.fr',
+      pictureUrl: '/candidates/emmanuel-macron.png',
+      politicalParty: 'La République En Marche !',
+      description:
+        "Emmanuel Macron est le candidat de La République En Marche !. Il est l'actuel Président de la République.",
+    }),
+    createPolitician({
+      name: 'Anne Hidalgo',
+      slug: 'anne-hidalgo',
+      programUrl: 'https://www.2022avechidalgo.fr/notre_programme',
+      pictureUrl: '/candidates/anne-hidalgo.png',
+      politicalParty: 'Parti Socialiste',
+      description:
+        'Anne Hidalgo est la candidate du Parti Socialiste. Elle a été désignée candidate par les militants du Parti Socialiste.',
+    }),
+    createPolitician({
+      name: 'Marine Le Pen',
+      slug: 'marine-le-pen',
+      programUrl: 'https://mlafrance.fr/programme',
+      pictureUrl: '/candidates/marine-le-pen.png',
+      politicalParty: 'Rassemblement National',
+      description: 'Marine Le Pen est la candidate du Rassemblement National.',
+    }),
+    createPolitician({
+      name: 'Eric Zemmour',
+      slug: 'eric-zemmour',
+      programUrl: 'https://programme.zemmour2022.fr',
+      pictureUrl: '/candidates/eric-zemmour.png',
+      politicalParty: 'Reconquête !',
+      description: 'Eric Zemmour est le candidat du mouvement Reconquête !.',
+    }),
+    createPolitician({
+      name: 'Fabien Roussel',
+      slug: 'fabien-roussel',
+      programUrl: 'https://www.fabienroussel2022.fr/le_programme',
+      pictureUrl: '/candidates/fabien-roussel.png',
+      politicalParty: 'Parti Communiste Français',
+      description: 'Fabien Roussel est le candidat du Parti Communiste Français.',
+    }),
   ];
 
   for (const politician of politicians) {
