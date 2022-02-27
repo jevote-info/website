@@ -155,7 +155,7 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
   return (
     <>
       <Head>
-        <title>JeVote - {currentCategory.title}</title>
+        <title>jevote.info - {currentCategory.title}</title>
         <meta
           name="description"
           content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"

@@ -26,7 +26,7 @@ const SocialNetworks = ({ colorScheme = 'primary', withNames = false }: SocialNe
         </Button>
       </NextLink>
 
-      <NextLink href="https://www.facebook.com/JeVote.info/" passHref>
+      <NextLink href="https://www.facebook.com/jevote.info/" passHref>
         <Button
           as="a"
           colorScheme={colorScheme}
