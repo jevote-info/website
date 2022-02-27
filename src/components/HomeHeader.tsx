@@ -37,10 +37,6 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
           display="inline-flex"
           alignItems="center"
           justifyContent="center"
-          _hover={{ background: 'primary.50' }}
-          _active={{
-            background: 'primary.100',
-          }}
           _focus={{
             boxShadow: 'outline',
           }}
