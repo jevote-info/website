@@ -1,3 +1,4 @@
+import { QuestionIcon } from '@chakra-ui/icons';
 import {
   Box,
   Heading,
@@ -12,6 +13,9 @@ import {
   AccordionButton,
   AccordionIcon,
   AccordionPanel,
+  Button,
+  Link,
+  Tooltip,
 } from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
 import { isSimpleQuestionAnswer, SurveyAnswers } from '../../../types/answers';
@@ -29,9 +33,9 @@ export function DetailedResults(props: DetailedResultsProps) {
   const { survey, answers, politicians } = props;
 
   return (
-    <Box>
-      <Heading as="h3" mb={5} textAlign="center">
-        Découvrez votre affinité envers chaque candidat pour toutes les questions
+    <Box mt="5">
+      <Heading as="h3" mb={10} textAlign="center">
+        Comprenez vos résultats avec le score des candidats pour chaque question
       </Heading>
       <Accordion defaultIndex={[0]} allowMultiple w="full">
         {survey.map(category => (
@@ -78,10 +82,26 @@ export function DetailedResults(props: DetailedResultsProps) {
                         {choice.politicianScores.map(politicianScore => (
                           <WrapItem key={politicianScore.id}>
                             <Tag size="lg" colorScheme={isChoiceSelected ? 'primary' : 'gray'}>
-                              <Text>
-                                {politicians[politicianScore.politicianId].name} :{' '}
-                                {politicianScore.score}
-                              </Text>
+                              <HStack spacing={3}>
+                                <Text>
+                                  {politicians[politicianScore.politicianId].name} :{' '}
+                                  {politicianScore.score}
+                                </Text>
+                                {politicianScore.source && (
+                                  <Tooltip label="Source" fontSize="md">
+                                    <Button
+                                      variant="link"
+                                      minWidth="fit-content"
+                                      w="fit-content"
+                                      as={Link}
+                                      href={politicianScore.source}
+                                      isExternal
+                                    >
+                                      <QuestionIcon />
+                                    </Button>
+                                  </Tooltip>
+                                )}
+                              </HStack>
                             </Tag>
                           </WrapItem>
                         ))}

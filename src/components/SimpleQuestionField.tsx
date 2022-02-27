@@ -71,9 +71,11 @@ const SimpleQuestion = (props: QuestionProps) => {
             </Popover>
           )}
         </HStack>
-        <Heading size="xs" as="h2">
-          {question.description}
-        </Heading>
+        {question.description && (
+          <Heading size="xs" as="h2">
+            {question.description}
+          </Heading>
+        )}
       </Box>
       <Box width="full">
         {error?.type === 'required' && (

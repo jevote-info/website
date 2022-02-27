@@ -60,7 +60,10 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
   return (
     <Head>
       <title>JeVote - {currentCategory.title}</title>
-      <meta name="description" content={currentCategory.description} />
+      <meta
+        name="description"
+        content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
+      />
       <link rel="icon" href="/favicon.ico" />
     </Head>
   );

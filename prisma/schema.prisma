@@ -31,7 +31,6 @@ model Category {
   updatedAt      DateTime        @updatedAt
   slug           String          @unique
   title          String
-  description    String
   questions      Question[]
   image          String
   order          Int             @default(autoincrement())
@@ -46,7 +45,7 @@ model Question {
   category    Category         @relation(fields: [categoryId], references: [id])
   categoryId  String
   title       String
-  description String
+  description String?
   source      String?
   help        String?
   order       Int              @default(autoincrement())
@@ -79,7 +78,7 @@ model PoliticianScore {
   choice       Choice     @relation(fields: [choiceId], references: [id])
   choiceId     String
   score        Int
-  source       String
+  source       String?
   politician   Politician @relation(fields: [politicianId], references: [id])
   politicianId String
 

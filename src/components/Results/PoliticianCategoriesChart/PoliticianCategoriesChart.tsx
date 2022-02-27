@@ -1,4 +1,4 @@
-import { Box, Container, Heading, HStack, useToken, VStack } from '@chakra-ui/react';
+import { Box, Container, Heading, HStack, useToken, VStack, Text } from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
 import { useMemo } from 'react';
 import {
@@ -60,6 +60,10 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
     });
   }, [survey, results, politician]);
 
+  const score = useMemo(() => {
+    return results.scores.find(({ politicianId }) => politicianId === politician.id)?.score || 0;
+  }, [results, politician]);
+
   return (
     <Container
       p={5}
@@ -72,6 +76,12 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
         <PoliticianPicture politician={politician} size="big" />
 
         <Heading>{politician.name}</Heading>
+        <Heading size="lg">
+          Score :{' '}
+          <Text as="span" color={score > 0 ? 'primary.500' : 'secondary.500'}>
+            {score}
+          </Text>
+        </Heading>
       </Box>
 
       <Box width={[300, 350, 500]} maxWidth="full">

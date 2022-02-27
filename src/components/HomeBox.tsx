@@ -23,10 +23,13 @@ const HomeBox = ({
     ['#F1F4F6', '#EFF2F5'],
     [gray800, gray700],
   );
+  const borderColor = useColorModeValue('#e8e9ec', gray700);
 
   return (
     <Box
-      border="4px solid #e8e9ec"
+      borderWidth={4}
+      borderStyle="solid"
+      borderColor={borderColor}
       borderRadius="32px"
       background={`linear-gradient(180deg, ${bgGradiantStart} 0%, ${bgGradientEnd} 100%);`}
       padding={isMobile ? '16px' : '64px'}

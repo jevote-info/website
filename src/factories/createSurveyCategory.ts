@@ -11,7 +11,6 @@ export function createSurveyCategory(params: RecursivePartial<Category> = {}): C
     id,
     slug: params.slug ?? title,
     title,
-    description: params.description ?? faker.lorem.sentence(),
     questions:
       params.questions && params.questions.length
         ? params.questions.map((question, index) =>
