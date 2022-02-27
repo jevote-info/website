@@ -146,9 +146,9 @@ function CGU(props: CGUProps) {
             Les résultats sont enregistrés 1 an à compter de leur collecte.
             <br />
             Le responsable du traitement est Jevote.Info dont les coordonnées sont{' '}
-            <NextLink href="mailto:jevoteinfo@gmail.com" passHref>
+            <NextLink href="mailto:contact@jevote.info" passHref>
               <Link isExternal fontWeight="bold">
-                jevoteinfo@gmail.com <ExternalLinkIcon mx="2px" />
+                contact@jevote.info <ExternalLinkIcon mx="2px" />
               </Link>
             </NextLink>
             . Les destinataires sont limités aux{' '}
