@@ -28,7 +28,7 @@ async function main() {
     createSurveyCategory({
       title: "Fonctionnement de l'Etat & institutions",
       slug: 'institutions',
-      image: 'taxation',
+      image: 'institutions',
       order: 3,
       published: true,
     }),
