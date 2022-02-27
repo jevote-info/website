@@ -123,6 +123,7 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
               justify="space-between"
               align="flex-start"
               direction={['column', 'column', 'row']}
+              w="full"
             >
               <Heading as="h3" size="md" maxW="600">
                 Découvrez votre affinité envers chaque candidat pour chaque catégorie
