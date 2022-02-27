@@ -1,4 +1,4 @@
-# JeVote.info
+# jevote.info
 
 ## Local development
 
