@@ -105,8 +105,8 @@ export function PoliticiansPodium(props: PoliticiansPodiumProps) {
           borderBottomStyle="solid"
         >
           <VStack flex={1} justify="flex-end">
-            <PoliticianPicture politician={politicians[1]} />
-            <Text fontWeight="bold" align="center">
+            <PoliticianPicture politician={politicians[1]} size="medium" />
+            <Text fontWeight="bold" align="center" color="primary.200" fontSize="md">
               {politicians[1].name}
             </Text>
             <Box
@@ -130,8 +130,8 @@ export function PoliticiansPodium(props: PoliticiansPodiumProps) {
             </Box>
           </VStack>
           <VStack flex={1} height="full" justify="flex-end">
-            <PoliticianPicture politician={politicians[0]} />
-            <Text fontWeight="bold" align="center">
+            <PoliticianPicture politician={politicians[0]} size="medium" />
+            <Text fontWeight="bold" align="center" color="primary.500" fontSize="lg">
               {politicians[0].name}
             </Text>
             <Box
@@ -155,8 +155,8 @@ export function PoliticiansPodium(props: PoliticiansPodiumProps) {
             </Box>
           </VStack>
           <VStack flex={1} height="full" justify="flex-end">
-            <PoliticianPicture politician={politicians[2]} />
-            <Text fontWeight="bold" align="center">
+            <PoliticianPicture politician={politicians[2]} size="medium" />
+            <Text fontWeight="bold" align="center" color="secondary.500" fontSize="md">
               {politicians[2].name}
             </Text>
             <Box
