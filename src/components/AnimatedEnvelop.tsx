@@ -1,4 +1,4 @@
-import { Box, Image } from '@chakra-ui/react';
+import { Box, Image, useColorModeValue } from '@chakra-ui/react';
 import { motion, useViewportScroll, useMotionValue } from 'framer-motion';
 import React, { useEffect, useRef } from 'react';
 
@@ -8,6 +8,8 @@ const AnimatedEnvelop = () => {
 
   const containerRef = useRef<HTMLDivElement>(null);
   const envelopRef = useRef<HTMLDivElement>(null);
+
+  const flagColorsOpacity = useColorModeValue(0.4, 0.7);
 
   useEffect(() => {
     const setY = (currentScroll: number) => {
@@ -45,7 +47,7 @@ const AnimatedEnvelop = () => {
         right="0"
         bottom="0"
         left="0"
-        background={`radial-gradient(20.63% 46.62% at 30% 50%, rgba(57, 63, 255, 0.4) 0%, rgba(255, 255, 255, 0) 100%)`}
+        background={`radial-gradient(20.63% 46.62% at 30% 50%, rgba(57, 63, 255, ${flagColorsOpacity}) 0%, rgba(255, 255, 255, 0) 100%)`}
         opacity="0.24"
       />
       <Box
@@ -54,7 +56,7 @@ const AnimatedEnvelop = () => {
         right="0"
         bottom="0"
         left="0"
-        background={`radial-gradient(20.63% 46.62% at 70% 50%, rgba(255, 17, 17, 0.4) 0%, rgba(255, 255, 255, 0) 100%)`}
+        background={`radial-gradient(20.63% 46.62% at 70% 50%, rgba(255, 17, 17, ${flagColorsOpacity}) 0%, rgba(255, 255, 255, 0) 100%)`}
         opacity="0.24"
       />
       <Box

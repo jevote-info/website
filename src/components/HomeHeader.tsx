@@ -1,5 +1,5 @@
 import { ChevronRightIcon } from '@chakra-ui/icons';
-import { Box, Flex, Heading, Image, Text } from '@chakra-ui/react';
+import { Box, Flex, Heading, Image, Text, useColorModeValue } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import React from 'react';
 import AnimatedEnvelop from '../components/AnimatedEnvelop';
@@ -12,6 +12,8 @@ type HomeHeaderProps = {
 
 const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
   const isMobile = useIsMobile();
+
+  const surveyButtonColor = useColorModeValue('primary.600', 'primary.200');
 
   return (
     <Flex direction="column" justifyContent="center" alignItems="center" position="relative">
@@ -32,7 +34,7 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
           borderRadius="md"
           fontWeight="semibold"
           padding="0 32px"
-          color="primary.600"
+          color={surveyButtonColor}
           background="transparent"
           display="inline-flex"
           alignItems="center"
