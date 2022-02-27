@@ -1,16 +1,12 @@
-import { PrismaClient } from '@prisma/client';
 import { Survey } from '../types/survey';
-
-let prisma: PrismaClient;
+import { getDB } from './db';
 
 export const fetchSurvey = async (options: { previewMode?: boolean } = {}): Promise<Survey> => {
   const { previewMode } = options;
 
-  if (!prisma) {
-    prisma = new PrismaClient();
-  }
+  const db = getDB();
 
-  return prisma.category.findMany({
+  return db.category.findMany({
     where: previewMode ? undefined : { published: true },
     orderBy: { order: 'asc' },
     include: {
