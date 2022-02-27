@@ -2,16 +2,17 @@ import React from 'react';
 import NextLink from 'next/link';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faFacebook, faInstagram, faTwitter, faLinkedin } from '@fortawesome/free-brands-svg-icons';
-import { Button } from '@chakra-ui/react';
+import { Button, Text } from '@chakra-ui/react';
 
 type SocialNetworksProps = {
   colorScheme?: string;
+  withNames?: boolean;
 };
 
-const SocialNetworks = ({ colorScheme = 'primary' }: SocialNetworksProps) => {
+const SocialNetworks = ({ colorScheme = 'primary', withNames = false }: SocialNetworksProps) => {
   return (
     <>
-      <NextLink href="https://www.instagram.com/" passHref>
+      <NextLink href="https://www.instagram.com/jevote.info/" passHref>
         <Button
           as="a"
           colorScheme={colorScheme}
@@ -21,10 +22,11 @@ const SocialNetworks = ({ colorScheme = 'primary' }: SocialNetworksProps) => {
           rel="noopener noreferrer"
         >
           <FontAwesomeIcon width={16} icon={faInstagram} />
+          {withNames && <Text marginLeft="8px">Instagram</Text>}
         </Button>
       </NextLink>
 
-      <NextLink href="https://www.facebook.com/" passHref>
+      <NextLink href="https://www.facebook.com/jevote.info/" passHref>
         <Button
           as="a"
           colorScheme={colorScheme}
@@ -34,10 +36,11 @@ const SocialNetworks = ({ colorScheme = 'primary' }: SocialNetworksProps) => {
           rel="noopener noreferrer"
         >
           <FontAwesomeIcon width={16} icon={faFacebook} />
+          {withNames && <Text marginLeft="8px">Facebook</Text>}
         </Button>
       </NextLink>
 
-      <NextLink href="https://twitter.com/" passHref>
+      <NextLink href="https://twitter.com/jevote_info" passHref>
         <Button
           as="a"
           colorScheme={colorScheme}
@@ -47,9 +50,10 @@ const SocialNetworks = ({ colorScheme = 'primary' }: SocialNetworksProps) => {
           rel="noopener noreferrer"
         >
           <FontAwesomeIcon width={16} icon={faTwitter} />
+          {withNames && <Text marginLeft="8px">Twitter</Text>}
         </Button>
       </NextLink>
-      <NextLink href="https://linkedin.com/" passHref>
+      <NextLink href="https://www.linkedin.com/company/jevote.info" passHref>
         <Button
           as="a"
           colorScheme={colorScheme}
@@ -59,6 +63,7 @@ const SocialNetworks = ({ colorScheme = 'primary' }: SocialNetworksProps) => {
           rel="noopener noreferrer"
         >
           <FontAwesomeIcon width={16} icon={faLinkedin} />
+          {withNames && <Text marginLeft="8px">LinkedIn</Text>}
         </Button>
       </NextLink>
     </>

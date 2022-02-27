@@ -1,4 +1,5 @@
-import { Box, Container, Heading, HStack, useToken, VStack, Text } from '@chakra-ui/react';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { Box, Container, Heading, HStack, useToken, VStack, Text, Link } from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
 import { useMemo } from 'react';
 import {
@@ -72,16 +73,23 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
       justifyContent="space-between"
       maxW="container.lg"
     >
-      <Box>
+      <Box maxW="300px">
         <PoliticianPicture politician={politician} size="big" />
 
         <Heading>{politician.name}</Heading>
-        <Heading size="lg">
+        <Heading size="md">{politician.politicalParty}</Heading>
+        <Heading mt={3} size="lg">
           Score :{' '}
           <Text as="span" color={score > 0 ? 'primary.500' : 'secondary.500'}>
             {score}
           </Text>
         </Heading>
+        <Text mt={3} mb={3}>
+          {politician.description}
+        </Text>
+        <Link href={politician.programUrl} isExternal fontWeight="bold">
+          Lire son programme <ExternalLinkIcon />
+        </Link>
       </Box>
 
       <Box width={[300, 350, 500]} maxWidth="full">

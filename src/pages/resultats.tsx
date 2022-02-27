@@ -3,7 +3,7 @@ import {
   Button,
   Container,
   Heading,
-  HStack,
+  Stack,
   Menu,
   MenuButton,
   MenuItem,
@@ -99,7 +99,7 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
   return (
     <>
       <Head>
-        <title>JeVote</title>
+        <title>jevote.info</title>
         <meta
           name="description"
           content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
@@ -119,7 +119,11 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
             )}
           </Box>
           <Container p={5} as={VStack} alignItems="start" spacing={5} maxW="container.lg">
-            <HStack justify="space-between" align="center" w="full">
+            <Stack
+              justify="space-between"
+              align="flex-start"
+              direction={['column', 'column', 'row']}
+            >
               <Heading as="h3" size="md" maxW="600">
                 Découvrez votre affinité envers chaque candidat pour chaque catégorie
               </Heading>
@@ -136,7 +140,7 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
                   ))}
                 </MenuList>
               </Menu>
-            </HStack>
+            </Stack>
             {result.scores.map(({ politicianId, score }) => {
               const categoryScores = result.categoriesScores.find(
                 ({ categoryId }) => categoryId === selectedCategory?.id,

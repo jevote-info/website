@@ -5,7 +5,7 @@ import NextLink from 'next/link';
 import React from 'react';
 
 type TeamMemberProps = {
-  imagePath: string;
+  imagePath?: string;
   name: string;
   title: string;
   description: string;
@@ -16,7 +16,7 @@ const TeamMember = ({ imagePath, name, title, description, linkedInUrl }: TeamMe
   return (
     <GridItem w="100%" marginBottom="32px" maxWidth="800px">
       <Box>
-        <Image src={imagePath} alt={`Photo de ${name}`} marginBottom="16px" />
+        {imagePath && <Image src={imagePath} alt={`Photo de ${name}`} marginBottom="16px" />}
         <Heading as="h2" size="md" marginBottom="4px">
           {name}
         </Heading>
