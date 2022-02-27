@@ -25,6 +25,7 @@ import { PoliticianGlobalScore } from '../components/Results/PoliticianGlobalSco
 import { Category } from '../types/category';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { PoliticiansPodium } from '../components/Results/PoliticiansPodium';
+import { DetailedResults } from '../components/Results/DetailedResults';
 
 interface SerializedResultsProps {
   survey: string;
@@ -69,7 +70,7 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
     [serializedProps.politicians],
   );
 
-  const { calculateResult, findMissingAnswer, result } = useSurveyStore();
+  const { calculateResult, findMissingAnswer, result, answers } = useSurveyStore();
 
   useEffect(() => {
     const missingAnswer = findMissingAnswer(survey);
@@ -147,6 +148,9 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
                 />
               );
             })}
+          </Container>
+          <Container p={5} maxW="container.lg">
+            <DetailedResults survey={survey} answers={answers} politicians={politicians} />
           </Container>
         </Box>
       </HomeLayout>

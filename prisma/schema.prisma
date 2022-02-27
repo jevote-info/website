@@ -47,6 +47,7 @@ model Question {
   categoryId  String
   title       String
   description String
+  source      String?
   help        String?
   order       Int              @default(autoincrement())
   published   Boolean          @default(false)
