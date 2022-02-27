@@ -30,7 +30,7 @@ const Team = ({ surveyPath }: TeamProps) => {
   return (
     <HomeLayout surveyPath={surveyPath}>
       <Container maxW="container.xl">
-        <Heading as="h1" color={titleColor} marginBottom="32px">
+        <Heading as="h1" color={titleColor} margin="64px 0 32px 0">
           Contributeurs
         </Heading>
         <Center>
