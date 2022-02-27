@@ -64,9 +64,14 @@ const SocialShare = () => {
         </Box>
       </Flex>
       <Text color="white" textAlign="center" marginTop="32px">
-        Suspendisse dui enim, tempus volutpat cursus in, lobortis et massa. Mauris maximus convallis
-        vestibulum. Sed commodo, risus et laoreet commodo, enim mauris commodo felis, ac auctor diam
-        orci id nisl. Donec tristique finibus mi sed pretium.
+        Vous avez aimé le questionnaire et notre démarche ?<br />
+        Partagez-le à vos proches en leur envoyant le lien ci-dessus et aidez-nous à le faire
+        connaître au plus grand nombre.
+        <br />
+        <br />
+        <br />
+        Vous pouvez également nous retrouver sur tous nos réseaux sociaux pour être tenu au courant
+        des dernières nouveautés.
       </Text>
       <Flex marginTop="32px">
         <DarkMode>
