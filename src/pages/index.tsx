@@ -34,7 +34,7 @@ function Home(props: HomeProps) {
   return (
     <>
       <Head>
-        <title>jevote.info</title>
+        <title>JeVote</title>
         <meta
           name="description"
           content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"

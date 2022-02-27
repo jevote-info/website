@@ -1,5 +1,6 @@
 import { Center, Container, Heading, Grid } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
+import Head from 'next/head';
 import React from 'react';
 import { HomeLayout } from '../components/HomeLayout';
 import TeamMember from '../components/TeamMember';
@@ -28,50 +29,60 @@ const Team = ({ surveyPath }: TeamProps) => {
   const isMobile = useIsMobile();
 
   return (
-    <HomeLayout surveyPath={surveyPath}>
-      <Container maxW="container.xl">
-        <Heading as="h1" color={titleColor} margin="64px 0 32px 0">
-          Contributeurs
-        </Heading>
-        <Center>
-          <Grid templateColumns={`repeat(${isMobile ? 1 : 3}, 1fr)`} gap="16px">
-            <TeamMember
-              name="Alan Chauchet"
-              title="Lead Front-end Developer chez Qare"
-              description="A remplir"
-              linkedInUrl="https://www.linkedin.com/in/alan-chauchet/"
-            />
-            <TeamMember name="Jordan" title="A remplir" description="A remplir" />
-            <TeamMember
-              name="Baptiste Acca"
-              title="Software Engineer @Sorare"
-              description="A remplir"
-              linkedInUrl="https://www.linkedin.com/in/baptisteacca/"
-            />
-            <TeamMember
-              imagePath="/team/julie-rosin.jpeg"
-              name="Julie Rosin"
-              title="Chargée de communication chez Artivisor, les bonnes adresses artisanales à Nantes"
-              description="A remplir"
-              linkedInUrl="https://www.linkedin.com/in/julie-rosin/"
-            />
-            <TeamMember
-              imagePath="/team/simon-galet.jpeg"
-              name="Simon Galet"
-              title="CEO @theTribe Mobile"
-              description="A remplir"
-              linkedInUrl="https://www.linkedin.com/in/simongalet/"
-            />
-            <TeamMember name="Florian Jeudi" title="A remplir" description="A remplir" />
-            <TeamMember
-              name="Guillaume Acca"
-              title="Lorem ipsum dolor sit amet"
-              description="A remplir"
-            />
-          </Grid>
-        </Center>
-      </Container>
-    </HomeLayout>
+    <>
+      <Head>
+        <title>JeVote - Contributeurs</title>
+        <meta
+          name="description"
+          content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
+        />
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <HomeLayout surveyPath={surveyPath}>
+        <Container maxW="container.xl">
+          <Heading as="h1" color={titleColor} margin="64px 0 32px 0">
+            Contributeurs
+          </Heading>
+          <Center>
+            <Grid templateColumns={`repeat(${isMobile ? 1 : 3}, 1fr)`} gap="16px">
+              <TeamMember
+                name="Alan Chauchet"
+                title="Lead Front-end Developer chez Qare"
+                description="A remplir"
+                linkedInUrl="https://www.linkedin.com/in/alan-chauchet/"
+              />
+              <TeamMember name="Jordan" title="A remplir" description="A remplir" />
+              <TeamMember
+                name="Baptiste Acca"
+                title="Software Engineer @Sorare"
+                description="A remplir"
+                linkedInUrl="https://www.linkedin.com/in/baptisteacca/"
+              />
+              <TeamMember
+                imagePath="/team/julie-rosin.jpeg"
+                name="Julie Rosin"
+                title="Chargée de communication chez Artivisor, les bonnes adresses artisanales à Nantes"
+                description="A remplir"
+                linkedInUrl="https://www.linkedin.com/in/julie-rosin/"
+              />
+              <TeamMember
+                imagePath="/team/simon-galet.jpeg"
+                name="Simon Galet"
+                title="CEO @theTribe Mobile"
+                description="A remplir"
+                linkedInUrl="https://www.linkedin.com/in/simongalet/"
+              />
+              <TeamMember name="Florian Jeudi" title="A remplir" description="A remplir" />
+              <TeamMember
+                name="Guillaume Acca"
+                title="Lorem ipsum dolor sit amet"
+                description="A remplir"
+              />
+            </Grid>
+          </Center>
+        </Container>
+      </HomeLayout>
+    </>
   );
 };
 
