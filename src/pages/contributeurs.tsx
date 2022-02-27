@@ -36,106 +36,37 @@ const Team = ({ surveyPath }: TeamProps) => {
         <Center>
           <Grid templateColumns={`repeat(${isMobile ? 1 : 3}, 1fr)`} gap="16px">
             <TeamMember
-              imagePath="/team-member.jpeg"
               name="Alan Chauchet"
               title="Lead Front-end Developer chez Qare"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nulla sit amet iaculis
-          rhoncus. Phasellus finibus gravida congue. Proin suscipit lacus nec nisi sodales, non
-          suscipit nibh condimentum. Donec sit amet risus blandit, faucibus tortor ac, pharetra
-          quam. In est tellus, dignissim sed ante sit amet, luctus fringilla lacus. Donec in diam
-          feugiat felis semper volutpat ac posuere nisi. Cras faucibus tellus a erat aliquet, at
-          aliquet sapien lacinia. Ut id elit sit amet felis viverra porta quis non lorem. Proin
-          efficitur consequat neque ac ornare. Aliquam ac lacus eget justo porttitor suscipit. Donec
-          sed maximus libero, vitae volutpat erat. Duis sit amet consequat felis. Donec a mauris
-          eget velit vestibulum efficitur. Pellentesque elementum porttitor libero."
+              description="A remplir"
               linkedInUrl="https://www.linkedin.com/in/alan-chauchet/"
             />
+            <TeamMember name="Jordan" title="A remplir" description="A remplir" />
             <TeamMember
-              imagePath="/team-member.jpeg"
-              name="Jordan"
-              title="Lorem ipsum dolor sit amet"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nulla sit amet iaculis
-        rhoncus. Phasellus finibus gravida congue. Proin suscipit lacus nec nisi sodales, non
-        suscipit nibh condimentum. Donec sit amet risus blandit, faucibus tortor ac, pharetra
-        quam. In est tellus, dignissim sed ante sit amet, luctus fringilla lacus. Donec in diam
-        feugiat felis semper volutpat ac posuere nisi. Cras faucibus tellus a erat aliquet, at
-        aliquet sapien lacinia. Ut id elit sit amet felis viverra porta quis non lorem. Proin
-        efficitur consequat neque ac ornare. Aliquam ac lacus eget justo porttitor suscipit. Donec
-        sed maximus libero, vitae volutpat erat. Duis sit amet consequat felis. Donec a mauris
-        eget velit vestibulum efficitur. Pellentesque elementum porttitor libero."
-            />
-            <TeamMember
-              imagePath="/team-member.jpeg"
               name="Baptiste Acca"
               title="Software Engineer @Sorare"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nulla sit amet iaculis
-        rhoncus. Phasellus finibus gravida congue. Proin suscipit lacus nec nisi sodales, non
-        suscipit nibh condimentum. Donec sit amet risus blandit, faucibus tortor ac, pharetra
-        quam. In est tellus, dignissim sed ante sit amet, luctus fringilla lacus. Donec in diam
-        feugiat felis semper volutpat ac posuere nisi. Cras faucibus tellus a erat aliquet, at
-        aliquet sapien lacinia. Ut id elit sit amet felis viverra porta quis non lorem. Proin
-        efficitur consequat neque ac ornare. Aliquam ac lacus eget justo porttitor suscipit. Donec
-        sed maximus libero, vitae volutpat erat. Duis sit amet consequat felis. Donec a mauris
-        eget velit vestibulum efficitur. Pellentesque elementum porttitor libero."
+              description="A remplir"
               linkedInUrl="https://www.linkedin.com/in/baptisteacca/"
             />
             <TeamMember
-              imagePath="/team-member.jpeg"
+              imagePath="/team/julie.jpeg"
               name="Julie"
               title="Chargée de communication chez Artivisor, les bonnes adresses artisanales à Nantes"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nulla sit amet iaculis
-        rhoncus. Phasellus finibus gravida congue. Proin suscipit lacus nec nisi sodales, non
-        suscipit nibh condimentum. Donec sit amet risus blandit, faucibus tortor ac, pharetra
-        quam. In est tellus, dignissim sed ante sit amet, luctus fringilla lacus. Donec in diam
-        feugiat felis semper volutpat ac posuere nisi. Cras faucibus tellus a erat aliquet, at
-        aliquet sapien lacinia. Ut id elit sit amet felis viverra porta quis non lorem. Proin
-        efficitur consequat neque ac ornare. Aliquam ac lacus eget justo porttitor suscipit. Donec
-        sed maximus libero, vitae volutpat erat. Duis sit amet consequat felis. Donec a mauris
-        eget velit vestibulum efficitur. Pellentesque elementum porttitor libero."
+              description="A remplir"
               linkedInUrl="https://www.linkedin.com/in/julie/"
             />
             <TeamMember
-              imagePath="/simon-galet.jpeg"
+              imagePath="/team/simon-galet.jpeg"
               name="Simon Galet"
               title="CEO @theTribe Mobile"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nulla sit amet iaculis
-        rhoncus. Phasellus finibus gravida congue. Proin suscipit lacus nec nisi sodales, non
-        suscipit nibh condimentum. Donec sit amet risus blandit, faucibus tortor ac, pharetra
-        quam. In est tellus, dignissim sed ante sit amet, luctus fringilla lacus. Donec in diam
-        feugiat felis semper volutpat ac posuere nisi. Cras faucibus tellus a erat aliquet, at
-        aliquet sapien lacinia. Ut id elit sit amet felis viverra porta quis non lorem. Proin
-        efficitur consequat neque ac ornare. Aliquam ac lacus eget justo porttitor suscipit. Donec
-        sed maximus libero, vitae volutpat erat. Duis sit amet consequat felis. Donec a mauris
-        eget velit vestibulum efficitur. Pellentesque elementum porttitor libero."
+              description="A remplir"
               linkedInUrl="https://www.linkedin.com/in/simongalet/"
             />
+            <TeamMember name="Florian Jeudi" title="A remplir" description="A remplir" />
             <TeamMember
-              imagePath="/team-member.jpeg"
-              name="Florian Jeudi"
-              title="Lorem ipsum dolor sit amet"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nulla sit amet iaculis
-        rhoncus. Phasellus finibus gravida congue. Proin suscipit lacus nec nisi sodales, non
-        suscipit nibh condimentum. Donec sit amet risus blandit, faucibus tortor ac, pharetra
-        quam. In est tellus, dignissim sed ante sit amet, luctus fringilla lacus. Donec in diam
-        feugiat felis semper volutpat ac posuere nisi. Cras faucibus tellus a erat aliquet, at
-        aliquet sapien lacinia. Ut id elit sit amet felis viverra porta quis non lorem. Proin
-        efficitur consequat neque ac ornare. Aliquam ac lacus eget justo porttitor suscipit. Donec
-        sed maximus libero, vitae volutpat erat. Duis sit amet consequat felis. Donec a mauris
-        eget velit vestibulum efficitur. Pellentesque elementum porttitor libero."
-            />
-            <TeamMember
-              imagePath="/team-member.jpeg"
               name="Guillaume Acca"
               title="Lorem ipsum dolor sit amet"
-              description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut euismod nulla sit amet iaculis
-        rhoncus. Phasellus finibus gravida congue. Proin suscipit lacus nec nisi sodales, non
-        suscipit nibh condimentum. Donec sit amet risus blandit, faucibus tortor ac, pharetra
-        quam. In est tellus, dignissim sed ante sit amet, luctus fringilla lacus. Donec in diam
-        feugiat felis semper volutpat ac posuere nisi. Cras faucibus tellus a erat aliquet, at
-        aliquet sapien lacinia. Ut id elit sit amet felis viverra porta quis non lorem. Proin
-        efficitur consequat neque ac ornare. Aliquam ac lacus eget justo porttitor suscipit. Donec
-        sed maximus libero, vitae volutpat erat. Duis sit amet consequat felis. Donec a mauris
-        eget velit vestibulum efficitur. Pellentesque elementum porttitor libero."
+              description="A remplir"
             />
           </Grid>
         </Center>
