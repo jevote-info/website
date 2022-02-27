@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Flex, Button, Link, VStack, HStack } from '@chakra-ui/react';
+import { Flex, Link, VStack, HStack } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { MenuLinks } from '../MenuLinks';
 import { ColorModeSwitch } from '../ColorModeSwitch';
@@ -8,10 +8,11 @@ import { Logo } from '../Logo';
 interface HomeLayoutProps {
   surveyPath: string;
   children: ReactNode;
+  withColorModeSwitch?: boolean;
 }
 
 export function HomeLayoutDesktop(props: HomeLayoutProps) {
-  const { surveyPath, children } = props;
+  const { surveyPath, children, withColorModeSwitch = true } = props;
 
   return (
     <VStack height="full">
@@ -22,22 +23,13 @@ export function HomeLayoutDesktop(props: HomeLayoutProps) {
           </Link>
         </NextLink>
         <HStack>
-          <NextLink href={surveyPath} passHref>
-            <Button
-              as="a"
-              colorScheme="primary"
-              variant="ghost"
-              aria-label="Lancer le questionnaire"
-            >
-              Questionnaire
-            </Button>
-          </NextLink>
+          <MenuLinks withSurveyLink surveyPath={surveyPath} />
 
-          <MenuLinks />
-
-          <Flex align="center" marginLeft="8px">
-            <ColorModeSwitch />
-          </Flex>
+          {withColorModeSwitch && (
+            <Flex align="center" marginLeft="8px">
+              <ColorModeSwitch />
+            </Flex>
+          )}
         </HStack>
       </HStack>
       {children}

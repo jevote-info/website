@@ -6,6 +6,7 @@ import { useIsMobile } from '../../hooks/useIsMobile';
 interface HomeLayoutProps {
   surveyPath: string;
   children: ReactNode;
+  withColorModeSwitch?: boolean;
 }
 
 export function HomeLayout(props: HomeLayoutProps) {
