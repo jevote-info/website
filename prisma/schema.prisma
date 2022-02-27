@@ -77,7 +77,7 @@ model PoliticianScore {
   updatedAt    DateTime   @updatedAt
   choice       Choice     @relation(fields: [choiceId], references: [id])
   choiceId     String
-  score        Int
+  score        Float
   source       String?
   politician   Politician @relation(fields: [politicianId], references: [id])
   politicianId String
@@ -99,7 +99,7 @@ model CategoryScore {
   id                 String                @id @default(uuid())
   createdAt          DateTime              @default(now())
   updatedAt          DateTime              @updatedAt
-  score              Int
+  score              Float
   politicianResult   PoliticianResultScore @relation(fields: [politicianResultId], references: [id])
   politicianResultId String
   category           Category              @relation(fields: [categoryId], references: [id])
@@ -110,7 +110,7 @@ model PoliticianResultScore {
   id               String          @id @default(uuid())
   createdAt        DateTime        @default(now())
   updatedAt        DateTime        @updatedAt
-  score            Int
+  score            Float
   result           Result          @relation(fields: [resultId], references: [id])
   resultId         String
   categoriesScores CategoryScore[]
