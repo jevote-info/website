@@ -8,11 +8,10 @@ import { Logo } from '../Logo';
 interface HomeLayoutProps {
   surveyPath: string;
   children: ReactNode;
-  withColorModeSwitch?: boolean;
 }
 
 export function HomeLayoutDesktop(props: HomeLayoutProps) {
-  const { surveyPath, children, withColorModeSwitch = true } = props;
+  const { surveyPath, children } = props;
 
   return (
     <VStack height="full">
@@ -25,11 +24,9 @@ export function HomeLayoutDesktop(props: HomeLayoutProps) {
         <HStack>
           <MenuLinks withSurveyLink surveyPath={surveyPath} />
 
-          {withColorModeSwitch && (
-            <Flex align="center" marginLeft="8px">
-              <ColorModeSwitch />
-            </Flex>
-          )}
+          <Flex align="center" marginLeft="8px">
+            <ColorModeSwitch />
+          </Flex>
         </HStack>
       </HStack>
       {children}

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Heading, Flex, Text, Image } from '@chakra-ui/react';
+import { Box, Heading, Flex, Text, Image, useColorModeValue, useToken } from '@chakra-ui/react';
 import { useIsMobile } from '../hooks/useIsMobile';
 
 type HomeBoxProps = {
@@ -18,14 +18,20 @@ const HomeBox = ({
   isImageFirst = false,
 }: HomeBoxProps) => {
   const isMobile = useIsMobile();
+  const [gray800, gray700] = useToken('colors', ['gray.800', 'gray.700']);
+  const [bgGradiantStart, bgGradientEnd] = useColorModeValue(
+    ['#F1F4F6', '#EFF2F5'],
+    [gray800, gray700],
+  );
+  const borderColor = useColorModeValue('#e8e9ec', gray700);
 
   return (
     <Box
       borderWidth={4}
       borderStyle="solid"
-      borderColor="#e8e9ec"
+      borderColor={borderColor}
       borderRadius="32px"
-      background={`linear-gradient(180deg, #F1F4F6 0%, #EFF2F5 100%);`}
+      background={`linear-gradient(180deg, ${bgGradiantStart} 0%, ${bgGradientEnd} 100%);`}
       padding={isMobile ? '16px' : '64px'}
       display="flex"
       flexDirection={isSmall ? 'column' : 'row'}

@@ -23,11 +23,10 @@ import { Logo } from '../Logo';
 interface HomeLayoutProps {
   surveyPath: string;
   children: ReactNode;
-  withColorModeSwitch?: boolean;
 }
 
 export function HomeLayoutMobile(props: HomeLayoutProps) {
-  const { surveyPath, children, withColorModeSwitch = true } = props;
+  const { surveyPath, children } = props;
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { asPath } = useRouter();
@@ -57,11 +56,9 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
             />
           </Flex>
 
-          {withColorModeSwitch && (
-            <Flex align="center" justifyContent="end">
-              <ColorModeSwitch />
-            </Flex>
-          )}
+          <Flex align="center" justifyContent="end">
+            <ColorModeSwitch />
+          </Flex>
         </Grid>
         {children}
       </VStack>
