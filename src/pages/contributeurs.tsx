@@ -46,15 +46,14 @@ const Team = ({ surveyPath }: TeamProps) => {
           <Center>
             <Grid templateColumns={`repeat(${isMobile ? 1 : 3}, 1fr)`} gap="16px">
               <TeamMember
+                imagePath="/team/alan-chauchet.jpeg"
                 name="Alan Chauchet"
-                title="Lead Front-end Developer chez Qare"
                 description="A remplir"
                 linkedInUrl="https://www.linkedin.com/in/alan-chauchet/"
               />
               <TeamMember name="Jordan" title="A remplir" description="A remplir" />
               <TeamMember
                 name="Baptiste Acca"
-                title="Software Engineer @Sorare"
                 description="A remplir"
                 linkedInUrl="https://www.linkedin.com/in/baptisteacca/"
               />
