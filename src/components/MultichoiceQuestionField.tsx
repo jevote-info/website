@@ -70,9 +70,11 @@ export function MultichoiceQuestionField(props: MultichoiceQuestionProps) {
             </Popover>
           )}
         </HStack>
-        <Heading size="xs" as="h2">
-          {question.description}
-        </Heading>
+        {question.description && (
+          <Heading size="xs" as="h2">
+            {question.description}
+          </Heading>
+        )}
         <Heading mt={3} size="xs" as="h3" color="gray.500">
           Plusieurs réponses possibles
         </Heading>

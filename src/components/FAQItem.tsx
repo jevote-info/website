@@ -16,11 +16,11 @@ const FAQItem: FC<FAQItemProps> = ({ title, children }) => {
   return (
     <AccordionItem>
       <Heading as="h4">
-        <AccordionButton>
+        <AccordionButton py={5}>
           <Text flex="1" textAlign="left" fontWeight="600" fontSize="24px">
             {title}
           </Text>
-          <AccordionIcon />
+          <AccordionIcon fontSize={30} />
         </AccordionButton>
       </Heading>
       <AccordionPanel pb={4}>{children}</AccordionPanel>

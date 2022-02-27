@@ -2,6 +2,8 @@ import {
   Box,
   Button,
   Container,
+  Heading,
+  HStack,
   Menu,
   MenuButton,
   MenuItem,
@@ -117,19 +119,24 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
             )}
           </Box>
           <Container p={5} as={VStack} alignItems="start" spacing={5} maxW="container.lg">
-            <Menu>
-              <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
-                {selectedCategory?.title || 'Général'}
-              </MenuButton>
-              <MenuList>
-                <MenuItem onClick={() => setSelectedCategory(null)}>Général</MenuItem>
-                {survey.map(category => (
-                  <MenuItem key={category.id} onClick={() => setSelectedCategory(category)}>
-                    {category.title}
-                  </MenuItem>
-                ))}
-              </MenuList>
-            </Menu>
+            <HStack justify="space-between" align="center" w="full">
+              <Heading as="h3" size="md" maxW="600">
+                Découvrez votre affinité envers chaque candidat pour chaque catégorie
+              </Heading>
+              <Menu>
+                <MenuButton as={Button} rightIcon={<ChevronDownIcon />}>
+                  {selectedCategory?.title || 'Général'}
+                </MenuButton>
+                <MenuList>
+                  <MenuItem onClick={() => setSelectedCategory(null)}>Général</MenuItem>
+                  {survey.map(category => (
+                    <MenuItem key={category.id} onClick={() => setSelectedCategory(category)}>
+                      {category.title}
+                    </MenuItem>
+                  ))}
+                </MenuList>
+              </Menu>
+            </HStack>
             {result.scores.map(({ politicianId, score }) => {
               const categoryScores = result.categoriesScores.find(
                 ({ categoryId }) => categoryId === selectedCategory?.id,

@@ -14,11 +14,6 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
   const isMobile = useIsMobile();
 
   const surveyButtonColor = useColorModeValue('primary.600', 'primary.200');
-  const surveyButtonaHoverBackground = useColorModeValue('primary.50', 'rgba(167, 172, 224, 0.12)');
-  const surveyButtonaActiveBackground = useColorModeValue(
-    'primary.100',
-    'rgba(167, 172, 224, 0.24)',
-  );
 
   return (
     <Flex direction="column" justifyContent="center" alignItems="center" position="relative">
@@ -31,6 +26,7 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
       </Heading>
       <NextLink href={surveyPath} passHref>
         <Box
+          className="callToAction"
           as="a"
           fontSize={isMobile ? '30px' : '40px'}
           marginTop="32px"
@@ -43,16 +39,21 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
           display="inline-flex"
           alignItems="center"
           justifyContent="center"
-          _hover={{ background: surveyButtonaHoverBackground }}
-          _active={{
-            background: surveyButtonaActiveBackground,
-          }}
           _focus={{
             boxShadow: 'outline',
           }}
         >
           Je trouve mon candidat
-          <ChevronRightIcon width="48px" height="48px" />
+          <ChevronRightIcon
+            transition="all 200ms ease"
+            sx={{
+              '.callToAction:hover &': {
+                transform: 'translateX(7px)',
+              },
+            }}
+            width="48px"
+            height="48px"
+          />
         </Box>
       </NextLink>
       <AnimatedEnvelop />

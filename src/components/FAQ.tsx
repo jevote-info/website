@@ -78,13 +78,13 @@ const FAQ = () => {
             <br />
             Notre projet est open-source, retrouvez le code source du projet sur notre{' '}
             <NextLink href="https://github.com/jevote-info/website/" passHref>
-              <Link isExternal>
+              <Link isExternal fontWeight="bold">
                 dépôt github <ExternalLinkIcon mx="2px" />
               </Link>
             </NextLink>{' '}
             et les{' '}
             <NextLink href="https://github.com/jevote-info/website/" passHref>
-              <Link isExternal>
+              <Link isExternal fontWeight="bold">
                 matrices de notation (TODO) <ExternalLinkIcon mx="2px" />
               </Link>
             </NextLink>
@@ -111,7 +111,7 @@ const FAQ = () => {
             <br />
             Vous pouvez consulter notre{' '}
             <NextLink href="https://github.com/jevote-info/website/" passHref>
-              <Link isExternal>
+              <Link isExternal fontWeight="bold">
                 matrice de notation (TODO) <ExternalLinkIcon mx="2px" />
               </Link>
             </NextLink>{' '}
