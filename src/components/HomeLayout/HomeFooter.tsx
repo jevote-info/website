@@ -1,4 +1,4 @@
-import { Box, Flex, Text, VStack } from '@chakra-ui/react';
+import { Box, Container, Flex, Text, useColorModeValue, VStack } from '@chakra-ui/react';
 import React from 'react';
 import { useIsMobile } from '../../hooks/useIsMobile';
 import { MenuLinks } from '../MenuLinks';
@@ -15,9 +15,11 @@ const HomeFooter = ({ surveyPath }: HomeFooterProps) => {
   const differenceInTime = electionDate.getTime() - now.getTime();
   const differenceInDay = Math.round(differenceInTime / (1000 * 3600 * 24));
 
+  const separatorColor = useColorModeValue('black', 'white');
+
   return (
-    <Box marginTop="128px">
-      <Box height="4px" width="100%" backgroundColor="black" borderRadius="2px" />
+    <Container marginTop={isMobile ? '64px' : '128px'} maxW="container.lg">
+      <Box height="4px" width="100%" backgroundColor={separatorColor} borderRadius="2px" />
       <Flex marginTop="32px" direction="column">
         <Flex direction={isMobile ? 'column' : 'row'}>
           <Text
@@ -70,7 +72,7 @@ const HomeFooter = ({ surveyPath }: HomeFooterProps) => {
           </Text>
         </Flex>
       </Flex>
-    </Box>
+    </Container>
   );
 };
 

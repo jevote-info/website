@@ -9,7 +9,6 @@ import FAQ from '../components/FAQ';
 import { useIsMobile } from '../hooks/useIsMobile';
 import { fetchSurvey } from '../services/survey';
 import SocialShare from '../components/SocialShare';
-import HomeFooter from '../components/HomeLayout/HomeFooter';
 
 interface HomeProps {
   surveyPath: string;
@@ -42,7 +41,7 @@ function Home(props: HomeProps) {
         />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <HomeLayout surveyPath={surveyPath} withColorModeSwitch={false}>
+      <HomeLayout surveyPath={surveyPath}>
         <Container h="full" maxW="container.lg">
           <Flex direction="column" justifyContent="center" alignItems="center">
             <HomeHeader surveyPath={surveyPath} />
@@ -70,7 +69,6 @@ function Home(props: HomeProps) {
             <FAQ />
             <SocialShare />
           </Flex>
-          <HomeFooter surveyPath={surveyPath} />
         </Container>
       </HomeLayout>
     </>

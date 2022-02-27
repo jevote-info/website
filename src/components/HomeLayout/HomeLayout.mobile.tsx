@@ -1,5 +1,6 @@
 import { ReactNode, useEffect, useRef } from 'react';
 import {
+  Box,
   Flex,
   IconButton,
   Link,
@@ -19,6 +20,7 @@ import { useRouter } from 'next/router';
 import { MenuLinks } from '../MenuLinks';
 import { ColorModeSwitch } from '../ColorModeSwitch';
 import { Logo } from '../Logo';
+import HomeFooter from './HomeFooter';
 
 interface HomeLayoutProps {
   surveyPath: string;
@@ -39,7 +41,7 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
 
   return (
     <>
-      <VStack height="full">
+      <Box height="full">
         <Grid width="full" templateColumns="1fr 1fr 1fr" p={3} alignItems="center">
           <NextLink href="/" passHref>
             <Link _hover={{ textDecoration: 'none' }} height="fit-content">
@@ -60,8 +62,9 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
             <ColorModeSwitch />
           </Flex>
         </Grid>
-        {children}
-      </VStack>
+        <Box flex="1">{children}</Box>
+        <HomeFooter surveyPath={surveyPath} />
+      </Box>
       <Drawer isOpen={isOpen} placement="top" onClose={onClose} finalFocusRef={buttonRef}>
         <DrawerOverlay />
         <DrawerContent>

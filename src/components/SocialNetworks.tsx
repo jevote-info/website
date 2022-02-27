@@ -12,7 +12,7 @@ type SocialNetworksProps = {
 const SocialNetworks = ({ colorScheme = 'primary', withNames = false }: SocialNetworksProps) => {
   return (
     <>
-      <NextLink href="https://www.instagram.com/" passHref>
+      <NextLink href="https://www.instagram.com/jevote.info/" passHref>
         <Button
           as="a"
           colorScheme={colorScheme}
@@ -26,7 +26,7 @@ const SocialNetworks = ({ colorScheme = 'primary', withNames = false }: SocialNe
         </Button>
       </NextLink>
 
-      <NextLink href="https://www.facebook.com/" passHref>
+      <NextLink href="https://www.facebook.com/JeVote.info/" passHref>
         <Button
           as="a"
           colorScheme={colorScheme}
@@ -40,7 +40,7 @@ const SocialNetworks = ({ colorScheme = 'primary', withNames = false }: SocialNe
         </Button>
       </NextLink>
 
-      <NextLink href="https://twitter.com/" passHref>
+      <NextLink href="https://twitter.com/jevote_info" passHref>
         <Button
           as="a"
           colorScheme={colorScheme}
@@ -53,7 +53,7 @@ const SocialNetworks = ({ colorScheme = 'primary', withNames = false }: SocialNe
           {withNames && <Text marginLeft="8px">Twitter</Text>}
         </Button>
       </NextLink>
-      <NextLink href="https://linkedin.com/" passHref>
+      <NextLink href="https://www.linkedin.com/company/jevote.info" passHref>
         <Button
           as="a"
           colorScheme={colorScheme}
