@@ -1,4 +1,4 @@
-import { Center, Container, Heading, Grid } from '@chakra-ui/react';
+import { Center, Container, Heading, Grid, Text } from '@chakra-ui/react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import React from 'react';
@@ -39,9 +39,19 @@ const Team = ({ surveyPath }: TeamProps) => {
       </Head>
       <HomeLayout surveyPath={surveyPath}>
         <Container maxW="container.xl">
-          <Heading as="h1" color={titleColor} margin="64px 0 32px 0">
+          <Heading as="h1" color={titleColor} margin="64px 0 16px 0">
             Contributeurs
           </Heading>
+          <Text as="p" marginBottom="64px">
+            Le projet jevote.info repose sur l&apos;engagement citoyen de ses contributeurs.
+            <br />
+            Nous ne sommes affiliés à aucun parti, aucune entreprise, aucune organisation, et nous
+            ne promouvons aucun candidat.
+            <br />
+            Par ailleurs, ce projet est réalisé sur notre temps personnel et n&apos;engage en aucun
+            cas la responsabilité de nos employeurs respectifs, qui ne contribuent aucunement à ce
+            projet.
+          </Text>
           <Center>
             <Grid templateColumns={`repeat(${isMobile ? 1 : 3}, 1fr)`} gap="16px">
               <TeamMember
