@@ -1,3 +1,4 @@
+import { withSentry } from '@sentry/nextjs';
 import { NextApiHandler } from 'next';
 
 const handler: NextApiHandler = (req, res) => {
@@ -9,4 +10,4 @@ const handler: NextApiHandler = (req, res) => {
   res.redirect('/');
 };
 
-export default handler;
+export default withSentry(handler);
