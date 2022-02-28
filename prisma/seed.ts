@@ -1,5 +1,7 @@
 import { PrismaClient } from '@prisma/client';
-import { parseSurvey } from './parseSurvey';
+import { ParsedSurvey } from './parseSurvey';
+import surveyBase from './surveyBase.json';
+
 const prisma = new PrismaClient();
 
 async function main() {
@@ -110,7 +112,7 @@ async function main() {
   };
 
   const categories = [
-    await await prisma.category.create({
+    await prisma.category.create({
       data: {
         title: 'Société',
         slug: 'societe',
@@ -119,16 +121,16 @@ async function main() {
         published: true,
       },
     }),
-    await await prisma.category.create({
+    await prisma.category.create({
       data: {
         title: "Fonctionnement de l'Etat et des institutions",
         slug: 'institutions',
-        image: 'taxation',
+        image: 'institutions',
         order: 2,
         published: true,
       },
     }),
-    await await prisma.category.create({
+    await prisma.category.create({
       data: {
         title: 'Fiscalité',
         slug: 'fiscalite',
@@ -137,7 +139,7 @@ async function main() {
         published: true,
       },
     }),
-    await await prisma.category.create({
+    await prisma.category.create({
       data: {
         title: 'Politique Economique & Sociale, immigration',
         slug: 'economie',
@@ -146,7 +148,7 @@ async function main() {
         published: true,
       },
     }),
-    await await prisma.category.create({
+    await prisma.category.create({
       data: {
         title: 'Politique Environnementale',
         slug: 'environnement',
@@ -155,7 +157,7 @@ async function main() {
         published: true,
       },
     }),
-    await await prisma.category.create({
+    await prisma.category.create({
       data: {
         title: 'Affaires étrangères et Défense',
         slug: 'etranger',
@@ -164,7 +166,7 @@ async function main() {
         published: true,
       },
     }),
-    await await prisma.category.create({
+    await prisma.category.create({
       data: {
         title: 'Justice',
         slug: 'justice',
@@ -173,7 +175,7 @@ async function main() {
         published: true,
       },
     }),
-    await await prisma.category.create({
+    await prisma.category.create({
       data: {
         title: 'Energie',
         slug: 'energie',
@@ -182,7 +184,7 @@ async function main() {
         published: true,
       },
     }),
-    await await prisma.category.create({
+    await prisma.category.create({
       data: {
         title: 'Santé',
         slug: 'sante',
@@ -193,7 +195,7 @@ async function main() {
     }),
   ];
 
-  const survey = await parseSurvey();
+  const survey: ParsedSurvey = surveyBase;
 
   for (const category of categories) {
     const categoryQuestions = survey.find(({ title }) => title === category.title)?.questions;
@@ -206,7 +208,9 @@ async function main() {
             title: questionToCreate.title,
             source: questionToCreate.source,
             categoryId: category.id,
-            multichoice: false,
+            multichoice: questionToCreate.multichoice || false,
+            description: questionToCreate.description,
+            help: questionToCreate.help,
             order: questionOrder,
             published: true,
           },
@@ -236,6 +240,26 @@ async function main() {
           }
           choiceOrder++;
         }
+
+        const noChoice = await prisma.choice.create({
+          data: {
+            text: 'Ne se prononce pas',
+            order: choiceOrder,
+            questionId: question.id,
+          },
+        });
+
+        for (const politician of Object.values(politicians)) {
+          await prisma.politicianScore.create({
+            data: {
+              politicianId: politician.id,
+              score: 0,
+              source: '',
+              choiceId: noChoice.id,
+            },
+          });
+        }
+
         questionOrder++;
       }
     }
