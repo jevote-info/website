@@ -1,0 +1,21 @@
+<svg width="127" height="99" viewBox="0 0 127 99" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    #check-mark { fill: #4C4FB6 }
+    .letter { stroke: #2F2788 }
+    #border { stroke: #2F2788; fill: #F59F81 }
+    #content { stroke: #2F2788 }
+
+    @media (prefers-color-scheme: dark) {
+      #check-mark { fill: white }
+      .letter { stroke: #F59F81 }
+      #border { stroke: #F59F81; fill: none; }
+      #content { stroke: white }
+    }
+  </style>
+  <rect id="check-mark" opacity="0.16" x="25" y="37" width="76" height="49" rx="2"/>
+  <path class="letter" d="M4 95H123" stroke-width="8" stroke-linecap="round"/>
+  <path class="letter" d="M112 95L111.53 33.4695C111.514 31.2723 109.728 29.5 107.53 29.5H101" stroke-width="8" stroke-linecap="round"/>
+  <path class="letter" d="M15 95L14.5308 33.5305C14.5138 31.3095 16.3096 29.5 18.5307 29.5H26" stroke-width="8" stroke-linecap="round"/>
+  <path id="border" d="M81.5 4H45.5C43.2909 4 41.5 5.79086 41.5 8V49C41.5 51.2091 43.2909 53 45.5 53H69.8431C70.904 53 71.9214 52.5786 72.6716 51.8284L84.3284 40.1716C85.0786 39.4214 85.5 38.404 85.5 37.3431V8C85.5 5.79086 83.7091 4 81.5 4Z" fill="#F59F81" stroke-width="8" stroke-linecap="round"/>
+  <path id="content" d="M53 28.5L57.9991 34.2682C58.793 35.1842 60.2126 35.1891 61.0128 34.2785L74 19.5" stroke-width="8" stroke-linecap="round"/>
+</svg>
