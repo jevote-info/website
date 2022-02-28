@@ -10,11 +10,14 @@ function isQuestion(line: string[]) {
   return line[0] && line[1];
 }
 
-type Survey = {
+export type ParsedSurvey = {
   title: string;
   questions: {
     title: string;
+    description?: string;
+    help?: string;
     source?: string;
+    multichoice?: boolean;
     choices: {
       text: string;
       politicianScores: Record<string, { score: number; source?: string }>;
@@ -22,12 +25,12 @@ type Survey = {
   }[];
 }[];
 
-export function parseSurvey(): Promise<Survey> {
+export function parseSurvey(surveyCSVPath: string): Promise<ParsedSurvey> {
   return new Promise((resolve, reject) => {
     const results: string[][] = [];
-    const survey: Survey = [];
+    const survey: ParsedSurvey = [];
 
-    fs.createReadStream(path.join(__dirname, '../public/survey.csv'))
+    fs.createReadStream(surveyCSVPath)
       .pipe(csv({ headers: false, skipLines: 1 }))
       .on('data', data => {
         Object.values(data).find(Boolean) && results.push(data);
@@ -93,6 +96,9 @@ export function parseSurvey(): Promise<Survey> {
             }
           }
         }
+        fs.writeFileSync(path.join(__dirname, 'surveyBase.json'), JSON.stringify(survey, null, 2), {
+          encoding: 'utf-8',
+        });
         resolve(survey);
       });
   });

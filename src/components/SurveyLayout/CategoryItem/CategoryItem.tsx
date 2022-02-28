@@ -40,11 +40,12 @@ export function CategoryItem(props: CategoryItemProps) {
         _hover={{
           bgColor: isActive ? activeColor : hoverColor,
         }}
+        align="center"
       >
         <Box width={10} justifyContent="center" color="white">
           <CategoryIcon category={category} />
         </Box>
-        <Text flex={1} fontSize="lg" fontWeight="semibold">
+        <Text flex={1} fontSize="lg" fontWeight="semibold" maxWidth={300}>
           {category.title}
         </Text>
         {isComplete ? (
