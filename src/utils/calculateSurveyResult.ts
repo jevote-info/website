@@ -45,7 +45,7 @@ const normalizeResult = (
                 politicianId
               ];
             const gap =
-              Math.abs(politicianBounds.minPossibleScore) + politicianBounds.maxPossibleScore;
+              Math.abs(politicianBounds.minPossibleScore) + politicianBounds.maxPossibleScore || 1;
             const factor = SURVEY_RESULT_SCORE_GAP / gap;
             const sub = politicianBounds.maxPossibleScore * factor - 100;
             return {

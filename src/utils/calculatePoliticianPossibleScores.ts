@@ -28,8 +28,8 @@ export const calculatePoliticianFactor = (survey: Survey): SurveyPoliticiansPoss
                         : acc[politicianId].maxPossibleScore,
                   }
                 : {
-                    minPossibleScore: score,
-                    maxPossibleScore: score,
+                    minPossibleScore: score * Importance.IMPORTANT,
+                    maxPossibleScore: score * Importance.IMPORTANT,
                   },
             }),
             {},
@@ -49,8 +49,8 @@ export const calculatePoliticianFactor = (survey: Survey): SurveyPoliticiansPoss
                         : acc[politicianId].maxPossibleScore,
                   }
                 : {
-                    minPossibleScore: score,
-                    maxPossibleScore: score,
+                    minPossibleScore: score * Importance.IMPORTANT,
+                    maxPossibleScore: score * Importance.IMPORTANT,
                   },
             }),
             {},
