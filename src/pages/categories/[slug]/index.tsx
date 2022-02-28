@@ -64,7 +64,6 @@ const CategoryPage = (serializedProps: SerialiazedCategoryProps) => {
         name="description"
         content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
       />
-      <link rel="icon" href="/favicon.ico" />
     </Head>
   );
 };
