@@ -65,14 +65,14 @@ const Team = ({ surveyPath }: TeamProps) => {
               <TeamMember
                 imagePath="/team/julie-rosin.jpeg"
                 name="Julie Rosin"
-                title="Chargée de communication chez Artivisor, les bonnes adresses artisanales à Nantes"
+                title=""
                 description=""
                 linkedInUrl="https://www.linkedin.com/in/julie-rosin/"
               />
               <TeamMember
                 imagePath="/team/simon-galet.jpeg"
                 name="Simon Galet"
-                title="CEO @theTribe Mobile"
+                title=""
                 description=""
                 linkedInUrl="https://www.linkedin.com/in/simongalet/"
               />
