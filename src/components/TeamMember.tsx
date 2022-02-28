@@ -17,7 +17,15 @@ const TeamMember = ({ imagePath, name, title, description, linkedInUrl }: TeamMe
   return (
     <GridItem w="100%" marginBottom="32px" maxWidth="800px">
       <Box>
-        {imagePath && <Image src={imagePath} alt={`Photo de ${name}`} width={400} height={600} />}
+        {imagePath && (
+          <Image
+            src={imagePath}
+            alt={`Photo de ${name}`}
+            width={400}
+            height={600}
+            objectFit="cover"
+          />
+        )}
         <Heading as="h2" size="md" mt={5} marginBottom="4px">
           {name}
         </Heading>

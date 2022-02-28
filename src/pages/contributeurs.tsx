@@ -48,34 +48,45 @@ const Team = ({ surveyPath }: TeamProps) => {
               <TeamMember
                 imagePath="/team/alan-chauchet.jpeg"
                 name="Alan Chauchet"
-                description="A remplir"
+                description=""
                 linkedInUrl="https://www.linkedin.com/in/alan-chauchet/"
               />
-              <TeamMember name="Jordan" title="A remplir" description="A remplir" />
               <TeamMember
+                imagePath="/team/jordan-berndt.png"
+                name="Jordan Berndt"
+                description=""
+                linkedInUrl="https://www.linkedin.com/in/jordan-berndt-921046145"
+              />
+              <TeamMember
+                imagePath="/team/baptiste-acca.jpeg"
                 name="Baptiste Acca"
-                description="A remplir"
+                description=""
                 linkedInUrl="https://www.linkedin.com/in/baptisteacca/"
               />
               <TeamMember
                 imagePath="/team/julie.jpeg"
                 name="Julie"
                 title="Chargée de communication chez Artivisor, les bonnes adresses artisanales à Nantes"
-                description="A remplir"
+                description=""
                 linkedInUrl="https://www.linkedin.com/in/julie/"
               />
               <TeamMember
                 imagePath="/team/simon-galet.jpeg"
                 name="Simon Galet"
                 title="CEO @theTribe Mobile"
-                description="A remplir"
+                description=""
                 linkedInUrl="https://www.linkedin.com/in/simongalet/"
               />
-              <TeamMember name="Florian Jeudi" title="A remplir" description="A remplir" />
               <TeamMember
+                imagePath="/team/florian-jeudi.jpeg"
+                name="Florian Jeudi"
+                description=""
+              />
+              <TeamMember
+                imagePath="/team/guillaume-acca.JPG"
                 name="Guillaume Acca"
-                title="Lorem ipsum dolor sit amet"
-                description="A remplir"
+                description=""
+                linkedInUrl="https://www.linkedin.com/in/guillaume-acca-649a26222/"
               />
             </Grid>
           </Center>
