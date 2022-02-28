@@ -4168,6 +4168,193 @@
             }
           }
         ]
+      },
+      {
+        "title": "Concernant les déserts médicaux, il faut :",
+        "help": "Le terme déserts médicaux désigne les zones en France (surtout rurales) qui souffrent d'une absence ou d'un manque de soignants.\r\nLa télémédecine désigne la pratique de la médecine à distance grâce aux technologies de la communication. Il peut s'agir d'une consultation par téléphone ou en vidéo, voire de l'utilisation de logiciels permettant d'établir des diagnostics à distance\r\nLes maisons de santé sont des institutions regroupant des soins de premier recours (généraliste, kiné, pharmacie, infirmier, etc.) au sein d'une structure unique, ce qui permet aux soignants de mieux suivre leurs patients et de diminuer leurs coûts (mise en commun de l'immobilier et des moyens).",
+        "source": "",
+        "choices": [
+          {
+            "text": "Limiter le droit à l'installation des médecins dans les zones médicales denses, c'est à dire où il y a une offre de médecine importante.",
+            "politicianScores": {
+              "JLM": {
+                "score": 0,
+                "source": ""
+              },
+              "YJ": {
+                "score": 1,
+                "source": ""
+              },
+              "VP": {
+                "score": -1,
+                "source": ""
+              },
+              "EM": {
+                "score": 1
+              },
+              "AH": {
+                "score": 0.5,
+                "source": ""
+              },
+              "MLP": {
+                "score": -0.5,
+                "source": ""
+              },
+              "EZ": {
+                "score": 1,
+                "source": ""
+              },
+              "FR": {
+                "score": 1,
+                "source": ""
+              }
+            }
+          },
+          {
+            "text": "Augmenter les salaires des médecins qui acceptent de s'installer dans les territoires sous-dotés en offre médicale.",
+            "politicianScores": {
+              "JLM": {
+                "score": -0.5,
+                "source": ""
+              },
+              "YJ": {
+                "score": -0.5,
+                "source": ""
+              },
+              "VP": {
+                "score": 1,
+                "source": ""
+              },
+              "EM": {
+                "score": 0
+              },
+              "AH": {
+                "score": 1,
+                "source": ""
+              },
+              "MLP": {
+                "score": 1,
+                "source": ""
+              },
+              "EZ": {
+                "score": 0,
+                "source": ""
+              },
+              "FR": {
+                "score": 0,
+                "source": ""
+              }
+            }
+          },
+          {
+            "text": "Créer des maisons de santé pour offrir des services de santé de proximité.",
+            "politicianScores": {
+              "JLM": {
+                "score": 1,
+                "source": ""
+              },
+              "YJ": {
+                "score": 0,
+                "source": ""
+              },
+              "VP": {
+                "score": 0,
+                "source": ""
+              },
+              "EM": {
+                "score": 0
+              },
+              "AH": {
+                "score": 0,
+                "source": ""
+              },
+              "MLP": {
+                "score": 1,
+                "source": ""
+              },
+              "EZ": {
+                "score": 1,
+                "source": ""
+              },
+              "FR": {
+                "score": 1,
+                "source": ""
+              }
+            }
+          },
+          {
+            "text": "Développer la télémédecine.",
+            "politicianScores": {
+              "JLM": {
+                "score": 0,
+                "source": ""
+              },
+              "YJ": {
+                "score": 0,
+                "source": ""
+              },
+              "VP": {
+                "score": 0,
+                "source": ""
+              },
+              "EM": {
+                "score": 1
+              },
+              "AH": {
+                "score": 0,
+                "source": ""
+              },
+              "MLP": {
+                "score": 1,
+                "source": ""
+              },
+              "EZ": {
+                "score": 0,
+                "source": ""
+              },
+              "FR": {
+                "score": 0,
+                "source": ""
+              }
+            }
+          },
+          {
+            "text": "Accroitre les moyens des facultés de médecine afin d'augmenter leurs capacités d'accueil et former plus de médecins.",
+            "politicianScores": {
+              "JLM": {
+                "score": 1,
+                "source": ""
+              },
+              "YJ": {
+                "score": 0,
+                "source": ""
+              },
+              "VP": {
+                "score": 0,
+                "source": ""
+              },
+              "EM": {
+                "score": 0
+              },
+              "AH": {
+                "score": 1,
+                "source": ""
+              },
+              "MLP": {
+                "score": 1,
+                "source": ""
+              },
+              "EZ": {
+                "score": 0,
+                "source": ""
+              },
+              "FR": {
+                "score": 0,
+                "source": ""
+              }
+            }
+          }
+        ]
       }
     ]
   }

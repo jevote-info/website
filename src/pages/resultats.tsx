@@ -28,6 +28,7 @@ import { Category } from '../types/category';
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { PoliticiansPodium } from '../components/Results/PoliticiansPodium';
 import { DetailedResults } from '../components/Results/DetailedResults';
+import { PoliticiansEmptyPodium } from '../components/Results/PoliticiansEmptyPodium';
 
 interface SerializedResultsProps {
   survey: string;
@@ -88,6 +89,9 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
   const topThreePoliticians = useMemo(() => {
     return result?.scores.slice(0, 3).map(({ politicianId }) => politicians[politicianId]) || [];
   }, [result, politicians]);
+  const hasPositiveScores = useMemo(() => {
+    return result?.scores.find(({ score }) => score > 0);
+  }, [result]);
 
   const [selectedPolitician, setSelectedPolitician] = useState(favPolitician);
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(null);
@@ -107,7 +111,11 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
       </Head>
       <HomeLayout surveyPath={surveyPath}>
         <Box height="full">
-          <PoliticiansPodium politicians={topThreePoliticians} nextSectionId="graphique" />
+          {hasPositiveScores ? (
+            <PoliticiansPodium politicians={topThreePoliticians} nextSectionId="graphique" />
+          ) : (
+            <PoliticiansEmptyPodium nextSectionId="graphique" />
+          )}
           <Box id="graphique">
             {selectedPolitician && (
               <PoliticianCategoriesChart

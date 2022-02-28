@@ -1,5 +1,4 @@
 import { Politician } from '@prisma/client';
-import axios from 'axios';
 import { MultichoiceQuestionAnswer, SimpleQuestionAnswer, SurveyAnswers } from '../types/answers';
 import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
 import { SurveyResult, SurveyResultScore } from '../types/surveyResult';
@@ -12,6 +11,9 @@ export function calculateSurveyResult(
   politiciansPossibleScores: SurveyPoliticiansPossibleScores,
 ): SurveyResult {
   const rawResult = calculateSurveyScores(survey, answers);
+
+  console.log('rawResult', rawResult);
+
   const normalizedResult = normalizeResult(rawResult, politiciansPossibleScores);
   return normalizedResult;
 }
@@ -22,10 +24,18 @@ const normalizeResult = (
 ): SurveyResult => {
   const normalizedScores = result.scores
     .map(({ politicianId, score }) => {
+      if (!score) {
+        return {
+          politicianId,
+          score: 0,
+        };
+      }
+
       const politicianBounds = politiciansPossibleScores.politiciansPossibleScores[politicianId];
       const gap = Math.abs(politicianBounds.minPossibleScore) + politicianBounds.maxPossibleScore;
       const factor = SURVEY_RESULT_SCORE_GAP / gap;
       const sub = politicianBounds.maxPossibleScore * factor - 100;
+
       return {
         politicianId,
         score: Math.round(score * factor - sub),
@@ -40,6 +50,12 @@ const normalizeResult = (
         questionScores,
         scores: scores
           .map(({ politicianId, score }) => {
+            if (!score) {
+              return {
+                politicianId,
+                score: 0,
+              };
+            }
             const politicianBounds =
               politiciansPossibleScores.categoriesPoliticiansPossibleScores[categoryId][
                 politicianId
