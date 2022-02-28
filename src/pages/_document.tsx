@@ -23,6 +23,11 @@ class MyDocument extends Document {
           <meta name="msapplication-TileColor" content="#da532c"></meta>
           <meta name="theme-color" content="#ffffff"></meta>
 
+          <meta
+            name="keywords"
+            content="présidentielle, vote, 2022, candidats, élections, élection, présidentielles, voter, choisir son candidat, questionnaire, élection 2022, présidentielle 2022, élections 2022, présidentielles 2022"
+          ></meta>
+
           <meta property="og:title" content="jevote.info" />
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://jevote.info" />
