@@ -42,6 +42,67 @@ const FAQ = () => {
             compte par l’algorithme et influeront donc sur les résultats.
           </Text>
         </FAQItem>
+        <FAQItem title="Combien de temps prend le questionnaire ?">
+          <Text as="p">
+            Il faut compter une vingtaine de minutes pour réaliser le questionnaire. Ça peut
+            paraître long, et croyez-nous nous aurions aimé le simplifier.
+            <br />
+            Cependant, la politique ne peut pas se résumer à de simples questions binaires. Beaucoup
+            de sujets sont abordés lors d&apos;une campagne présidentielle et nous tenions à en
+            représenter la majorité.
+            <br />
+            <br />
+            Notre objectif n&apos;est pas de vous dire pour qui voter, mais de vous aider à vous
+            poser les bonnes questions sur les sujets qui vous tiennent à cœur.
+            <br />
+            Nous vous invitons vivement à aller plus loin et à vous renseigner sur les programmes
+            des candidats.
+          </Text>
+        </FAQItem>
+        <FAQItem title="Pourquoi avez-vous lancé cette initiative ?">
+          <Text as="p">
+            En 2017, encore étudiants, nous avions lancé jevote.info avec pour ambition d’intéresser
+            les citoyens à la politique en vue de l’élection présidentielle, et de les inciter à
+            voter. Nous n’avions aucune idée de comment notre initiative serait reçue, mais à notre
+            échelle, ce fut un succès, avec plus de 700 000 questionnaires remplis, et de nombreux
+            retours positifs. À l’aube des élections 2022, l’importance de faire renaître
+            jevote.info face au risque d’une abstention élevée, couplée aux sollicitations d’anciens
+            utilisateurs, nous a motivés.
+            <br />
+            <br />
+            Il peut être difficile de suivre les propositions des candidats si l’on ne s’intéresse
+            pas habituellement à la politique. Ainsi, comme en 2017, nous avons parcouru les
+            programmes des candidats à l’élection présidentielle ainsi que leurs prises de position
+            dans les médias afin de vous permettre de les traduire sous forme de questionnaire.
+            <br />
+            L’objectif est de permettre aux utilisateurs de voir où ils se situent par rapport aux
+            candidats, mais aussi de les inciter à consulter de manière plus approfondie leurs
+            programmes et à s’intéresser à l’actualité politique, avec un seul objectif : un maximum
+            de participation au vote en avril 2022 !
+          </Text>
+        </FAQItem>
+        <FAQItem title="Comment fonctionne l'algorithme ?">
+          <Text as="p">
+            Pour chaque candidat, chaque réponse est notée avec un score compris entre -1 et 1. Pour
+            chacune de vos réponses, nous additionnons le score de proximité avec chaque candidat
+            afin d’obtenir un score global de proximité. Tous les candidats n’ont pas les mêmes
+            scores maximum et minimum possibles, c’est pourquoi nous normalisons le score brut afin
+            d’obtenir un résultat entre -100 et 100.
+            <br />
+            Notre projet est open-source, retrouvez le code source du projet sur notre{' '}
+            <NextLink href="https://github.com/jevote-info/website/" passHref>
+              <Link isExternal fontWeight="bold">
+                dépôt github <ExternalLinkIcon mx="2px" />
+              </Link>
+            </NextLink>{' '}
+            et les{' '}
+            <NextLink href="https://github.com/jevote-info/website/" passHref>
+              <Link isExternal fontWeight="bold">
+                matrices de notation (TODO) <ExternalLinkIcon mx="2px" />
+              </Link>
+            </NextLink>
+          </Text>
+        </FAQItem>
         <FAQItem title="Mes données sont-elles stockées ?">
           <Text as="p">
             Nous stockons uniquement les résultats obtenus au questionnaire. Cependant, aucune
@@ -66,28 +127,6 @@ const FAQ = () => {
             <br />
             Nous ne souhaitons pas recevoir de don ou une quelconque aide financière, l’équipe
             travaille bénévolement et prend les frais du site à sa charge.
-          </Text>
-        </FAQItem>
-        <FAQItem title="Comment fonctionne l'algorithme ?">
-          <Text as="p">
-            Pour chaque candidat, chaque réponse est notée avec un score compris entre -1 et 1. Pour
-            chacune de vos réponses, nous additionnons le score de proximité avec chaque candidat
-            afin d’obtenir un score global de proximité. Tous les candidats n’ont pas les mêmes
-            scores maximum et minimum possibles, c’est pourquoi nous normalisons le score brut afin
-            d’obtenir un résultat entre -100 et 100.
-            <br />
-            Notre projet est open-source, retrouvez le code source du projet sur notre{' '}
-            <NextLink href="https://github.com/jevote-info/website/" passHref>
-              <Link isExternal fontWeight="bold">
-                dépôt github <ExternalLinkIcon mx="2px" />
-              </Link>
-            </NextLink>{' '}
-            et les{' '}
-            <NextLink href="https://github.com/jevote-info/website/" passHref>
-              <Link isExternal fontWeight="bold">
-                matrices de notation (TODO) <ExternalLinkIcon mx="2px" />
-              </Link>
-            </NextLink>
           </Text>
         </FAQItem>
         <FAQItem title="Quelles sont les sources utilisées ?">
@@ -116,28 +155,6 @@ const FAQ = () => {
               </Link>
             </NextLink>{' '}
             pour avoir une idée plus précise de certaines sources utilisées.
-          </Text>
-        </FAQItem>
-        <FAQItem title="Pourquoi avons-nous lancé cette initiative ?">
-          <Text as="p">
-            En 2017, encore étudiants, nous avions lancé jevote.info avec pour ambition d’intéresser
-            les citoyens à la politique en vue de l’élection présidentielle, et de les inciter à
-            voter. Nous n’avions aucune idée de comment notre initiative serait reçue, mais à notre
-            échelle, ce fut un succès, avec plus de 700 000 questionnaires remplis, et de nombreux
-            retours positifs. À l’aube des élections 2022, l’importance de faire renaître
-            jevote.info face au risque d’une abstention élevée, couplée aux sollicitations d’anciens
-            utilisateurs, nous a motivés.
-            <br />
-            <br />
-            Il peut être difficile de suivre les propositions des candidats si l’on ne s’intéresse
-            pas habituellement à la politique. Ainsi, comme en 2017, nous avons parcouru les
-            programmes des candidats à l’élection présidentielle ainsi que leurs prises de position
-            dans les médias afin de vous permettre de les traduire sous forme de questionnaire.
-            <br />
-            L’objectif est de permettre aux utilisateurs de voir où ils se situent par rapport aux
-            candidats, mais aussi de les inciter à consulter de manière plus approfondie leurs
-            programmes et à s’intéresser à l’actualité politique, avec un seul objectif : un maximum
-            de participation au vote en avril 2022 !
           </Text>
         </FAQItem>
       </Accordion>
