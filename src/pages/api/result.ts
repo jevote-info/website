@@ -1,9 +1,10 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { withSentry } from '@sentry/nextjs';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { createResult } from '../../services/result';
 import { SurveyResult } from '../../types/surveyResult';
 
-export default async function resultHandler(req: NextApiRequest, res: NextApiResponse<void>) {
+async function resultHandler(req: NextApiRequest, res: NextApiResponse<void>) {
   const {
     body: { result, uniqueId },
     method,
@@ -19,3 +20,5 @@ export default async function resultHandler(req: NextApiRequest, res: NextApiRes
       res.status(405).end(`Method ${method} Not Allowed`);
   }
 }
+
+export default withSentry(resultHandler);
