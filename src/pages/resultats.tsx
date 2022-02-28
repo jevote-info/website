@@ -99,7 +99,7 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
   return (
     <>
       <Head>
-        <title>jevote.info</title>
+        <title>jevote.info - Résultats</title>
         <meta
           name="description"
           content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
