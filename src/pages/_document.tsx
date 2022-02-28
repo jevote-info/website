@@ -32,11 +32,11 @@ class MyDocument extends Document {
           <meta property="og:title" content="jevote.info" />
           <meta property="og:type" content="website" />
           <meta property="og:url" content="https://www.jevote.info" />
-          <meta property="og:image" content="/Sharing cover-M.png" />
+          <meta property="og:image" content="https://www.jevote.info/sharingCover.png" />
 
           <meta name="twitter:title" content="jevote.info" />
           <meta name="twitter:description" content=" Trouvez votre candidat" />
-          <meta name="twitter:image" content="/Sharing cover-M.png" />
+          <meta name="twitter:image" content="https://www.jevote.info/sharingCover.png" />
           <meta name="twitter:card" content="summary_large_image" />
         </Head>
         <body>
