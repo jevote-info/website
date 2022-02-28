@@ -4173,6 +4173,7 @@
         "title": "Concernant les déserts médicaux, il faut :",
         "help": "Le terme déserts médicaux désigne les zones en France (surtout rurales) qui souffrent d'une absence ou d'un manque de soignants.\r\nLa télémédecine désigne la pratique de la médecine à distance grâce aux technologies de la communication. Il peut s'agir d'une consultation par téléphone ou en vidéo, voire de l'utilisation de logiciels permettant d'établir des diagnostics à distance\r\nLes maisons de santé sont des institutions regroupant des soins de premier recours (généraliste, kiné, pharmacie, infirmier, etc.) au sein d'une structure unique, ce qui permet aux soignants de mieux suivre leurs patients et de diminuer leurs coûts (mise en commun de l'immobilier et des moyens).",
         "source": "",
+        "multichoice": "true",
         "choices": [
           {
             "text": "Limiter le droit à l'installation des médecins dans les zones médicales denses, c'est à dire où il y a une offre de médecine importante.",
