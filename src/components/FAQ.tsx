@@ -117,6 +117,28 @@ const FAQ = () => {
             cas visibles par une personne extérieure à l’équipe de jevote.info.
           </Text>
         </FAQItem>
+        <FAQItem title="Pourquoi n'avez-vous pas de bandeau de cookie ?">
+          <Text as="p">
+            Nous n&apos;utilisons aucun service utilisant vos informations personnelles. Nous avons
+            fait ce choix pour éviter tout risque de violation de votre vie privée.
+            <br />
+            Les seules données que nous stockons sur votre navigateur sont des données de
+            fonctionnement. Pour faire simple, c&apos;est grâce à ça que vous pouvez fermer le
+            questionnaire et le reprendre là où vous en étiez.
+          </Text>
+        </FAQItem>
+        <FAQItem title="Qui êtes-vous ?">
+          <Text as="p">
+            Le projet jevote.info repose sur l&apos;engagement citoyen de ses contributeurs.
+            <br />
+            Nous ne sommes affiliés à aucun parti, aucune entreprise, aucune organisation, et nous
+            ne promouvons aucun candidat.
+            <br />
+            Par ailleurs, ce projet est réalisé sur notre temps personnel et n&apos;engage en aucun
+            cas la responsabilité de nos employeurs respectifs, qui ne contribuent aucunement à ce
+            projet.
+          </Text>
+        </FAQItem>
         <FAQItem title="Comment vous financez-vous ?">
           <Text as="p">
             Notre équipe est entièrement indépendante et n’est reliée à aucun parti politique,
