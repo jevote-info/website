@@ -1,3 +1,4 @@
+import { Importance } from '../components/ImportanceMeter';
 import {
   Survey,
   SurveyPoliticianPossibleScore,
@@ -18,12 +19,12 @@ export const calculatePoliticianFactor = (survey: Survey): SurveyPoliticiansPoss
               [politicianId]: acc[politicianId]
                 ? {
                     minPossibleScore:
-                      score < 0
-                        ? acc[politicianId].minPossibleScore + score
+                      score * Importance.IMPORTANT < 0
+                        ? acc[politicianId].minPossibleScore + score * Importance.IMPORTANT
                         : acc[politicianId].minPossibleScore,
                     maxPossibleScore:
-                      score > 0
-                        ? acc[politicianId].maxPossibleScore + score
+                      score * Importance.IMPORTANT > 0
+                        ? acc[politicianId].maxPossibleScore + score * Importance.IMPORTANT
                         : acc[politicianId].maxPossibleScore,
                   }
                 : {
@@ -39,12 +40,12 @@ export const calculatePoliticianFactor = (survey: Survey): SurveyPoliticiansPoss
               [politicianId]: acc[politicianId]
                 ? {
                     minPossibleScore:
-                      score <= acc[politicianId].minPossibleScore
-                        ? score
+                      score * Importance.IMPORTANT <= acc[politicianId].minPossibleScore
+                        ? score * Importance.IMPORTANT
                         : acc[politicianId].minPossibleScore,
                     maxPossibleScore:
-                      score >= acc[politicianId].maxPossibleScore
-                        ? score
+                      score * Importance.IMPORTANT >= acc[politicianId].maxPossibleScore
+                        ? score * Importance.IMPORTANT
                         : acc[politicianId].maxPossibleScore,
                   }
                 : {
