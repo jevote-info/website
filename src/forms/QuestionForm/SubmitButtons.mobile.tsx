@@ -6,10 +6,11 @@ interface SubmitButtonsProps {
   formId: string;
   previousPath: string | null;
   canGoToResult: boolean;
+  onGoToResult: () => void;
 }
 
 export function SubmitButtonsMobile(props: SubmitButtonsProps) {
-  const { formId, previousPath, canGoToResult } = props;
+  const { formId, previousPath, canGoToResult, onGoToResult } = props;
 
   const bgColor = useColorModeValue('#FFFFFF', '#1a202c');
 
@@ -36,11 +37,9 @@ export function SubmitButtonsMobile(props: SubmitButtonsProps) {
       </Button>
       <Flex flex={1} justify="flex-end">
         {canGoToResult && (
-          <Link href="/resultats" passHref>
-            <Button as="a" colorScheme="blue">
-              Voir les résultats
-            </Button>
-          </Link>
+          <Button onClick={onGoToResult} colorScheme="blue">
+            Voir les résultats
+          </Button>
         )}
       </Flex>
     </HStack>

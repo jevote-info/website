@@ -12,6 +12,7 @@ interface SurveyLayoutProps {
   currentCategory: LightweightCategory;
   currentQuestion: Question;
   children: ReactNode;
+  onGoToResult: () => void;
 }
 
 export function SurveyLayout(props: SurveyLayoutProps) {

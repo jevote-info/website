@@ -17,10 +17,11 @@ interface SurveyLayoutProps {
   currentCategory: LightweightCategory;
   currentQuestion: Question;
   children: ReactNode;
+  onGoToResult: () => void;
 }
 
 export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
-  const { survey, canGoToResult, currentCategory, children, currentQuestion } = props;
+  const { survey, canGoToResult, currentCategory, children, currentQuestion, onGoToResult } = props;
 
   const { answers } = useSurveyStore();
 
@@ -59,11 +60,9 @@ export function SurveyLayoutDesktop(props: SurveyLayoutProps) {
               borderColor="primary.50"
               borderRadius="lg"
             >
-              <NextLink href="/resultats" passHref>
-                <Button as="a" colorScheme="primary" size="lg" width="full">
-                  Découvrez vos résultats
-                </Button>
-              </NextLink>
+              <Button onClick={onGoToResult} colorScheme="primary" size="lg" width="full">
+                Découvrez vos résultats
+              </Button>
             </Box>
           )}
         </VStack>

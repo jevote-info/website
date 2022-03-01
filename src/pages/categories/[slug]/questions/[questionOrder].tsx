@@ -1,8 +1,20 @@
+import { ExternalLinkIcon } from '@chakra-ui/icons';
+import {
+  Button,
+  Link,
+  Modal,
+  ModalBody,
+  ModalCloseButton,
+  ModalContent,
+  ModalFooter,
+  ModalOverlay,
+} from '@chakra-ui/react';
 import { AnimatePresence, motion } from 'framer-motion';
 import Head from 'next/head';
+import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { GetStaticPaths, GetStaticProps } from 'next/types';
-import { useCallback, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import superjson from 'superjson';
 import { SurveyLayout } from '../../../../components/SurveyLayout';
 import { QuestionForm } from '../../../../forms/QuestionForm';
@@ -114,6 +126,7 @@ export const getStaticProps: GetStaticProps<SerializedCategoryProps> = async ({
 function QuestionPage(serializedProps: SerializedCategoryProps) {
   const { nextPath, previousPath, survey, currentCategory } = serializedProps;
   const { push } = useRouter();
+  const [isConsentModalOpen, setIsConsentModalOpen] = useState(false);
 
   const currentQuestion = useMemo(
     () => superjson.parse<Question>(serializedProps.currentQuestion),
@@ -122,11 +135,23 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
 
   const { answers, setQuestionAnswer } = useSurveyStore();
 
+  const onGoToResult = () => setIsConsentModalOpen(true);
+
+  const onModalClose = () => setIsConsentModalOpen(false);
+
+  const onModalConsent = () => {
+    push('/resultats');
+  };
+
   const onSubmit = useCallback(
     (formValues: QuestionAnswer) => {
       setQuestionAnswer(currentCategory.id, currentQuestion.id, formValues);
 
-      push(nextPath);
+      if (nextPath !== '/resultats') {
+        push(nextPath);
+      } else {
+        onGoToResult();
+      }
     },
     [currentCategory, currentQuestion, nextPath, push, setQuestionAnswer],
   );
@@ -162,11 +187,46 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
         />
         <link rel="preload" as="image" href="/icons/categories.svg" />
       </Head>
+      <Modal isOpen={isConsentModalOpen} onClose={onModalClose}>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalCloseButton />
+          <ModalBody marginTop="32px">
+            En cliquant sur j&apos;accepte, je consens à ce que les résultats du questionnaire
+            soient collectés et conservés à des fins statistiques. Le responsable du traitement est
+            JeVote.Info dont les coordonnées sont contact@jevote.info. Les destinataires sont les
+            contributeurs du site.
+            <br />
+            <br />
+            Ces données sont anonymes et ne seront en aucun cas utilisées à des fins commerciales.
+            <br />
+            Seuls les membres de jevote.info auront accès à ces données pour de l&apos;analyse
+            dédiée à l&apos;amélioration du site.
+            <br />
+            <br />
+            <NextLink href="/cgu" passHref>
+              <Link isExternal fontWeight="bold">
+                Conditions générales d&apos;utilisation <ExternalLinkIcon mx="2px" />
+              </Link>
+            </NextLink>{' '}
+          </ModalBody>
+
+          <ModalFooter>
+            <Button colorScheme="secondary" variant="ghost" mr={3} onClick={onModalClose}>
+              Je refuse
+            </Button>
+            <Button colorScheme="primary" mr={3} onClick={onModalConsent}>
+              J&apos;accepte
+            </Button>
+          </ModalFooter>
+        </ModalContent>
+      </Modal>
       <SurveyLayout
         survey={survey}
         canGoToResult={canGoToResult}
         currentCategory={currentCategory}
         currentQuestion={currentQuestion}
+        onGoToResult={onGoToResult}
       >
         <AnimatePresence>
           <motion.div
@@ -194,6 +254,7 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
             formId="question-form"
             previousPath={previousPath}
             canGoToResult={canGoToResult}
+            onGoToResult={onGoToResult}
           />
         ) : (
           <SubmitButtonsDesktop formId={formId} previousPath={previousPath} />
