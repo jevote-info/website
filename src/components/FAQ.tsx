@@ -96,9 +96,9 @@ const FAQ = () => {
               </Link>
             </NextLink>{' '}
             et les{' '}
-            <NextLink href="https://github.com/jevote-info/website/" passHref>
+            <NextLink href="https://docs.google.com/spreadsheets/d/1AQPMzbTj6FK9oIpPw9Vp-16DmbN9Nbxd00uyASYnABA/edit?usp=sharing" passHref>
               <Link isExternal fontWeight="bold">
-                matrices de notation (TODO) <ExternalLinkIcon mx="2px" />
+                matrices de notation <ExternalLinkIcon mx="2px" />
               </Link>
             </NextLink>
           </Text>
@@ -171,9 +171,9 @@ const FAQ = () => {
             cours de la campagne, nous refléterons ces évolutions dans notre scoring.
             <br />
             Vous pouvez consulter notre{' '}
-            <NextLink href="https://github.com/jevote-info/website/" passHref>
+            <NextLink href="https://docs.google.com/spreadsheets/d/1AQPMzbTj6FK9oIpPw9Vp-16DmbN9Nbxd00uyASYnABA/edit?usp=sharing" passHref>
               <Link isExternal fontWeight="bold">
-                matrice de notation (TODO) <ExternalLinkIcon mx="2px" />
+                matrice de notation <ExternalLinkIcon mx="2px" />
               </Link>
             </NextLink>{' '}
             pour avoir une idée plus précise de certaines sources utilisées.
