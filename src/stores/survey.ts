@@ -93,7 +93,7 @@ export const createSurveyStore = () => {
         }),
         {
           name: 'survey',
-          version: 2,
+          version: 3,
           partialize: state => ({
             uniqueId: state.uniqueId,
             answers: state.answers,
