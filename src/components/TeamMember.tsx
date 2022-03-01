@@ -1,6 +1,6 @@
 import { Box, Button, GridItem, Heading, Text } from '@chakra-ui/react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faLinkedin } from '@fortawesome/free-brands-svg-icons';
+import { faLinkedin, faTwitter } from '@fortawesome/free-brands-svg-icons';
 import NextLink from 'next/link';
 import React from 'react';
 import Image from 'next/image';
@@ -11,9 +11,17 @@ type TeamMemberProps = {
   title?: string;
   description: string;
   linkedInUrl?: string;
+  twitterUrl?: string;
 };
 
-const TeamMember = ({ imagePath, name, title, description, linkedInUrl }: TeamMemberProps) => {
+const TeamMember = ({
+  imagePath,
+  name,
+  title,
+  description,
+  linkedInUrl,
+  twitterUrl,
+}: TeamMemberProps) => {
   return (
     <GridItem w="100%" marginBottom="32px" maxWidth="800px">
       <Box>
@@ -46,6 +54,21 @@ const TeamMember = ({ imagePath, name, title, description, linkedInUrl }: TeamMe
               leftIcon={<FontAwesomeIcon icon={faLinkedin} />}
             >
               LinkedIn
+            </Button>
+          </NextLink>
+        )}
+        {twitterUrl && (
+          <NextLink href={twitterUrl} passHref>
+            <Button
+              as="a"
+              target="_blank"
+              aria-label={`Lien vers le profil Twitter de ${name}`}
+              rel="noopener noreferrer"
+              colorScheme="twitter"
+              leftIcon={<FontAwesomeIcon icon={faTwitter} />}
+              marginLeft={linkedInUrl && '3'}
+            >
+              Twitter
             </Button>
           </NextLink>
         )}

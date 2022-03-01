@@ -20,8 +20,9 @@ export async function createResult(result: SurveyResult, uniqueId: string): Prom
   });
   if (existingResult) return;
 
+  const [{ politicianId: winnerId }] = result.scores.sort(({ score: a }, { score: b }) => b - a);
   const resultDb = await db.result.create({
-    data: { uniqueId, resultHash },
+    data: { uniqueId, resultHash, winnerId },
   });
 
   await Promise.all(

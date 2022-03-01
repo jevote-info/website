@@ -12,8 +12,6 @@ export function calculateSurveyResult(
 ): SurveyResult {
   const rawResult = calculateSurveyScores(survey, answers);
 
-  console.log('rawResult', rawResult);
-
   const normalizedResult = normalizeResult(rawResult, politiciansPossibleScores);
   return normalizedResult;
 }
