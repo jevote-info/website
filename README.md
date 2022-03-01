@@ -1,4 +1,5 @@
-# jevote.info
+# [jevote.info](https://jevote.info)
+![jevote.info banner](https://jevote.info/sharingCover.png)
 
 ## Local development
 
