@@ -72,13 +72,7 @@ const Team = ({ surveyPath }: TeamProps) => {
                 description=""
                 linkedInUrl="https://www.linkedin.com/in/baptisteacca/"
               />
-              <TeamMember
-                imagePath="/team/julie.jpeg"
-                name="Julie"
-                title=""
-                description=""
-                linkedInUrl="https://www.linkedin.com/in/julie/"
-              />
+              <TeamMember imagePath="/team/julie.jpeg" name="Julie" title="" description="" />
               <TeamMember
                 imagePath="/team/simon-galet.jpeg"
                 name="Simon Galet"
