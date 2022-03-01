@@ -52,7 +52,7 @@ function CGU(props: CGUProps) {
             URL{' '}
             <NextLink href="/" passHref>
               <Link isExternal fontWeight="bold">
-                www.jevote.info <ExternalLinkIcon mx="2px" />
+                https://jevote.info <ExternalLinkIcon mx="2px" />
               </Link>
             </NextLink>
             .
