@@ -39,7 +39,7 @@ export function DetailedResults(props: DetailedResultsProps) {
       </Heading>
       <Accordion defaultIndex={[0]} allowMultiple w="full">
         {survey.map(category => (
-          <AccordionItem key={category.id} spacing={5} alignItems="flex-start" w="full">
+          <AccordionItem key={category.id} alignItems="flex-start" w="full">
             <AccordionButton py={3}>
               <HStack flex={1} spacing={5}>
                 <CategoryIcon category={category} />
