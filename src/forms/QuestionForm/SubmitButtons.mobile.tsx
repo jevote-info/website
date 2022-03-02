@@ -15,10 +15,11 @@ export function SubmitButtonsMobile(props: SubmitButtonsProps) {
 
   return (
     <HStack
-      background={`linear-gradient(0deg,${bgColor} 90%, ${bgColor}00 100%)`}
+      background={`linear-gradient(0deg,${bgColor} 80%, ${bgColor}00 100%)`}
       spacing={3}
       px={5}
       py={3}
+      pt={6}
       justifyContent="start"
       position="fixed"
       bottom={0}

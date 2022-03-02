@@ -81,7 +81,11 @@ export function DetailedResults(props: DetailedResultsProps) {
                       <Wrap>
                         {choice.politicianScores.map(politicianScore => (
                           <WrapItem key={politicianScore.id}>
-                            <Tag size="lg" colorScheme={isChoiceSelected ? 'primary' : 'gray'}>
+                            <Tag
+                              size="lg"
+                              colorScheme={isChoiceSelected ? 'primary' : 'gray'}
+                              variant={isChoiceSelected ? 'solid' : 'subtle'}
+                            >
                               <HStack spacing={3}>
                                 <Text>
                                   {politicians[politicianScore.politicianId].name} :{' '}

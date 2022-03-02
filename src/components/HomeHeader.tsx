@@ -28,12 +28,12 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
         <Box
           className="callToAction"
           as="a"
-          fontSize={isMobile ? '30px' : '40px'}
+          fontSize={isMobile ? '22px' : '40px'}
           marginTop="32px"
           transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
           borderRadius="md"
           fontWeight="semibold"
-          padding="0 32px"
+          padding={`0 ${isMobile ? '16' : '32'}px`}
           color={surveyButtonColor}
           background="transparent"
           display="inline-flex"

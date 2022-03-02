@@ -32,7 +32,7 @@ const HomeBox = ({
       borderColor={borderColor}
       borderRadius="32px"
       background={`linear-gradient(180deg, ${bgGradiantStart} 0%, ${bgGradientEnd} 100%);`}
-      padding={isMobile ? '16px' : '64px'}
+      padding={isMobile ? '32px' : '64px'}
       display="flex"
       flexDirection={isSmall ? 'column' : 'row'}
       margin="16px"
@@ -44,7 +44,7 @@ const HomeBox = ({
         </Flex>
       )}
       <Box flex={isSmall ? '1' : '0.5'}>
-        <Heading as="h3" fontWeight="600">
+        <Heading as="h3" fontWeight="600" fontSize={isMobile ? '36px' : '28px'}>
           {title}
         </Heading>
         <Text marginTop="32px" fontSize="20px">
