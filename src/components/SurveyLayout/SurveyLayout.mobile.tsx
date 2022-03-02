@@ -88,6 +88,7 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
             maxW="container.md"
             p={0}
             m={0}
+            pb={6}
             spacing={5}
             position="relative"
           >

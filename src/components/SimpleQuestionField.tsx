@@ -1,4 +1,4 @@
-import { InfoOutlineIcon } from '@chakra-ui/icons';
+import { QuestionOutlineIcon } from '@chakra-ui/icons';
 import {
   Box,
   Heading,
@@ -11,11 +11,13 @@ import {
   PopoverContent,
   PopoverTrigger,
   Text,
+  Tooltip,
   useRadioGroup,
   VStack,
 } from '@chakra-ui/react';
 import React from 'react';
 import { Control, useController } from 'react-hook-form';
+import { useIsMobile } from '../hooks/useIsMobile';
 import { SimpleQuestionAnswer } from '../types/answers';
 import { Question } from '../types/question';
 import { ChoiceRadio } from './ChoiceRadio';
@@ -28,6 +30,8 @@ interface QuestionProps {
 
 const SimpleQuestion = (props: QuestionProps) => {
   const { question, control } = props;
+
+  const isMobile = useIsMobile();
 
   const {
     field: { onChange, name, value },
@@ -56,12 +60,25 @@ const SimpleQuestion = (props: QuestionProps) => {
           {question.help && (
             <Popover>
               <PopoverTrigger>
-                <IconButton
-                  variant="outline"
-                  icon={<InfoOutlineIcon />}
-                  aria-label="Informations"
-                  borderRadius="full"
-                />
+                {isMobile ? (
+                  <IconButton
+                    variant="outline"
+                    colorScheme="primary"
+                    icon={<QuestionOutlineIcon />}
+                    aria-label="Informations"
+                    borderRadius="full"
+                  />
+                ) : (
+                  <Tooltip label="Besoin d'aide ?">
+                    <IconButton
+                      variant="outline"
+                      colorScheme="primary"
+                      icon={<QuestionOutlineIcon />}
+                      aria-label="Informations"
+                      borderRadius="full"
+                    />
+                  </Tooltip>
+                )}
               </PopoverTrigger>
               <PopoverContent>
                 <PopoverArrow />

@@ -46,14 +46,14 @@ const SocialShare = () => {
           transition="all 0.2s cubic-bezier(.08,.52,.52,1)"
           fontWeight="bold"
           padding={isMobile ? '0 16px' : '0 64px'}
-          backgroundColor="primary.600"
+          backgroundColor={hasCopied ? 'secondary.500' : 'primary.600'}
           color="white"
           display="inline-flex"
           alignItems="center"
           justifyContent="center"
-          _hover={{ background: 'primary.500' }}
+          _hover={{ background: hasCopied ? 'secondary.500' : 'primary.500' }}
           _active={{
-            background: 'primary.400',
+            background: hasCopied ? 'secondary.500' : 'primary.400',
           }}
           _focus={{
             boxShadow: 'outline',

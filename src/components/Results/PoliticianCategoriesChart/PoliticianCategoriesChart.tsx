@@ -1,5 +1,15 @@
 import { ExternalLinkIcon } from '@chakra-ui/icons';
-import { Box, Container, Heading, HStack, useToken, VStack, Text, Link } from '@chakra-ui/react';
+import {
+  Box,
+  Container,
+  Heading,
+  HStack,
+  useToken,
+  VStack,
+  Text,
+  Link,
+  useColorModeValue,
+} from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
 import { useMemo } from 'react';
 import {
@@ -28,6 +38,7 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
 
   const isMobile = useIsMobile();
   const [primary500, gray100] = useToken('colors', ['primary.500', 'gray.300']);
+  const axisFillColor = useColorModeValue('#1A202C', 'rgba(255, 255, 255, 0.92)');
 
   const radarChartCategoryMax = useMemo(
     () =>
@@ -116,7 +127,7 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
               key={category.slug}
               dependentAxis
               style={{
-                axisLabel: { padding: 10 },
+                axisLabel: { padding: 10, fill: axisFillColor },
                 axis: { stroke: 'none' },
                 grid: { stroke: gray100, strokeWidth: 0.25, opacity: 0.5 },
               }}
