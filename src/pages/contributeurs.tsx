@@ -56,19 +56,19 @@ const Team = ({ surveyPath }: TeamProps) => {
             <Grid templateColumns={`repeat(${isMobile ? 1 : 3}, 1fr)`} gap="16px">
               <TeamMember
                 imagePath="/team/alan-chauchet.jpeg"
-                name="Alan Chauchet"
+                name="Alan"
                 description=""
                 linkedInUrl="https://www.linkedin.com/in/alan-chauchet/"
               />
               <TeamMember
                 imagePath="/team/jordan-berndt.png"
-                name="Jordan Berndt"
+                name="Jordan"
                 description=""
                 linkedInUrl="https://www.linkedin.com/in/jordan-berndt-921046145"
               />
               <TeamMember
                 imagePath="/team/baptiste-acca.jpeg"
-                name="Baptiste Acca"
+                name="Baptiste"
                 description=""
                 linkedInUrl="https://www.linkedin.com/in/baptisteacca/"
                 twitterUrl="https://twitter.com/eulbat"
@@ -76,19 +76,15 @@ const Team = ({ surveyPath }: TeamProps) => {
               <TeamMember imagePath="/team/julie.jpeg" name="Julie" title="" description="" />
               <TeamMember
                 imagePath="/team/simon-galet.jpeg"
-                name="Simon Galet"
+                name="Simon"
                 title=""
                 description=""
                 linkedInUrl="https://www.linkedin.com/in/simongalet/"
               />
-              <TeamMember
-                imagePath="/team/florian-jeudi.jpeg"
-                name="Florian Jeudi"
-                description=""
-              />
+              <TeamMember imagePath="/team/florian-jeudi.jpeg" name="Florian" description="" />
               <TeamMember
                 imagePath="/team/guillaume-acca.JPG"
-                name="Guillaume Acca"
+                name="Guillaume"
                 description=""
                 linkedInUrl="https://www.linkedin.com/in/guillaume-acca-649a26222/"
               />
