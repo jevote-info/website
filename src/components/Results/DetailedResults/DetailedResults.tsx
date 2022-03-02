@@ -25,7 +25,7 @@ import { DetailedResultsSource } from './DetailedResults.Source';
 
 interface DetailedResultsProps {
   survey: Survey;
-  answers: SurveyAnswers;
+  answers?: SurveyAnswers;
   politicians: Record<Politician['id'], Politician>;
 }
 
@@ -62,10 +62,13 @@ export function DetailedResults(props: DetailedResultsProps) {
                 </Heading>
                 {question.source && <DetailedResultsSource questionSource={question.source} />}
                 {question.choices.map(choice => {
-                  const questionAnswer = answers[category.id][question.id];
-                  const isChoiceSelected = isSimpleQuestionAnswer(questionAnswer)
-                    ? questionAnswer.choiceId === choice.id
-                    : questionAnswer.choices.includes(choice.id);
+                  const questionAnswer = answers ? answers[category.id][question.id] : undefined;
+                  const isChoiceSelected =
+                    answers && questionAnswer
+                      ? isSimpleQuestionAnswer(questionAnswer)
+                        ? questionAnswer.choiceId === choice.id
+                        : questionAnswer.choices.includes(choice.id)
+                      : false;
                   return (
                     <VStack
                       key={choice.id}
