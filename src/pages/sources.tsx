@@ -51,7 +51,7 @@ function SourcesPage(serializedProps: SerializedSourceProps) {
   return (
     <>
       <Head>
-        <title>jevote.info - Résultats</title>
+        <title>jevote.info - Sources</title>
         <meta
           name="description"
           content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
