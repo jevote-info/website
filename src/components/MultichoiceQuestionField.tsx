@@ -1,5 +1,6 @@
 import { InfoOutlineIcon } from '@chakra-ui/icons';
 import {
+  Tag,
   Box,
   Heading,
   HStack,
@@ -75,9 +76,9 @@ export function MultichoiceQuestionField(props: MultichoiceQuestionProps) {
             {question.description}
           </Heading>
         )}
-        <Heading mt={3} size="xs" as="h3" color="gray.500">
+        <Tag mt={3} as="h3" size="lg" colorScheme="primary" variant="solid">
           Plusieurs réponses possibles
-        </Heading>
+        </Tag>
       </Box>
       <Box width="full">
         {error?.type === 'required' && (
