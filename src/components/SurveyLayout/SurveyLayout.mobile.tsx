@@ -15,6 +15,7 @@ import {
   Progress,
   useDisclosure,
   VStack,
+  Text,
 } from '@chakra-ui/react';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
@@ -24,7 +25,6 @@ import { useSurveyStore } from '../../stores/survey';
 import { LightweightCategory } from '../../types/category';
 import { Question } from '../../types/question';
 import { LightweightSurvey } from '../../types/survey';
-import { ColorModeSwitch } from '../ColorModeSwitch';
 import { Logo } from '../Logo';
 import { MenuLinks } from '../MenuLinks';
 import { CategoryIcon } from './CategoryIcon';
@@ -69,17 +69,18 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
           <Button
             ref={buttonRef}
             p={0}
-            flexDirection="column"
+            flexDirection="row"
             alignItems="center"
             variant="ghost"
             onClick={onOpen}
+            ml="5"
+            flex="1"
           >
             <CategoryIcon category={currentCategory} />
+            <Text whiteSpace="pre-line" fontSize="sm">
+              {currentCategory.title}
+            </Text>
           </Button>
-
-          <Flex flex={1} justifyContent="end">
-            <ColorModeSwitch />
-          </Flex>
         </Flex>
         <Box height="full" width="full">
           <Container
@@ -130,8 +131,8 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
             </VStack>
           </DrawerBody>
 
-          <DrawerFooter>
-            <MenuLinks />
+          <DrawerFooter flexDirection="column">
+            <MenuLinks withColorModeSwitch stackSocialNetwork />
           </DrawerFooter>
         </DrawerContent>
       </Drawer>
