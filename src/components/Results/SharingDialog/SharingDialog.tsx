@@ -17,6 +17,7 @@ import axios from 'axios';
 import { Politician } from '@prisma/client';
 import { SharingVariant, ImageSharingVariant } from '../../../types/surveyResult';
 import { useIsMobile } from '../../../hooks/useIsMobile';
+import { isImageSharingVariant } from '../../../utils/isSharingVariant';
 
 interface SharingModalProps {
   open: boolean;
@@ -41,12 +42,6 @@ const fread = (file: File) => {
 
     fileReader.readAsDataURL(file);
   });
-};
-
-const isImageSharingVariant = (
-  sharingVariant: SharingVariant,
-): sharingVariant is ImageSharingVariant => {
-  return sharingVariant !== 'text';
 };
 
 export function SharingDialog(props: SharingModalProps) {
