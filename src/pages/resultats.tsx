@@ -9,6 +9,7 @@ import {
   MenuItem,
   MenuList,
   VStack,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
 import { GetStaticProps } from 'next';
@@ -26,9 +27,9 @@ import { PoliticianCategoriesChart } from '../components/Results/PoliticianCateg
 import { PoliticianGlobalScore } from '../components/Results/PoliticianGlobalScore';
 import { Category } from '../types/category';
 import { ChevronDownIcon } from '@chakra-ui/icons';
-import { PoliticiansPodium } from '../components/Results/PoliticiansPodium';
 import { DetailedResults } from '../components/Results/DetailedResults';
-import { PoliticiansEmptyPodium } from '../components/Results/PoliticiansEmptyPodium';
+import { PoliticiansPodiumHero } from '../components/Results/PoliticiansPodiumHero';
+import { SharingDialog } from '../components/Results/SharingDialog';
 
 interface SerializedResultsProps {
   survey: string;
@@ -60,6 +61,11 @@ export const getStaticProps: GetStaticProps<SerializedResultsProps> = async ({
 
 function ResultsPage(serializedProps: SerializedResultsProps) {
   const { politicianPossibleScores, surveyPath } = serializedProps;
+  const {
+    isOpen: isSharingModalOpen,
+    onOpen: onSharingModalOpen,
+    onClose: onSharingModalClose,
+  } = useDisclosure();
 
   const { push } = useRouter();
 
@@ -89,8 +95,9 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
   const topThreePoliticians = useMemo(() => {
     return result?.scores.slice(0, 3).map(({ politicianId }) => politicians[politicianId]) || [];
   }, [result, politicians]);
+
   const hasPositiveScores = useMemo(() => {
-    return result?.scores.find(({ score }) => score > 0);
+    return !!result?.scores.find(({ score }) => score > 0);
   }, [result]);
 
   const [selectedPolitician, setSelectedPolitician] = useState(favPolitician);
@@ -111,11 +118,11 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
       </Head>
       <HomeLayout surveyPath={surveyPath}>
         <Box height="full">
-          {hasPositiveScores ? (
-            <PoliticiansPodium politicians={topThreePoliticians} nextSectionId="graphique" />
-          ) : (
-            <PoliticiansEmptyPodium nextSectionId="graphique" />
-          )}
+          <PoliticiansPodiumHero
+            politicians={topThreePoliticians}
+            hasPositiveScores={hasPositiveScores}
+            onSharingModalOpen={onSharingModalOpen}
+          />
           <Box id="graphique">
             {selectedPolitician && (
               <PoliticianCategoriesChart
@@ -171,6 +178,11 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
           <Container p={5} maxW="container.lg">
             <DetailedResults survey={survey} answers={answers} politicians={politicians} />
           </Container>
+          <SharingDialog
+            open={isSharingModalOpen}
+            onClose={onSharingModalClose}
+            politicians={topThreePoliticians}
+          />
         </Box>
       </HomeLayout>
     </>

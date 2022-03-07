@@ -1,22 +1,38 @@
 import { Flex, Text, useColorModeValue, useColorMode, useTheme } from '@chakra-ui/react';
 import { useIsMobile } from '../hooks/useIsMobile';
+import { ImageSharingVariant } from '../types/surveyResult';
 
-export function Logo() {
+export interface LogoProps {
+  vertical?: boolean;
+  sizeVariant?: 'normal' | ImageSharingVariant;
+}
+
+export function Logo(props: LogoProps) {
   const isMobile = useIsMobile();
+  const { vertical } = props;
+  const sizeVariant = props.sizeVariant || 'normal';
+  const logoSizes = {
+    normal: isMobile ? 20 : 40,
+    story: 190,
+    post: 69,
+  };
+  const fontSizes = {
+    normal: 16,
+    story: 56,
+    post: 20,
+  };
+
+  const height = logoSizes[sizeVariant];
+  const fontSize = fontSizes[sizeVariant];
 
   const theme = useTheme();
   const { colorMode } = useColorMode();
   const primaryStrokeColor = useColorModeValue(theme.colors.primary['900'], 'white');
 
   return (
-    <Flex alignItems="center">
+    <Flex alignItems="center" flexDirection={vertical ? 'column' : 'row'} justifyContent="center">
       {colorMode === 'dark' ? (
-        <svg
-          height={isMobile ? 20 : 40}
-          viewBox="0 0 231 180"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg height={height} viewBox="0 0 231 180" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect
             opacity="0.16"
             x="45.4545"
@@ -62,12 +78,7 @@ export function Logo() {
           />
         </svg>
       ) : (
-        <svg
-          height={isMobile ? 20 : 40}
-          viewBox="0 0 231 180"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
+        <svg height={height} viewBox="0 0 231 180" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect
             opacity="0.16"
             x="45.4545"
@@ -113,7 +124,13 @@ export function Logo() {
           />
         </svg>
       )}
-      <Text marginLeft="16px" fontSize="16px" fontWeight="900" color={primaryStrokeColor}>
+      <Text
+        marginLeft={vertical ? undefined : '16px'}
+        marginTop={vertical ? '10px' : undefined}
+        fontSize={fontSize}
+        fontWeight="900"
+        color={primaryStrokeColor}
+      >
         je
         <Text as="span" color={theme.colors.secondary['500']}>
           vote

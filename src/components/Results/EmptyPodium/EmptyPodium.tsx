@@ -1,32 +1,8 @@
-import { ChevronDownIcon } from '@chakra-ui/icons';
-import {
-  Box,
-  Container,
-  Heading,
-  HStack,
-  Text,
-  VStack,
-  keyframes,
-  Link,
-  Center,
-} from '@chakra-ui/react';
+import { Box, Container, Heading, HStack, Text, VStack } from '@chakra-ui/react';
 
-interface PoliticiansEmptyPodiumProps {
-  nextSectionId: string;
-}
-
-const move = keyframes`
-  0% {transform: translateY(0px);}
-  50% {transform: translateY(4px)}
-  100% {transform: translateY(0px)}
-`;
-
-export function PoliticiansEmptyPodium(props: PoliticiansEmptyPodiumProps) {
-  const { nextSectionId } = props;
-
+export function EmptyPodium() {
   return (
     <Container
-      minHeight="calc(100vh - 64px)"
       display="flex"
       flexDirection="column"
       justifyContent="space-between"
@@ -34,11 +10,6 @@ export function PoliticiansEmptyPodium(props: PoliticiansEmptyPodiumProps) {
       px={5}
     >
       <VStack width="full" flex={1} justifyContent="center">
-        <Center>
-          <Heading as="h1" mb={[5, 10]}>
-            Vos résultats
-          </Heading>
-        </Center>
         <HStack
           align="flex-end"
           justify="space-between"
@@ -87,10 +58,6 @@ export function PoliticiansEmptyPodium(props: PoliticiansEmptyPodiumProps) {
           </VStack>
         </HStack>
         <Heading>Il semblerait qu&apos;aucun des candidats ne corresponde à vos idées</Heading>
-      </VStack>
-      <VStack as={Link} alignItems="center" p={5} spacing={0} href={`#${nextSectionId}`}>
-        <Text>Faites défiler pour plus de détails</Text>
-        <ChevronDownIcon animation={`${move} infinite 2s ease`} fontSize={30} />
       </VStack>
     </Container>
   );

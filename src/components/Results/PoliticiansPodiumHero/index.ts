@@ -1,0 +1,1 @@
+export { PoliticiansPodiumHero } from './PoliticiansPodiumHero';

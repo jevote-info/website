@@ -1,0 +1,1 @@
+export { ShareResultsImage } from './ShareResultsImage';
