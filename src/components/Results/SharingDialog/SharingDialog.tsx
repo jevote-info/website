@@ -1,7 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import {
   Button,
-  Center,
   Modal,
   ModalBody,
   ModalCloseButton,
@@ -9,15 +8,23 @@ import {
   ModalHeader,
   ModalOverlay,
   Text,
-  HStack,
+  Stack,
   useToast,
   Spinner,
+  useColorMode,
 } from '@chakra-ui/react';
 import axios from 'axios';
+import Image from 'next/image';
 import { Politician } from '@prisma/client';
 import { SharingVariant, ImageSharingVariant } from '../../../types/surveyResult';
 import { useIsMobile } from '../../../hooks/useIsMobile';
 import { isImageSharingVariant } from '../../../utils/isSharingVariant';
+import lightSharingPostImage from './images/light/sharing-post.png';
+import lightSharingStoryImage from './images/light/sharing-story.png';
+import lightSharingTextImage from './images/light/sharing-text.png';
+import darkSharingPostImage from './images/dark/sharing-post.png';
+import darkSharingStoryImage from './images/dark/sharing-story.png';
+import darkSharingTextImage from './images/dark/sharing-text.png';
 
 interface SharingModalProps {
   open: boolean;
@@ -49,7 +56,8 @@ export function SharingDialog(props: SharingModalProps) {
 
   const toast = useToast();
   const isMobile = useIsMobile();
-  const [loading, setLoading] = useState(false);
+  const { colorMode } = useColorMode();
+  const [loading, setLoading] = useState<ImageSharingVariant | undefined>();
   const [images, setImages] = useState<SharingImages>();
 
   const textSharing = useMemo(() => {
@@ -107,13 +115,13 @@ https://jevote.info`;
         isClosable: true,
       });
     } else {
-      setLoading(true);
       if (!images || !isImageSharingVariant(sharingVariant)) return;
+      setLoading(sharingVariant);
 
       try {
         if (navigatorShareEnabled && navigator.canShare({ files: [images[sharingVariant]] })) {
           await navigator.share({ files: [images[sharingVariant]] });
-          setLoading(false);
+          setLoading(undefined);
         } else {
           const dataURL = (await fread(images[sharingVariant])) as string;
 
@@ -121,11 +129,11 @@ https://jevote.info`;
           link.href = dataURL;
           link.download = `Mes résultats jevote.info.png`;
           link.click();
-          setLoading(false);
+          setLoading(undefined);
         }
       } catch (err) {
         console.error('Could not generate sharing image', err);
-        setLoading(false);
+        setLoading(undefined);
       }
     }
   };
@@ -137,45 +145,74 @@ https://jevote.info`;
         <ModalHeader>Partager mes résultats</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <HStack width="full" height="full">
+          <Stack width="full" height="full" direction={['column', 'column', 'row']}>
             <Button
+              flexDirection="column"
               onClick={() => share('text')}
               bgColor="grey.300"
               borderColor="grey.300"
               borderWidth="3px"
               borderRadius="10px"
-              minHeight="150px"
+              minHeight="260px"
               padding="3"
               flex="1"
             >
-              <Text>Text</Text>
+              <Image
+                width={100}
+                height={200}
+                src={colorMode === 'dark' ? darkSharingTextImage : lightSharingTextImage}
+              />
+              <Text mt="3">Texte</Text>
             </Button>
             <Button
+              flexDirection="column"
               onClick={() => share('story')}
               bgColor="grey.300"
               borderColor="grey.300"
               borderWidth="3px"
               borderRadius="10px"
-              minHeight="150px"
+              minHeight="260px"
               padding="3"
               flex="1"
             >
-              <Text>Story</Text>
+              {loading === 'story' ? (
+                <Spinner />
+              ) : (
+                <>
+                  <Image
+                    width={100}
+                    height={200}
+                    src={colorMode === 'dark' ? darkSharingStoryImage : lightSharingStoryImage}
+                  />
+                  <Text mt="3">Story</Text>
+                </>
+              )}
             </Button>
             <Button
+              flexDirection="column"
               onClick={() => share('post')}
               bgColor="grey.300"
               borderColor="grey.300"
               borderWidth="3px"
               borderRadius="10px"
-              minHeight="150px"
+              minHeight="260px"
               padding="3"
               flex="1"
             >
-              <Text>Post</Text>
+              {loading === 'post' ? (
+                <Spinner />
+              ) : (
+                <>
+                  <Image
+                    width={100}
+                    height={200}
+                    src={colorMode === 'dark' ? darkSharingPostImage : lightSharingPostImage}
+                  />
+                  <Text mt="3">Post</Text>
+                </>
+              )}
             </Button>
-          </HStack>
-          <Center>{loading && <Spinner color="primary.200" />}</Center>
+          </Stack>
         </ModalBody>
       </ModalContent>
     </Modal>
