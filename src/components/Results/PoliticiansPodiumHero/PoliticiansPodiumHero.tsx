@@ -95,7 +95,7 @@ export function PoliticiansPodiumHero(props: PoliticiansPodiumHeroProps) {
         {hasPositiveScores ? (
           <Podium politicians={politicians} variant="normal" />
         ) : (
-          <EmptyPodium nextSectionId="graphique" />
+          <EmptyPodium />
         )}
       </VStack>
       <Center mt="3">
