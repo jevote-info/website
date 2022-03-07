@@ -5,7 +5,6 @@ import {
   IconButton,
   Link,
   VStack,
-  Grid,
   useDisclosure,
   Drawer,
   DrawerOverlay,
@@ -18,7 +17,6 @@ import { HamburgerIcon } from '@chakra-ui/icons';
 import NextLink from 'next/link';
 import { useRouter } from 'next/router';
 import { MenuLinks } from '../MenuLinks';
-import { ColorModeSwitch } from '../ColorModeSwitch';
 import { Logo } from '../Logo';
 import HomeFooter from './HomeFooter';
 
@@ -42,7 +40,7 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
   return (
     <>
       <Box height="full">
-        <Grid width="full" templateColumns="1fr 1fr 1fr" p={3} alignItems="center">
+        <Flex width="full" p={3} alignItems="center" justifyContent="space-between">
           <NextLink href="/" passHref>
             <Link _hover={{ textDecoration: 'none' }} height="fit-content">
               <Logo />
@@ -57,11 +55,7 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
               onClick={onOpen}
             />
           </Flex>
-
-          <Flex align="center" justifyContent="end">
-            <ColorModeSwitch />
-          </Flex>
-        </Grid>
+        </Flex>
         <Box flex="1">{children}</Box>
         <HomeFooter surveyPath={surveyPath} />
       </Box>
@@ -79,7 +73,12 @@ export function HomeLayoutMobile(props: HomeLayoutProps) {
 
           <DrawerBody>
             <VStack>
-              <MenuLinks withSurveyLink surveyPath={surveyPath} withSocialNetworksNames />
+              <MenuLinks
+                withSurveyLink
+                surveyPath={surveyPath}
+                withSocialNetworksNames
+                withColorModeSwitch
+              />
             </VStack>
           </DrawerBody>
         </DrawerContent>
