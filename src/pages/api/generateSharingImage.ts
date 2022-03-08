@@ -67,8 +67,8 @@ const screenshotResults = async (sharingVariant: SharingVariant, politicians: Po
   });
   const page = await browser.newPage();
   await page.goto(sharingUrl, { waitUntil: 'networkidle0' });
-  await page.evaluate(() => {
-    window.scrollBy(0, window.innerHeight);
+  await page.waitForNavigation({
+    waitUntil: 'networkidle0',
   });
   await page.screenshot({
     path: `./sharingImages/${resultHash}.png`,

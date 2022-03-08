@@ -88,7 +88,12 @@ export function Podium(props: PodiumProps) {
             alignItems="start"
             justifyContent="center"
           >
-            <Image src={secondPlaceMedal} alt="Deuxième place" width={50} height={50} />
+            <Image
+              src={secondPlaceMedal}
+              alt="Deuxième place"
+              width={variant === 'normal' ? 50 : 100}
+              height={variant === 'normal' ? 50 : 100}
+            />
           </Flex>
         </Box>
       </VStack>
@@ -125,7 +130,12 @@ export function Podium(props: PodiumProps) {
             alignItems="start"
             justifyContent="center"
           >
-            <Image src={firstPlaceMedal} alt="Première place" width={50} height={50} />
+            <Image
+              src={firstPlaceMedal}
+              alt="Première place"
+              width={variant === 'normal' ? 50 : 100}
+              height={variant === 'normal' ? 50 : 100}
+            />
           </Flex>
         </Box>
       </VStack>
@@ -156,7 +166,12 @@ export function Podium(props: PodiumProps) {
             alignItems="start"
             justifyContent="center"
           >
-            <Image src={thirdPlaceMedal} alt="Troisième place" width={50} height={50} />
+            <Image
+              src={thirdPlaceMedal}
+              alt="Troisième place"
+              width={variant === 'normal' ? 50 : 100}
+              height={variant === 'normal' ? 50 : 100}
+            />
           </Flex>
         </Box>
       </VStack>
