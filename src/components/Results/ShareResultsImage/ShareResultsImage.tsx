@@ -1,10 +1,8 @@
-import { Box, Container, VStack, Text, Flex } from '@chakra-ui/react';
+import { Box, Container, VStack, Text, Flex, Image } from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
-import Image from 'next/image';
 import { SharingVariant } from '../../../types/surveyResult';
 import { Logo } from '../../Logo';
 import { Podium } from '../Podium';
-import pointRightEmoji from './images/point-right-emoji.png';
 
 interface ShareResultsImageProps {
   sharingVariant?: SharingVariant;
@@ -51,7 +49,7 @@ export function ShareResultsImage(props: ShareResultsImageProps) {
             justifyContent="center"
             alignItems="center"
           >
-            <Image src={pointRightEmoji} width={64} height={64} />
+            <Image src="/point-right-emoji.png" width="64px" height="64px" />
             <Text ml="5">
               Je trouve <strong>mon candidat</strong>
             </Text>
@@ -101,8 +99,9 @@ export function ShareResultsImage(props: ShareResultsImageProps) {
             position="absolute"
             bottom="32px"
           >
-            <Text>
-              👉 Je trouve <strong>mon candidat</strong>
+            <Image src="/point-right-emoji.png" width="64px" height="64px" />
+            <Text ml="5">
+              Je trouve <strong>mon candidat</strong>
             </Text>
           </Flex>
         </VStack>
