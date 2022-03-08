@@ -1,4 +1,4 @@
-import { Box, Container, VStack, Text, Flex } from '@chakra-ui/react';
+import { Box, Container, VStack, Text, Flex, Image } from '@chakra-ui/react';
 import { Politician } from '@prisma/client';
 import { SharingVariant } from '../../../types/surveyResult';
 import { Logo } from '../../Logo';
@@ -49,8 +49,9 @@ export function ShareResultsImage(props: ShareResultsImageProps) {
             justifyContent="center"
             alignItems="center"
           >
-            <Text>
-              👉 Je trouve <strong>mon candidat</strong>
+            <Image src="/point-right-emoji.png" width="64px" height="64px" />
+            <Text ml="5">
+              Je trouve <strong>mon candidat</strong>
             </Text>
           </Flex>
         </VStack>
@@ -98,8 +99,9 @@ export function ShareResultsImage(props: ShareResultsImageProps) {
             position="absolute"
             bottom="32px"
           >
-            <Text>
-              👉 Je trouve <strong>mon candidat</strong>
+            <Image src="/point-right-emoji.png" width="64px" height="64px" />
+            <Text ml="5">
+              Je trouve <strong>mon candidat</strong>
             </Text>
           </Flex>
         </VStack>
