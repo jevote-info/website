@@ -158,6 +158,7 @@ https://jevote.info`;
               flex="1"
             >
               <Image
+                alt="Partage format texte"
                 width={100}
                 height={200}
                 src={colorMode === 'dark' ? darkSharingTextImage : lightSharingTextImage}
@@ -180,6 +181,7 @@ https://jevote.info`;
               ) : (
                 <>
                   <Image
+                    alt="Partage format story"
                     width={100}
                     height={200}
                     src={colorMode === 'dark' ? darkSharingStoryImage : lightSharingStoryImage}
@@ -204,6 +206,7 @@ https://jevote.info`;
               ) : (
                 <>
                   <Image
+                    alt="Partage format post"
                     width={100}
                     height={200}
                     src={colorMode === 'dark' ? darkSharingPostImage : lightSharingPostImage}
