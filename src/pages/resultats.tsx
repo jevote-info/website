@@ -20,8 +20,7 @@ import { HomeLayout } from '../components/HomeLayout';
 import { fetchPoliticians } from '../services/politicians';
 import { fetchSurvey } from '../services/survey';
 import { useSurveyStore } from '../stores/survey';
-import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
-import { calculatePoliticianFactor } from '../utils/calculatePoliticianPossibleScores';
+import { Survey } from '../types/survey';
 import Head from 'next/head';
 import { PoliticianCategoriesChart } from '../components/Results/PoliticianCategoriesChart';
 import { PoliticianGlobalScore } from '../components/Results/PoliticianGlobalScore';
@@ -35,7 +34,6 @@ interface SerializedResultsProps {
   survey: string;
   surveyPath: string;
   politicians: string;
-  politicianPossibleScores: SurveyPoliticiansPossibleScores;
 }
 
 export const getStaticProps: GetStaticProps<SerializedResultsProps> = async ({
@@ -45,7 +43,6 @@ export const getStaticProps: GetStaticProps<SerializedResultsProps> = async ({
   const politicians = await fetchPoliticians();
   const firstCategory = survey[0];
   const firstQuestion = firstCategory.questions[0];
-  const politicianPossibleScores = calculatePoliticianFactor(survey);
 
   return {
     props: {
@@ -54,13 +51,12 @@ export const getStaticProps: GetStaticProps<SerializedResultsProps> = async ({
       politicians: superjson.stringify(
         politicians.reduce((acc, politician) => ({ ...acc, [politician.id]: politician }), {}),
       ),
-      politicianPossibleScores,
     },
   };
 };
 
 function ResultsPage(serializedProps: SerializedResultsProps) {
-  const { politicianPossibleScores, surveyPath } = serializedProps;
+  const { surveyPath } = serializedProps;
   const {
     isOpen: isSharingModalOpen,
     onOpen: onSharingModalOpen,
@@ -87,9 +83,9 @@ function ResultsPage(serializedProps: SerializedResultsProps) {
     if (missingAnswer) {
       push(`/categories/${missingAnswer.category.slug}/questions/${missingAnswer.question.order}`);
     } else {
-      calculateResult(survey, politicianPossibleScores);
+      calculateResult(survey);
     }
-  }, [findMissingAnswer, survey, push, calculateResult, politicianPossibleScores]);
+  }, [findMissingAnswer, survey, push, calculateResult]);
 
   const favPolitician = result?.scores[0] && politicians[result.scores[0].politicianId];
   const topThreePoliticians = useMemo(() => {
