@@ -77,7 +77,7 @@ export function SurveyLayoutMobile(props: SurveyLayoutProps) {
             flex="1"
           >
             <CategoryIcon category={currentCategory} />
-            <Text whiteSpace="pre-line" fontSize="sm">
+            <Text ml="2" whiteSpace="pre-line" fontSize="sm">
               {currentCategory.title}
             </Text>
           </Button>
