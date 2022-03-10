@@ -7,10 +7,10 @@ import { v4 } from 'uuid';
 import { QuestionAnswer, SurveyAnswers } from '../types/answers';
 import { Category } from '../types/category';
 import { Question } from '../types/question';
-import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
+import { Survey } from '../types/survey';
 import { SurveyResult } from '../types/surveyResult';
-import { calculateSurveyResult } from '../utils/calculateSurveyResult';
 import { isQuestionAnswered } from '../utils/isQuestionAnswered';
+import { calculateSurveyResult } from '../utils/calculateSurveyResult';
 
 interface SurveyState extends State {
   uniqueId: string;
@@ -21,7 +21,7 @@ interface SurveyState extends State {
     questionId: Question['id'],
     answer: QuestionAnswer,
   ) => void;
-  calculateResult(survey: Survey, politiciansPossibleScores: SurveyPoliticiansPossibleScores): void;
+  calculateResult(survey: Survey): void;
   saveResult(result: SurveyResult): void;
   findMissingAnswer(survey: Survey): { category: Category; question: Question } | null;
 }
@@ -45,10 +45,10 @@ export const createSurveyStore = () => {
           answers: {},
           result: null,
           politiciansPossibleScores: undefined,
-          calculateResult(survey, politiciansPossibleScores) {
+          calculateResult(survey) {
             const { answers, saveResult } = get();
 
-            const result = calculateSurveyResult(survey, answers, politiciansPossibleScores);
+            const result = calculateSurveyResult(survey, answers);
 
             saveResult(result);
 

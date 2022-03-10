@@ -24,7 +24,6 @@ import {
 import { useIsMobile } from '../../../hooks/useIsMobile';
 import { Survey } from '../../../types/survey';
 import { SurveyResult } from '../../../types/surveyResult';
-import { SURVEY_RESULT_SCORE_GAP } from '../../../utils/calculateSurveyResult';
 import { PoliticianPicture } from '../PoliticianPicture';
 
 interface PoliticianGlobalScoreProps {
@@ -44,7 +43,7 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
     () =>
       survey.map(category => ({
         x: category.title,
-        y: SURVEY_RESULT_SCORE_GAP,
+        y: 1,
       })),
     [survey],
   );
@@ -62,11 +61,13 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
         ({ politicianId }) => politicianId === politician.id,
       );
       const categoryScore =
-        (politicianScore ? politicianScore.score + 100 : 0) / SURVEY_RESULT_SCORE_GAP;
+        politicianScore?.score && politicianScore?.score > 0 ? politicianScore.score : 0;
+
+      console.log('categoryScore', categoryScore);
 
       return {
         x: category.title,
-        y: categoryScore,
+        y: categoryScore / 100,
         label: `${categoryScore}%`,
       };
     });

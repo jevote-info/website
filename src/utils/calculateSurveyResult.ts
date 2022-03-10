@@ -1,168 +1,200 @@
 import { Politician } from '@prisma/client';
 import { MultichoiceQuestionAnswer, SimpleQuestionAnswer, SurveyAnswers } from '../types/answers';
-import { Survey, SurveyPoliticiansPossibleScores } from '../types/survey';
-import { SurveyResult, SurveyResultScore } from '../types/surveyResult';
+import { Survey } from '../types/survey';
+import { SurveyResult } from '../types/surveyResult';
+import { calculateSurveyBoundaries } from './calculateSurveyBoundaries';
+import { Question } from '../types/question';
+import { Category } from '../types/category';
 
-export const SURVEY_RESULT_SCORE_GAP = 200;
+export function calculateSurveyResult(survey: Survey, answers: SurveyAnswers): SurveyResult {
+  const surveyBoundaries = calculateSurveyBoundaries(survey);
 
-export function calculateSurveyResult(
-  survey: Survey,
-  answers: SurveyAnswers,
-  politiciansPossibleScores: SurveyPoliticiansPossibleScores,
-): SurveyResult {
-  const rawResult = calculateSurveyScores(survey, answers);
-
-  const normalizedResult = normalizeResult(rawResult, politiciansPossibleScores);
-  return normalizedResult;
-}
-
-const normalizeResult = (
-  result: SurveyResult,
-  politiciansPossibleScores: SurveyPoliticiansPossibleScores,
-): SurveyResult => {
-  const normalizedScores = result.scores
-    .map(({ politicianId, score }) => {
-      if (!score) {
-        return {
-          politicianId,
-          score: 0,
-        };
+  const surveyResult: {
+    scores: Record<Politician['id'], number>;
+    categoriesScores: Record<
+      Category['id'],
+      {
+        scores: Record<Politician['id'], number>;
+        questionScores: Record<
+          Question['id'],
+          {
+            scores: Record<Politician['id'], number>;
+          }
+        >;
       }
-
-      const politicianBounds = politiciansPossibleScores.politiciansPossibleScores[politicianId];
-      const gap = Math.abs(politicianBounds.minPossibleScore) + politicianBounds.maxPossibleScore;
-      const factor = SURVEY_RESULT_SCORE_GAP / gap;
-      const sub = politicianBounds.maxPossibleScore * factor - 100;
-
-      return {
-        politicianId,
-        score: Math.round(score * factor - sub),
-      };
-    })
-    .sort((a, b) => b.score - a.score);
-
-  const normalizedCategoriesScores = result.categoriesScores.map(
-    ({ categoryId, questionScores, scores }) => {
-      return {
-        categoryId,
-        questionScores,
-        scores: scores
-          .map(({ politicianId, score }) => {
-            if (!score) {
-              return {
-                politicianId,
-                score: 0,
-              };
-            }
-            const politicianBounds =
-              politiciansPossibleScores.categoriesPoliticiansPossibleScores[categoryId][
-                politicianId
-              ];
-            const gap =
-              Math.abs(politicianBounds.minPossibleScore) + politicianBounds.maxPossibleScore || 1;
-            const factor = SURVEY_RESULT_SCORE_GAP / gap;
-            const sub = politicianBounds.maxPossibleScore * factor - 100;
-            return {
-              politicianId,
-              score: Math.round(score * factor - sub),
-            };
-          })
-          .sort((a, b) => b.score - a.score),
-      };
-    },
-  );
-
-  return {
-    scores: normalizedScores,
-    categoriesScores: normalizedCategoriesScores,
+    >;
+  } = {
+    scores: {},
+    categoriesScores: {},
   };
-};
 
-const calculateSurveyScores = (survey: Survey, answers: SurveyAnswers): SurveyResult => {
-  const categoriesScores = survey.map(({ id: categoryId, questions }) => {
-    const questionScores = questions.map(({ id: questionId, choices, multichoice }) => {
-      const answer = answers[categoryId][questionId];
-      if (isMultichoiceQuestionAnswer(answer, multichoice)) {
-        const selectedChoices = [];
-        for (const choiceId of answer.choices) {
-          const c = choices.find(choice => choice.id === choiceId);
-          if (c) {
-            selectedChoices.push(c);
-          } else {
-            throw `Couldn't find choice ${choiceId}`;
+  for (const category of survey) {
+    const categoryResult: typeof surveyResult.categoriesScores[string] =
+      (surveyResult.categoriesScores[category.id] = {
+        scores: {},
+        questionScores: {},
+      });
+    for (const question of category.questions) {
+      const questionResult: typeof categoryResult.questionScores[number] =
+        (categoryResult.questionScores[question.id] = {
+          scores: {},
+        });
+      if (question.multichoice) {
+        const { weight, choices } = answers[category.id][question.id] as MultichoiceQuestionAnswer;
+
+        for (const choiceId of choices) {
+          const choice = question.choices.find(({ id }) => id === choiceId);
+          if (choice) {
+            for (const politicianScore of choice.politicianScores) {
+              questionResult.scores[politicianScore.politicianId] =
+                (questionResult.scores[politicianScore.politicianId] || 0) +
+                politicianScore.score * weight;
+            }
           }
         }
-
-        const scores = selectedChoices.reduce<SurveyResultScore[]>((acc, { politicianScores }) => {
-          return politicianScores.map(({ score, politicianId }) => {
-            const previousScore =
-              acc.find(({ politicianId: accPoliticianId }) => politicianId === accPoliticianId)
-                ?.score || 0;
-            return {
-              politicianId,
-              score: score * answer.weight + previousScore,
-            };
-          });
-        }, []);
-
-        return {
-          questionId,
-          scores,
-        };
       } else {
-        const selectedChoice = choices.find(choice => choice.id === answer.choiceId);
+        const { weight, choiceId } = answers[category.id][question.id] as SimpleQuestionAnswer;
 
-        if (!selectedChoice) {
-          throw `Couldn't find choice ${answer.choiceId}`;
+        const choice = question.choices.find(({ id }) => id === choiceId);
+        if (choice) {
+          for (const politicianScore of choice.politicianScores) {
+            questionResult.scores[politicianScore.politicianId] =
+              (questionResult.scores[politicianScore.politicianId] || 0) +
+              politicianScore.score * weight;
+          }
         }
-
-        return {
-          questionId,
-          scores: selectedChoice.politicianScores.map(({ score, politicianId }) => ({
-            politicianId,
-            score: score * answer.weight,
-          })),
-        };
       }
-    });
+      for (const politicianId in questionResult.scores) {
+        categoryResult.scores[politicianId] =
+          (categoryResult.scores[politicianId] || 0) + questionResult.scores[politicianId];
+      }
+    }
+    for (const politicianId in categoryResult.scores) {
+      surveyResult.scores[politicianId] =
+        (surveyResult.scores[politicianId] || 0) + categoryResult.scores[politicianId];
+    }
+  }
 
-    return {
-      categoryId,
-      questionScores,
-      scores: groupPoliticianScores(questionScores),
-    };
-  });
+  let maxOverflow: number | null = null;
+  let minOverflow: number | null = null;
+
+  for (const politicianId in surveyResult.scores) {
+    if (surveyResult.scores[politicianId] > 0 && surveyBoundaries.scores[politicianId]?.max) {
+      surveyResult.scores[politicianId] =
+        (surveyResult.scores[politicianId] * 100) / surveyBoundaries.scores[politicianId].max;
+
+      if (
+        surveyResult.scores[politicianId] > 100 &&
+        (maxOverflow === null || surveyResult.scores[politicianId] > maxOverflow)
+      ) {
+        maxOverflow = surveyResult.scores[politicianId];
+      }
+    } else if (
+      surveyResult.scores[politicianId] < 0 &&
+      surveyBoundaries.scores[politicianId]?.min
+    ) {
+      surveyResult.scores[politicianId] =
+        (surveyResult.scores[politicianId] * -100) / surveyBoundaries.scores[politicianId].min;
+
+      if (
+        surveyResult.scores[politicianId] < -100 &&
+        (minOverflow === null || surveyResult.scores[politicianId] < minOverflow)
+      ) {
+        minOverflow = surveyResult.scores[politicianId];
+      }
+    }
+  }
+
+  if (maxOverflow) {
+    for (const politicianId in surveyResult.scores) {
+      if (surveyResult.scores[politicianId] > 0) {
+        surveyResult.scores[politicianId] *= 100 / maxOverflow;
+      }
+    }
+  }
+
+  if (minOverflow) {
+    for (const politicianId in surveyResult.scores) {
+      if (surveyResult.scores[politicianId] < 0) {
+        surveyResult.scores[politicianId] *= -100 / minOverflow;
+      }
+    }
+  }
+
+  for (const categoryId in surveyResult.categoriesScores) {
+    const categoryScores = surveyResult.categoriesScores[categoryId].scores;
+    const categoryBoundaries = surveyBoundaries.categoriesScores[categoryId].scores;
+
+    let maxOverflow: number | null = null;
+    let minOverflow: number | null = null;
+
+    for (const politicianId in categoryScores) {
+      if (categoryScores[politicianId] > 0 && categoryBoundaries[politicianId]?.max) {
+        categoryScores[politicianId] =
+          (categoryScores[politicianId] * 100) / categoryBoundaries[politicianId].max;
+
+        if (
+          categoryScores[politicianId] > 100 &&
+          (maxOverflow === null || categoryScores[politicianId] > maxOverflow)
+        ) {
+          maxOverflow = categoryScores[politicianId];
+        }
+      } else if (categoryScores[politicianId] < 0 && categoryBoundaries[politicianId]?.min) {
+        categoryScores[politicianId] =
+          (categoryScores[politicianId] * -100) / categoryBoundaries[politicianId].min;
+
+        if (
+          categoryScores[politicianId] < -100 &&
+          (minOverflow === null || categoryScores[politicianId] < minOverflow)
+        ) {
+          minOverflow = categoryScores[politicianId];
+        }
+      }
+    }
+
+    if (maxOverflow) {
+      for (const politicianId in surveyResult.scores) {
+        if (categoryScores[politicianId] > 0) {
+          categoryScores[politicianId] *= 100 / maxOverflow;
+        }
+      }
+    }
+
+    if (minOverflow) {
+      for (const politicianId in surveyResult.scores) {
+        if (categoryScores[politicianId] < 0) {
+          categoryScores[politicianId] *= -100 / minOverflow;
+        }
+      }
+    }
+  }
 
   return {
-    scores: groupPoliticianScores(categoriesScores),
-    categoriesScores,
+    scores: Object.entries(surveyResult.scores)
+      .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
+      .map(([politicianId, score]) => ({
+        politicianId,
+        score: Math.floor(score),
+      })),
+    categoriesScores: Object.entries(surveyResult.categoriesScores).map(
+      ([categoryId, { scores, questionScores }]) => ({
+        categoryId,
+        scores: Object.entries(scores)
+          .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
+          .map(([politicianId, score]) => ({
+            politicianId,
+            score: Math.floor(score),
+          })),
+        questionScores: Object.entries(questionScores).map(([questionId, { scores }]) => ({
+          questionId,
+          scores: Object.entries(scores)
+            .sort(([, scoreA], [, scoreB]) => scoreB - scoreA)
+            .map(([politicianId, score]) => ({
+              politicianId,
+              score: Math.floor(score),
+            })),
+        })),
+      }),
+    ),
   };
-};
-
-const groupPoliticianScores = (answers: { scores: SurveyResultScore[] }[]): SurveyResultScore[] => {
-  const politicianScores = answers.reduce<Record<Politician['id'], number>>(
-    (answerAcc, { scores }) => ({
-      ...answerAcc,
-      ...scores.reduce<Record<Politician['id'], number>>(
-        (scoreAcc, { politicianId, score }) => ({
-          ...scoreAcc,
-          [politicianId]: score + (scoreAcc[politicianId] || 0) + (answerAcc[politicianId] || 0),
-        }),
-        {},
-      ),
-    }),
-    {},
-  );
-
-  return Object.entries(politicianScores).map(([politicianId, score]) => ({
-    politicianId,
-    score,
-  }));
-};
-
-const isMultichoiceQuestionAnswer = (
-  answer: MultichoiceQuestionAnswer | SimpleQuestionAnswer,
-  multichoice: boolean,
-): answer is MultichoiceQuestionAnswer => {
-  return multichoice;
-};
+}

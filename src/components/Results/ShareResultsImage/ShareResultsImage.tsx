@@ -49,7 +49,12 @@ export function ShareResultsImage(props: ShareResultsImageProps) {
             justifyContent="center"
             alignItems="center"
           >
-            <Image src="/point-right-emoji.png" width="64px" height="64px" />
+            <Image
+              alt="Je trouve mon candidat"
+              src="/point-right-emoji.png"
+              width="64px"
+              height="64px"
+            />
             <Text ml="5">
               Je trouve <strong>mon candidat</strong>
             </Text>
@@ -99,7 +104,12 @@ export function ShareResultsImage(props: ShareResultsImageProps) {
             position="absolute"
             bottom="32px"
           >
-            <Image src="/point-right-emoji.png" width="64px" height="64px" />
+            <Image
+              alt="Je trouve mon candidat"
+              src="/point-right-emoji.png"
+              width="64px"
+              height="64px"
+            />
             <Text ml="5">
               Je trouve <strong>mon candidat</strong>
             </Text>
