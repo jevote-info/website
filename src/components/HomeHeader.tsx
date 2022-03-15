@@ -18,7 +18,9 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
   return (
     <Flex direction="column" justifyContent="center" alignItems="center" position="relative">
       <Heading as="h1" size={isMobile ? '2xl' : '3xl'} textAlign="center" marginTop={[8, 8, 16]}>
-        Élection présidentielle 2022: qui soutient{' '}
+        Élection présidentielle 2022 :
+        <br />
+        qui soutient{' '}
         <Text as="span" color="secondary.500" position="relative" display="inline-block">
           vos idées
           <ChoiceUnderline />
@@ -79,7 +81,9 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
         <Text as="span" color="secondary.500">
           renseigner
         </Text>
-        , c’est être sûr de faire le bon{' '}
+        , c’est être sûr
+        <br />
+        de faire le bon{' '}
         <Text as="span" color="primary.600">
           choix
         </Text>
