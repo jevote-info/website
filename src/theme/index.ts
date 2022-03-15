@@ -36,6 +36,10 @@ const theme = extendTheme({
       800: '#c72b00',
       900: '#ae1d00',
     },
+    dribbble: {
+      500: '#ea4c89',
+      600: '#db3d7a',
+    },
   },
   fonts: {
     heading: 'Quicksand',
