@@ -35,10 +35,6 @@ function Home(props: HomeProps) {
     <>
       <Head>
         <title>jevote.info - Élection présidentielle 2022</title>
-        <meta
-          name="description"
-          content="Découvrez quel candidat(e) de l'élection présidentielle de 2022 est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
-        />
       </Head>
       <HomeLayout surveyPath={surveyPath}>
         <Container h="full" maxW="container.lg">

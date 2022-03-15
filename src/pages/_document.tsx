@@ -27,6 +27,10 @@ class MyDocument extends Document {
             name="keywords"
             content="présidentielle, vote, 2022, candidats, élections, élection, présidentielles, voter, choisir son candidat, questionnaire, élection 2022, présidentielle 2022, élections 2022, présidentielles 2022"
           ></meta>
+          <meta
+            name="description"
+            content="Découvrez quel candidat(e) de l'élection présidentielle de 2022 est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
+          />
 
           <meta property="og:title" content="jevote.info" />
           <meta property="og:type" content="website" />
@@ -34,9 +38,13 @@ class MyDocument extends Document {
           <meta property="og:image" content="https://jevote.info/sharingCover.png" />
 
           <meta name="twitter:title" content="jevote.info" />
-          <meta name="twitter:description" content=" Trouvez votre candidat" />
+          <meta
+            name="twitter:description"
+            content="Découvrez quel candidat(e) de l'élection présidentielle de 2022 est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
+          />
           <meta name="twitter:image" content="https://jevote.info/sharingCover.png" />
           <meta name="twitter:card" content="summary_large_image" />
+          <meta name="twitter:site" content="@jevote_info" />
         </Head>
         <body>
           <ColorModeScript initialColorMode={theme.config.initialColorMode} />

@@ -52,10 +52,6 @@ function SourcesPage(serializedProps: SerializedSourceProps) {
     <>
       <Head>
         <title>jevote.info - Sources</title>
-        <meta
-          name="description"
-          content="Découvrez quel candidat(e) de l'élection présidentielle de 2022 est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
-        />
       </Head>
       <HomeLayout surveyPath={surveyPath}>
         <Container p={5} as={VStack} alignItems="start" spacing={5} maxW="container.lg">
