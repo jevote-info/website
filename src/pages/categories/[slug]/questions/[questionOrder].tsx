@@ -158,7 +158,7 @@ function QuestionPage(serializedProps: SerializedCategoryProps) {
         <title>jevote.info - {currentCategory.title}</title>
         <meta
           name="description"
-          content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
+          content="Découvrez quel candidat(e) de l'élection présidentielle de 2022 est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
         />
         <link rel="preload" as="image" href="/icons/categories.svg" />
       </Head>
