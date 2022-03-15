@@ -39,10 +39,10 @@ const Team = ({ surveyPath }: TeamProps) => {
       </Head>
       <HomeLayout surveyPath={surveyPath}>
         <Container maxW="container.xl">
-          <Heading as="h1" color={titleColor} margin="64px 0 16px 0">
+          <Heading as="h1" color={titleColor} margin="64px 0 16px 0" textAlign="center">
             Contributeurs
           </Heading>
-          <Text as="p" marginBottom="64px">
+          <Text as="p" marginBottom="64px" align="center">
             Le projet jevote.info repose sur l&apos;engagement citoyen de ses contributeurs.
             <br />
             Nous ne sommes affiliés à aucun parti, aucune entreprise, aucune organisation, et nous
