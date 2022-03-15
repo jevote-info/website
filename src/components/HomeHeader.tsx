@@ -61,7 +61,7 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
         as="h2"
         size={isMobile ? '2xl' : '3xl'}
         textAlign="center"
-        marginTop="64px"
+        marginTop={isMobile ? '96px' : '220px'}
         marginBottom="32px"
         padding="24px"
         position="relative"
