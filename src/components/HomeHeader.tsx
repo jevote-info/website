@@ -18,7 +18,10 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
   return (
     <Flex direction="column" justifyContent="center" alignItems="center" position="relative">
       <Heading as="h1" size={isMobile ? '2xl' : '3xl'} textAlign="center" marginTop={[8, 8, 16]}>
-        Élection présidentielle 2022 :
+        Élection présidentielle{' '}
+        <Text as="span" style={{ whiteSpace: 'nowrap' }}>
+          2022 :
+        </Text>
         <br />
         qui soutient{' '}
         <Text as="span" color="secondary.500" position="relative" display="inline-block">
@@ -54,8 +57,8 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
                 transform: 'translateX(7px)',
               },
             }}
-            width="48px"
-            height="48px"
+            mt={isMobile ? '0.5' : '1.5'}
+            boxSize={isMobile ? 6 : 12}
           />
         </Box>
       </NextLink>
