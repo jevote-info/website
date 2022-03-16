@@ -61,6 +61,7 @@ const Team = ({ surveyPath }: TeamProps) => {
                 name="Jordan"
                 description=""
                 linkedInUrl="https://www.linkedin.com/in/jordan-berndt-921046145"
+                dribbbleUrl="https://dribbble.com/JordanBrnt"
               />
               <TeamMember
                 imagePath="/team/baptiste-acca.jpeg"
