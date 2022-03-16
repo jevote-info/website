@@ -37,6 +37,8 @@ const theme = extendTheme({
       900: '#ae1d00',
     },
     dribbble: {
+      200: '#ea4c89',
+      300: '#db3d7a',
       500: '#ea4c89',
       600: '#db3d7a',
     },
