@@ -34,11 +34,7 @@ function Home(props: HomeProps) {
   return (
     <>
       <Head>
-        <title>jevote.info</title>
-        <meta
-          name="description"
-          content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
-        />
+        <title>jevote.info - Élection présidentielle 2022</title>
       </Head>
       <HomeLayout surveyPath={surveyPath}>
         <Container h="full" maxW="container.lg">
@@ -59,7 +55,7 @@ function Home(props: HomeProps) {
               />
               <HomeBox
                 title="Votez pour vos idées"
-                description="Nos objectifs ? Pallier certains maux de la société qui n’ont cessé de croître ces dernières années : un désintéressement de la politique et un taux d’abstention élevé (22,23% au premier tour en 2017). À travers jevote.info, nous souhaitons rendre la politique accessible à tous les citoyens, lutter contre l'abstention et favoriser l’engagement de chacun."
+                description="Nos objectifs ? Pallier certains maux de la société qui n’ont cessé de croître ces dernières années : un désintéressement de la politique et un taux d’abstention élevé (22,23% au premier tour de l'élection présidentielle en 2017). À travers jevote.info, nous souhaitons rendre la politique accessible à tous les citoyens, lutter contre l'abstention et favoriser l’engagement de chacun, notamment pour l'élection présidentielle de 2022."
                 imagePath="/vote.png"
                 isSmall
                 isImageFirst

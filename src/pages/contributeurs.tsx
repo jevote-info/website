@@ -32,10 +32,6 @@ const Team = ({ surveyPath }: TeamProps) => {
     <>
       <Head>
         <title>jevote.info - Contributeurs</title>
-        <meta
-          name="description"
-          content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
-        />
       </Head>
       <HomeLayout surveyPath={surveyPath}>
         <Container maxW="container.xl">

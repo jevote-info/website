@@ -30,10 +30,6 @@ function CGU(props: CGUProps) {
     <>
       <Head>
         <title>jevote.info - Conditions Générales d&apos;Utilisation</title>
-        <meta
-          name="description"
-          content="Découvrez quel candidat(e) est le plus proche de vos convictions grace à un questionnaire sur les programmes des candidats"
-        />
       </Head>
       <HomeLayout surveyPath={surveyPath}>
         <Container h="full" maxW="container.lg">

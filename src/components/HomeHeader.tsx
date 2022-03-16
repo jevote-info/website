@@ -18,11 +18,14 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
   return (
     <Flex direction="column" justifyContent="center" alignItems="center" position="relative">
       <Heading as="h1" size={isMobile ? '2xl' : '3xl'} textAlign="center" marginTop={[8, 8, 16]}>
-        Se renseigner, c’est être sûr de faire le bon{' '}
+        Élection présidentielle 2022 :
+        <br />
+        qui soutient{' '}
         <Text as="span" color="secondary.500" position="relative" display="inline-block">
-          choix
+          vos idées
           <ChoiceUnderline />
-        </Text>
+        </Text>{' '}
+        ?
       </Heading>
       <NextLink href={surveyPath} passHref>
         <Box
@@ -74,13 +77,15 @@ const HomeHeader = ({ surveyPath }: HomeHeaderProps) => {
           left="0"
           alt="Element décoratif"
         />
-        Une application{' '}
+        Se{' '}
         <Text as="span" color="secondary.500">
-          citoyenne
+          renseigner
         </Text>
-        , pour tous les{' '}
+        , c’est être sûr
+        <br />
+        de faire le bon{' '}
         <Text as="span" color="primary.600">
-          citoyens
+          choix
         </Text>
         <Image
           src="/icons/bottom-right-splash-effect.svg"
