@@ -10,7 +10,7 @@ import {
   Link,
   useColorModeValue,
 } from '@chakra-ui/react';
-import { Politician } from '@prisma/client';
+import { Category, Politician } from '@prisma/client';
 import { useMemo } from 'react';
 import {
   VictoryArea,
@@ -39,38 +39,69 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
   const [primary500, gray100] = useToken('colors', ['primary.500', 'gray.300']);
   const axisFillColor = useColorModeValue('#1A202C', 'rgba(255, 255, 255, 0.92)');
 
-  const radarChartCategoryMax = useMemo(
-    () =>
-      survey.map(category => ({
-        x: category.title,
-        y: 1,
-      })),
-    [survey],
-  );
-
-  const radarChart = useMemo(() => {
+  const radarChart: {
+    group: { category: Category; x: string; y: number; label: string }[];
+    axisComponent: JSX.Element[];
+    max: { x: string; y: number }[];
+  } = useMemo(() => {
     if (!politician) {
-      return [];
+      return { group: [], axisComponent: [], max: [] };
     }
 
-    return survey.map(category => {
+    const positiveCategories: { category: Category; x: string; y: number; label: string }[] = [];
+    const negativeCategories: { category: Category; x: string; y: number; label: string }[] = [];
+
+    for (const category of survey) {
       const categoryScores = results.categoriesScores.find(
         ({ categoryId }) => categoryId === category.id,
       );
       const politicianScore = categoryScores?.scores.find(
         ({ politicianId }) => politicianId === politician.id,
       );
-      const categoryScore =
-        politicianScore?.score && politicianScore?.score > 0 ? politicianScore.score : 0;
+      const categoryScore = politicianScore?.score;
 
-      console.log('categoryScore', categoryScore);
+      if (categoryScore && categoryScore > 0) {
+        positiveCategories.push({
+          category,
+          x: category.title,
+          y: categoryScore / 100,
+          label: `${categoryScore}%`,
+        });
+      } else {
+        negativeCategories.push({
+          category,
+          x: category.title,
+          y: 0,
+          label: '0%',
+        });
+      }
+    }
 
-      return {
+    return {
+      group: [...positiveCategories, ...negativeCategories],
+      axisComponent: [...positiveCategories, ...negativeCategories].map(({ category }, index) => (
+        <VictoryPolarAxis
+          key={category.slug}
+          dependentAxis
+          style={{
+            axisLabel: { padding: 10, fill: axisFillColor },
+            axis: { stroke: 'none' },
+            grid: { stroke: gray100, strokeWidth: 0.25, opacity: 0.5 },
+          }}
+          tickLabelComponent={<VictoryLabel labelPlacement="vertical" />}
+          labelPlacement="perpendicular"
+          axisValue={index + 1}
+          label={category.slug}
+          axisLabelComponent={<VictoryLabel text={category.slug.split('-')} />}
+          tickFormat={() => ''}
+          tickValues={[0.25, 0.5, 0.75, 1]}
+        />
+      )),
+      max: [...positiveCategories, ...negativeCategories].map(({ category }) => ({
         x: category.title,
-        y: categoryScore / 100,
-        label: `${categoryScore}%`,
-      };
-    });
+        y: 1,
+      })),
+    };
   }, [survey, results, politician]);
 
   const score = useMemo(() => {
@@ -113,34 +144,17 @@ export function PoliticianCategoriesChart(props: PoliticianGlobalScoreProps) {
         >
           <VictoryGroup colorScale={['gold', primary500]}>
             <VictoryArea
-              data={radarChartCategoryMax}
+              data={radarChart?.max}
               style={{ data: { fillOpacity: 0, strokeWidth: 0 } }}
             />
             <VictoryArea
               labelComponent={<VictoryTooltip />}
-              data={radarChart}
+              data={radarChart?.group}
               style={{ data: { fillOpacity: 0.2, strokeWidth: 2 } }}
             />
           </VictoryGroup>
 
-          {survey.map((category, index) => (
-            <VictoryPolarAxis
-              key={category.slug}
-              dependentAxis
-              style={{
-                axisLabel: { padding: 10, fill: axisFillColor },
-                axis: { stroke: 'none' },
-                grid: { stroke: gray100, strokeWidth: 0.25, opacity: 0.5 },
-              }}
-              tickLabelComponent={<VictoryLabel labelPlacement="vertical" />}
-              labelPlacement="perpendicular"
-              axisValue={index + 1}
-              label={category.slug}
-              axisLabelComponent={<VictoryLabel text={category.slug.split('-')} />}
-              tickFormat={() => ''}
-              tickValues={[0.25, 0.5, 0.75, 1]}
-            />
-          ))}
+          {radarChart?.axisComponent}
         </VictoryChart>
       </Box>
     </Container>
