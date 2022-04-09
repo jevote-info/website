@@ -13,7 +13,7 @@ const HomeFooter = ({ surveyPath }: HomeFooterProps) => {
   const now = new Date(Date.now());
   const electionDate = new Date('04/10/2022');
   const differenceInTime = electionDate.getTime() - now.getTime();
-  const differenceInDay = Math.round(differenceInTime / (1000 * 3600 * 24));
+  const differenceInDay = Math.ceil(differenceInTime / (1000 * 3600 * 24));
 
   const separatorColor = useColorModeValue('black', 'white');
 
