@@ -11,7 +11,7 @@ const HomeFooter = ({ surveyPath }: HomeFooterProps) => {
   const isMobile = useIsMobile();
 
   const now = new Date(Date.now());
-  const electionDate = new Date('04/10/2022');
+  const electionDate = new Date('04/24/2022');
   const differenceInTime = electionDate.getTime() - now.getTime();
   const differenceInDay = Math.ceil(differenceInTime / (1000 * 3600 * 24));
 
@@ -58,7 +58,7 @@ const HomeFooter = ({ surveyPath }: HomeFooterProps) => {
             <Text as="span" fontWeight="600">
               J-{differenceInDay}
             </Text>{' '}
-            avant le premier tour des éléctions.
+            avant le second tour des éléctions.
           </Text>
           <Text
             as="p"
