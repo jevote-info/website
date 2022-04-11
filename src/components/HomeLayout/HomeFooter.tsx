@@ -58,7 +58,7 @@ const HomeFooter = ({ surveyPath }: HomeFooterProps) => {
             <Text as="span" fontWeight="600">
               J-{differenceInDay}
             </Text>{' '}
-            avant le second tour des éléctions.
+            avant le second tour des élections.
           </Text>
           <Text
             as="p"
